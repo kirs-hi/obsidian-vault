@@ -1,0 +1,59 @@
+filters:
+  and:
+    - file.inFolder("02_DATA/技术")
+    - file.ext == "md"
+    - file.name != "技术笔记总览"
+formulas:
+  目录: 'file.folder.split("/").last()'
+properties:
+  file.name:
+    displayName: 标题
+  note.tags:
+    displayName: 标签
+  note.created:
+    displayName: 创建
+  formula.目录:
+    displayName: 所属目录
+  file.mtime:
+    displayName: 最近修改
+views:
+  - type: table
+    name: 全部笔记
+    order:
+      - file.name
+      - formula.目录
+      - note.tags
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: cards
+    name: 按目录浏览
+    order:
+      - file.name
+      - note.tags
+    sort:
+      - property: formula.目录
+        direction: ASC
+  - type: table
+    name: 最近更新
+    order:
+      - file.name
+      - formula.目录
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+    limit: 15
+  - type: table
+    name: 待补全属性
+    filters:
+      and:
+        - 'note.tags == null'
+    order:
+      - file.name
+      - formula.目录
+      - file.mtime
+    sort:
+      - property: file.name
+        direction: ASC

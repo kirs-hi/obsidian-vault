@@ -1,6 +1,6 @@
 {
   "command_timeout": 5,
-  "templates_folder": "50_资源库/模板",
+  "templates_folder": "05_Archive/模板",
   "templates_pairs": [
     ["", ""]
   ],
@@ -12,12 +12,16 @@
   "enable_folder_templates": true,
   "folder_templates": [
     {
-      "folder": "10_日常/日记",
-      "template": "50_资源库/模板/日记模板.md"
+      "folder": "02_DATA/技术",
+      "template": "05_Archive/模板/技术笔记模板.md"
     },
     {
-      "folder": "00_收件箱",
-      "template": "50_资源库/模板/闪念笔记模板.md"
+      "folder": "03_LIFE/日记",
+      "template": "05_Archive/模板/日记模板.md"
+    },
+    {
+      "folder": "03_LIFE/读书笔记",
+      "template": "05_Archive/模板/读书笔记模板.md"
     }
   ],
   "syntax_highlighting": true,
