@@ -1,0 +1,24 @@
+---
+title: "《AI大模型Ragent项目》——SSE协议与流式响应-知识星球"
+source: "https://wx.zsxq.com/group/51121244585524/topic/14588152514152842"
+author:
+  - "[[马丁 2026-03-11 22:15]]"
+published:
+created: 2026-06-07
+description: "知识星球是创作者连接铁杆粉丝，实现知识变现的工具。任何从事创作或艺术的人，例如艺术家、工匠、教师、学术研究、科普等，只要能获得一千位铁杆粉丝，就足够生计无忧，自由创作。社群管理、内容沉淀、链接粉丝等就在知识星球。"
+tags:
+  - "clippings"
+---
+详情返回 拿个offer-开源&项目实战
+
+来自：拿个offer-开源&项目实战进入星球
+
+**《AI大模型Ragent项目》——SSE协议与流式响应** 在模型调用 API 那篇里，你已经用 stream=true 调过大模型 API，也写过 BufferedReader 逐行读取 data: 的代码。当时的代码能跑，效果也不错——逐字输出，打字机效果。 但你有没有想过几个问题： 这个 data: 开头的格式叫什么？是谁定义的？ 为什么大模型 API 都用这个格式，而不用 WebSocket？ 如果网络不好，... [《AI大模型Ragent项目》——SSE协议与流式响应](https://articles.zsxq.com/id_vj6bjkw3zw3w.html)
+
+...
+
+展开全部
+
+觉得很赞
+
+<iframe src="chrome-extension://cnjifjpddelmedmihgijeibhnjfabmlf/side-panel.html?context=iframe"></iframe>

@@ -1,0 +1,529 @@
+---
+title: "《AI大模型Ragent项目》第4小节：什么是RAG？"
+source: "https://articles.zsxq.com/id_80e7w4map98n.html"
+author:
+  - "[[马丁]]"
+published:
+created: 2026-06-05
+description:
+tags:
+  - "clippings"
+---
+[来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
+
+AI 这波浪潮，Java 程序员已经躲不过去了。
+
+不管你现在做的是业务系统还是中间件，面试的时候多多少少都会被问到 AI 相关的东西。RAG 是什么？Agent 怎么实现？用过 MCP 吗？这些问题越来越高频。可以说， **AI 已经从“加分项”变成了“必答题”** 。
+
+但说实话，对于大多数应用层的开发者来说，去死磕大模型的微调、蒸馏、Transformer 原理，性价比并不高。真正实用的，是掌握 RAG 和 Agent 这些应用层的东西——能落地、能出活、面试也能聊得起来。
+
+问题是，怎么学？
+
+很多人跟着 B 站视频或者 GitHub 上的开源项目撸了一遍，以为自己懂了。结果面试一问深的，直接懵了。原因很简单：那些 demo 级别的项目，和企业真正要用的东西，差距太大了。
+
+还有些同学报了训练营，发现清一色是 Python。语言不熟、生态不通，学完感觉收获有限，回到 Java 这边还是不知道怎么下手。就算用 Spring AI 或者 LangChain4j，版本迭代太快，低版本功能缺，高版本升级约等于重写，也是一肚子苦水。
+
+基于这些问题，我决定做一个 RAG 实战项目，名字叫 **Ragent** 。
+
+这个项目会覆盖市面上主流的 RAG 技术点，也会涉及 MCP、Agent 等场景。更重要的是，它不是我看了几篇文章拼凑出来的玩具——我在公司 **实际落地过 RAG 系统** ，解决过信息孤岛、知识检索、效率提升这些真实的业务问题。所以 Ragent 的复杂度，就是企业级项目该有的复杂度。
+
+学完之后，你可以放心大胆地跟面试官讲： **企业里就是这么做的** 。
+
+在正式介绍 Ragent 之前，我们先来系统地聊聊 RAG——它的概念、架构、典型场景，以及为什么做好它没那么容易。
+
+## 从一个实际问题开始
+
+### 1\. 大模型是怎么工作的？
+
+在聊 RAG 之前，先花两分钟搞清楚大语言模型（LLM）是怎么回事。搞懂这个，后面的内容就好理解了。
+
+#### 1.1 训练阶段：疯狂阅读
+
+大模型训练这事，说白了就是让 AI 读互联网上海量的文本，从里面学规律、学知识。
+
+![无法获取该图片](https://oss.open8gu.com/image-20260213171102260.png "无法获取该图片")
+
+经过这番训练，模型学会了三类东西：
+
+- **语言规律** ：怎么组织句子、怎么表达才通顺。
+
+- **世界知识** ：历史事件、科学常识这些。
+
+- **推理能力** ：因果关系、逻辑推断。
+
+#### 1.2 推理阶段：预测下一个词
+
+你跟大模型聊天的时候，它其实就在干一件事：根据你输入的内容，一个字一个字地往后猜。
+
+```
+你的输入：今天北京的天气
+模型预测：怎 → 么 → 样 → ？ → 根 → 据 → ...
+```
+
+有点像文字接龙——根据训练时学到的规律，每次猜一个最可能的字，串起来就是完整的回答。
+
+这里有个关键点：模型的所有知识都是训练阶段灌进去的，推理的时候只是在用这些知识，没法获取新的。
+
+### 2\. 大模型的五大局限性
+
+理解了工作原理，就很容易理解为什么大模型在实际应用中会遇到麻烦。
+
+#### 2.1 幻觉问题：一本正经地胡说八道
+
+这是最让人头疼的问题。大模型有时会 **生成看起来很合理、但实际上完全错误的内容** 。
+
+> 实际上这个人名是我故意编纂的，而回答的公司中也不存在这个人。当然，现在相对于 AI 刚出来的时候已经好很多了，拿这个例子来说，很多高版本的 AI 已经能结合联网搜索等功能，将幻觉问题降低了很多。
+
+为什么会这样？因为模型的本质是预测概率最高的下一个词，它并不真正理解事实。当它对某个问题不确定时，它不会说我不知道，而是会生成一个看起来像答案的内容。
+
+#### 2.2 知识时效性：活在过去
+
+大模型的知识是 **冻结在训练截止日期** 的。
+
+对于企业应用来说，这个问题更严重——产品在更新、政策在变化、价格在调整，而大模型对这些一无所知。
+
+#### 2.3 专业领域深度不足
+
+虽然大模型训练的内容是海量级别的，但在特定专业领域往往 **不够深入** 。
+
+```
+用户：我们公司的 XX-2000 型号服务器的 BIOS 怎么设置？
+​
+模型：抱歉，我没有关于贵公司特定产品的信息...
+```
+
+训练数据中包含的专业内容相对有限，模型对垂直领域的理解远不如领域专家。
+
+#### 2.4 私有数据无法获取
+
+大模型是在公开数据上训练的，它 **无法访问** ：
+
+- 公司内部文档
+
+- 客户数据
+
+- 未公开的研究资料
+
+- 个人私有信息
+
+这意味着，对于我们公司的考勤制度是什么这种问题，大模型永远答不上来。
+
+#### 2.5 黑盒不可追溯
+
+大模型的回答是 **不可追溯来源** 的。
+
+```
+用户：这个医疗建议的依据是什么？
+​
+模型：这是基于一般医学知识...（无法提供具体出处）
+```
+
+在很多场景下（医疗、法律、金融），我们需要知道答案的来源，以便验证和追责。大模型做不到这一点。
+
+### 3\. 这些局限性在实际场景中的体现
+
+想象这样一个场景：你接到一个需求，要给公司做一个智能客服系统。用户可以用自然语言提问，系统能根据公司的产品文档给出准确回答。
+
+你想到了用大模型（比如通义千问、DeepSeek）来实现。但很快你发现上面说的问题全都冒出来了：
+
+| 局限性 | 在智能客服中的表现 |
+| --- | --- |
+| 幻觉问题 | 编造不存在的产品功能，误导用户 |
+| 知识时效 | 不知道上周刚发布的新产品 |
+| 专业深度 | 对复杂的技术问题回答肤浅 |
+| 私有数据 | 不知道公司的退换货政策 |
+| 不可追溯 | 用户问"这个说法哪里写的"，答不上来 |
+
+> **结论：大模型只知道训练时学到的通用知识，根本不知道你公司的产品是什么，结果只能瞎编。**
+
+### 4\. 传统检索的困境
+
+可能有同学会问，我直接用关键词搜索，就像在 MySQL 里写 `LIKE '%打印机%'` ，行不行？
+
+如果用户问的比较精准的时候可以，但是绝大部分情况下不行。原因如下：
+
+| 用户的问题 | 文档里的表述 | 关键词匹配结果 |
+| --- | --- | --- |
+| 这玩意儿怎么用 | 产品使用方法 | ❌ 匹配不上 |
+| 价格多少钱 | 产品售价：299元 | ❌ 匹配不上 |
+| 墨水没了咋办 | 更换墨盒步骤 | ❌ 匹配不上 |
+
+问题的本质是： **关键词搜索只能匹配字面，无法理解语义。**
+
+人能理解“这玩意儿怎么用”和“产品使用方法”说的是一回事，但传统数据库做不到。
+
+## RAG 架构：让大模型开卷考试
+
+### 1\. RAG 概念介绍
+
+结合上面的内容，所以问题就变成了：大模型懂语义但没有私有知识，传统搜索有数据但不懂人话。能不能把两者结合起来？这正是 **RAG（Retrieval-Augmented Generation，检索增强生成）** 要解决的问题。
+
+RAG 概念最早是 2020 年 Meta（当时还叫 Facebook AI）的研究团队提出的。他们的思路很直接：与其让模型把所有东西都记在脑子里，不如教它"先查资料，再回答"。这样一来，模型的回答就有据可依了——既利用了大模型理解语义的能力，又能接入最新的、私有的知识库数据。
+
+简单说就是：
+
+- 1.
+	把公司的产品文档数据存到一个能理解语义的知识库里；
+
+- 2.
+	用户提问时，先从知识库检索相关内容；
+
+- 3.
+	把检索到的内容和用户问题一起发给大模型；
+
+- 4.
+	大模型基于这些参考资料来回答。
+
+这就像考试时允许翻书——大模型不需要记住所有知识，只要能找到并理解就行。
+
+### 2\. RAG 核心流程
+
+RAG 全链路图： `ingest → chunk → embed → index → retrieve → answer` 。
+
+这六步分成两个阶段：前四步是准备阶段，离线做一次；后两步是运行阶段，每次用户提问都走一遍。
+
+下面一个个拆开讲。
+
+#### 2.1 Ingest：把数据导进来
+
+第一步很简单，把你的数据源接入系统。
+
+数据可能是 PDF 产品手册、Word 内部文档、网页内容、数据库里的结构化数据，格式五花八门。不同格式用不同的解析方式：PDF 要提取文字，Word 要读取内容，网页要爬取并清洗。
+
+这步的目标就一个：拿到干净的纯文本。
+
+#### 2.2 Chunk：把长文档切成小块
+
+文档一般都很长，直接用有两个问题：
+
+- 1.
+	大模型的上下文窗口有限，塞不下整篇文档；
+
+- 2.
+	检索时希望找到最相关的那一小段，而不是整篇文章。
+
+所以要切块。比如一份 50 页的产品手册，可以按章节切，或者固定每 500 字切一块。
+
+切块有讲究：
+
+- 太大：检索不够精准，还容易超出上下文限制
+
+- 太小：语义不完整，上下文丢失
+
+常见做法是 500-1000 字一块，相邻块之间有一定重叠（比如重叠 100 字），防止重要信息正好被切断。
+
+#### 2.3 Embed：把文字变成向量
+
+这步是整个 RAG 的核心。
+
+前面说过，传统关键词搜索不懂语义。怎么让机器理解"这玩意儿怎么用"和"产品使用方法"是一回事？
+
+答案是把文字转成向量。
+
+向量就是一串数字，比如 `[0.23, -0.45, 0.67, ...]` ，可能有几百上千维。这串数字编码了这段文字的语义信息，意思相近的文字，向量在空间中的距离也近。
+
+```
+"打印机怎么用"  → [0.23, -0.45, 0.67, ...]
+​
+"产品使用方法"  → [0.25, -0.42, 0.65, ...]  ← 很接近
+​
+"今天天气不错"  → [-0.89, 0.12, 0.03, ...]  ← 差很远
+```
+
+这个转换由专门的 Embedding 模型完成，比如 Qwen3 的 Qwen3-Embedding-8B，或者开源的 bge、m3e。
+
+#### 2.4 Index：存进向量数据库
+
+向量算出来了，得找个地方存起来。
+
+普通数据库存结构化数据，做精确匹配。向量数据库专门存向量，做相似度搜索——给一个向量，找出距离最近的 N 个。
+
+常见的向量数据库有 `Milvus` 、 `Pinecone` 、 `Weaviate` ，轻量级的有 `Faiss` 、 `Chroma` 。
+
+> 从我目前的调研来看，Milvus 在向量数据库中 **更新迭代快、社区活跃度高** ，同时也提供了 **较完善的可视化界面** ，上手和管理都比较方便。因此，后续课程我们将以 **Milvus** 作为示例工具进行讲解与演示。
+
+存的时候，向量和原文要一起存。后面检索出来，得把原文拿给大模型看。同时还要有元数据（简单理解是个 JSON）的概念，方便检索时进行筛选精准数据。
+
+#### 2.5 Retrieve：检索相关内容
+
+用户提问了，比如"打印机墨盒怎么换"。
+
+这时候做两件事：
+
+- 1.
+	把用户问题也转成向量；
+
+- 2.
+	拿这个向量去向量数据库搜，找出最相似的几个文档块。
+
+因为语义相近的文字向量也相近，所以用户说"墨盒怎么换"，文档里写的是"墨盒更换步骤"，照样能匹配上。
+
+这就是前面说的理解语义——不是比字面，是比意思。
+
+#### 2.6 Answer：大模型生成回答
+
+最后一步，把检索到的内容和用户问题打包发给大模型。
+
+```
+你是一个产品客服，请根据以下参考资料回答用户问题。
+参考资料：
+【文档1】墨盒更换步骤：1. 打开前盖...
+【文档2】墨盒型号说明：本产品适用 XX-100 墨盒...
+用户问题：打印机墨盒怎么换？
+请基于参考资料回答，如果资料中没有相关内容，请说明。
+```
+
+大模型看到这些资料，就能给出准确的回答，而不是自己编。
+
+#### 2.7 流程小结
+
+准备阶段跑一次就行，有新文档时增量更新；运行阶段每次用户提问都走一遍。
+
+| 阶段 | 步骤 | 做什么 |
+| --- | --- | --- |
+| 准备阶段（离线） | Ingest | 导入原始文档 |
+|  | Chunk | 切成小块 |
+|  | Embed | 转成向量 |
+|  | Index | 存进向量数据库 |
+| 运行阶段（在线） | Retrieve | 检索相关文档 |
+|  | Answer | 大模型生成回答 |
+
+上面六步，先有个整体印象就行。
+
+实际落地的时候，每一步都有不少讲究。比如文档怎么切块效果最好？向量模型选哪个？检索结果要不要做重排序？这些选择没有标准答案，得看你的数据特点和业务场景。
+
+后面的章节会把每个环节拆开，聊聊常见的做法和踩坑点。
+
+### 3\. 优缺点
+
+先说好处，RAG 能火起来不是没道理的。
+
+**成本低，上手快**
+
+想让大模型懂你的业务知识，有两条路：一是拿你的数据去微调模型，二是用 RAG 把知识喂给它。微调要准备训练数据、要算力、要时间，搞一次少说几天。RAG 就简单多了，把文档灌进向量库，当天就能跑起来。
+
+> 想让大模型懂你的业务知识，有两条路：一是拿你的数据去微调模型（相当于让模型“重新学习”一遍，把知识记进模型参数里），二是用 RAG 把知识喂给它。
+
+**知识更新方便**
+
+微调完的模型，知识就固化了。要更新？再微调一轮。RAG 不一样，文档有变动，重新处理一下就行，甚至可以做到实时检索最新数据。对于知识频繁变化的场景，这点很关键。
+
+**答案可追溯**
+
+大模型回答的时候，你能看到它参考了哪些文档。用户觉得答案有问题，可以去查原文验证。这在对准确性要求高的场景（比如金融、医疗、法务）很重要——出了问题能查到底。
+
+---
+
+再说问题，RAG 也不是万能的。
+
+**效果看知识库质量**
+
+垃圾进，垃圾出。知识库里的文档质量差、组织乱，检索出来的内容也不会好到哪去。RAG 系统的上限，很大程度上取决于你喂给它的数据。
+
+**系统复杂度上来了**
+
+原本直接调大模型就完事，现在多了文档处理、向量存储、检索排序这些环节，链路变长了。任何一个环节出问题，最终效果都会打折扣。调试起来也比单纯调模型麻烦。
+
+**检索耗时不能忽视**
+
+多了检索这一步，响应时间必然变长。有研究说检索环节能占整个 RAG 流程耗时的 60% 以上。如果业务对延迟敏感，这块得重点优化。
+
+---
+
+总的来说，RAG 适合知识密集、更新频繁、需要可追溯的场景。但它不是银弹，效果好不好，得看知识库建得怎么样、系统设计得合不合理。
+
+## RAG 实际应用场景
+
+讲完原理，来看看 RAG 在实际业务中都在干什么。
+
+下面这几个场景有个共同点： **知识量大、更新频繁、用户问法不固定** 。碰到这类需求，RAG 基本都能派上用场。
+
+### 1\. 企业内部知识库
+
+这是 RAG 最经典的应用场景，几乎每个上了规模的公司都有需求。
+
+员工想查公司的报销制度、请假流程、技术规范，以前要么翻 Wiki 翻半天，要么直接问同事。现在接个 RAG 系统，自然语言问一句就能得到答案，还能告诉你出处在哪个文档。
+
+> 典型的知识来源包括：公司制度文档、产品手册、技术文档、历史项目沉淀、会议纪要等。
+
+如果只是查文档，那还只是知识库。更有价值的是让它能查数据、能干活。
+
+借助 MCP（Model Context Protocol）或类似的工具调用能力，可以把 RAG 系统和企业内部的业务系统打通。这时候它就不只是知识库助手，而是真正的智能助手了。
+
+举几个例子：
+
+- 这个月我有几天考勤异常？还剩几天年假？——对接 HR 系统
+
+- 华东区上个月销售额多少？环比怎么样？——对接 BI 数据
+
+- 帮我查一下订单 #12345 的物流状态——对接订单系统
+
+- 我名下有哪些待审批的流程？——对接 OA 系统
+
+这种场景下，大模型先理解用户意图，再调用对应的工具去取数，最后把结果组织成自然语言返回。知识检索 + 数据查询 + 工具调用，组合起来就能升级为企业级智能助手。
+
+> 这个截图就是我们接下来要讲的 Ragent 项目前端界面，整体观感还不错吧？
+
+### 2\. 智能客服
+
+传统客服机器人靠的是关键词匹配和预设问答对，覆盖不到的问题就抓瞎。接入 RAG 后，可以把产品文档、FAQ、历史工单都灌进去，回答的范围和灵活度都上了一个台阶。
+
+用户问的问题千奇百怪，不可能全部预设。RAG 的好处是只要知识库里有相关内容，就能组织出一个像样的回答。对于减少人工客服压力、提升响应效率很有帮助。
+
+> 观察到一个变化：阿里云 AI 助理的流程/提示词可能做了收敛。此前在带前置描述的情况下，模型会输出明显的拟人化/角色扮演内容（例如“尊敬的奥特曼先生，感谢您为光之国做的贡献……”）。这类输出虽有趣，但对 ToC 场景会带来风格漂移与严谨性不足的问题。我认为这是一次合理的优化。
+
+### 3\. 专业领域助手
+
+法律、金融、医疗这些行业，对准确性要求特别高，大模型自己编回答是绝对不行的。
+
+RAG 在这类场景的价值很明显：
+
+- **法律** ：检索相关法条、判例，辅助律师写诉状、做案情分析。
+
+- **金融** ：基于研报、财报、公告回答投资相关问题。
+
+- **医疗** ：检索医学文献、用药指南，辅助诊断建议。
+
+这些场景不仅需要答案准确，还需要可追溯——用户要能看到答案依据的是哪条法规、哪篇文献。RAG 天然支持这点。
+
+### 4\. 代码与技术文档助手
+
+开发团队也是 RAG 的重度用户。
+
+把公司的代码仓库、技术文档、API 文档接进去，新人问：这个接口怎么调用、这块业务逻辑在哪个模块，系统能直接检索到相关代码和文档给出回答。
+
+GitHub Copilot、Cursor 这类工具，背后也大量用到了类似的检索增强思路。
+
+## 做好 RAG 并不容易
+
+看完前面的内容，你可能觉得 RAG 原理也不复杂，搭一个 demo 似乎很快。确实，跑通一个仅仅是能用的 RAG 原型，可能一下午就够了。
+
+但是从能用到好用，中间隔着一堆坑。
+
+### 1\. 数据入向量库
+
+企业里的知识不会乖乖地以纯文本形式等着你。PDF、Word、PPT、网页、Markdown、数据库，什么都有。光是把这些东西解析成干净的文本，就是一堆脏活累活。PDF 里的表格、扫描件、双栏排版，每一个都是坑。
+
+文档要切成小块才能检索，但切多大是个问题。切太大，检索不精准，一大段里可能只有一两句话有用；切太小，上下文信息丢了，检索到的片段看不懂在说啥。
+
+按段落切？按固定字数切？按语义切？不同类型的文档可能需要不同的策略，没有银弹。
+
+### 2\. 问题重写
+
+用户输入的问题，往往不能直接拿去检索。
+
+- **口语化** ：用户问“报销咋整”，你拿这四个字去做向量检索，效果能好吗？得把它展开成“公司报销流程是什么，需要准备哪些材料”之类的完整表述，检索效果才会好。
+
+- **多轮对话** ：用户第一轮问“年假有多少天”，第二轮接着问“怎么申请”。这个怎么申请单独拿去检索，系统根本不知道在问啥。得把上文的年假补进去，变成年假怎么申请，才能检索到正确的内容。
+
+- **多意图** ：“请假流程是什么，另外帮我查下我还剩几天年假”——这其实是两个问题，一个要检索知识库，一个要查业务数据。你得先把它拆开，分别处理。
+
+- **复杂问题** ：用户问“我想申请调岗到上海，需要满足什么条件，流程是什么，大概要多久”——这个问题涉及多个方面，可能散落在不同的文档里。直接检索未必能覆盖全，拆成几个子问题分别检索，再合并答案，效果会更好。
+
+问题重写这一步，本质上是在弥补用户表达和检索需要之间的 gap。做不做、做多深，直接影响后面的检索质量。
+
+### 3\. 意图识别
+
+用户发来一句话，系统得先判断：这句话想干嘛？不是所有问题都需要走 RAG 流程。
+
+- **闲聊** ：用户说“你是ChatGPT么？”，这种情况去知识库里检索，能检索出什么？这种情况应该直接让模型回复，不用走检索。
+
+- **工具调用** ：“报销制度是什么”需要检索知识库，“我这个月的报销单到哪一步了”需要调用业务系统接口。走错了路，答案肯定不对。
+
+- **多知识库路由** ：企业里可能有多个知识库——HR 政策库、产品文档库、技术文档库。用户问的问题应该去哪个库里找？如果每个库都搜一遍，成本高、噪音大；如果只搜一个库，选错了就什么都检索不到。
+
+- **该不该回答** ：有些问题不该回答。涉及敏感信息的、超出系统能力范围的、恶意试探的，都需要识别出来，给出合适的拒绝或引导。
+
+意图识别做得不好，后面的流程再完美也没用——方向错了，跑得越快错得越远。
+
+### 4\. 数据检索
+
+这是 RAG 的核心环节，也是最容易出问题的环节。
+
+- **向量检索的局限** ：纯向量检索对语义相似性很敏感，但对精确匹配很弱。用户问“BRD-2024-0312 这个需求的状态”，这是个精确的编号，向量检索可能完全找不到。类似的还有人名、产品型号、订单号这些，光靠向量不够。
+
+- **混合检索的取舍** ：为了弥补上面这个问题，通常会把向量检索和关键词检索结合起来。但两边的结果怎么融合？权重怎么设？不同场景可能需要不同的策略。
+
+- **top-k 选多少** ：检索返回多少条结果？选少了可能漏掉关键信息，选多了塞给模型一大堆内容，它可能反而被干扰。而且返回越多，后续处理的成本也越高。
+
+- **结果重排序** ：向量相似度高的，不一定是最相关的。很多时候需要再加一层重排序（Reranking），用更精细的模型对检索结果重新打分排序。这一步能明显提升最终效果，但也增加了延迟和成本。
+
+- **召回了但不该用** ：检索到的内容不一定都该用。有些可能是过时的版本，有些可能相关度其实不够，有些可能用户没有权限看。在塞给模型之前，还需要做一轮过滤和筛选。
+
+### 5\. 会话记忆
+
+单轮问答相对简单，多轮对话的复杂度会陡增。
+
+- **上下文要带多少** ：用户聊了 20 轮，你把所有历史对话都塞给模型？Token 成本扛不住，模型也容易被早期不相关的内容干扰。但如果只带最近几轮，又可能丢失重要的上下文信息。
+
+- **记忆的压缩和摘要** ：一种做法是对历史对话做摘要，提取关键信息，用摘要代替完整的历史记录。但摘要过程本身可能丢失细节，摘错了后面就全错了。
+
+- **长期记忆** ：有些场景需要跨会话的记忆。用户上周问过的问题，这周再来的时候系统还能记得。这涉及到记忆的持久化存储和检索，又是一套单独的机制。
+
+- **记忆的更新和遗忘** ：用户在对话中纠正了之前的信息，系统得能更新记忆。有些过时的信息需要遗忘，不能一直带着。这些都需要额外的逻辑来处理。
+
+### 6\. 其他功能
+
+除了主流程，一个完整的 RAG 系统还需要处理很多边边角角的事情。
+
+**引导澄清**
+
+用户的问题太模糊，没法检索，也没法回答。比如用户就说一个“报销”，系统应该反问：你是想了解报销流程，还是查询报销单状态，还是想提交新的报销？这需要系统能识别出问题不够明确，并给出合适的引导。
+
+**请求风控**
+
+总有人会试图让系统说一些不该说的话，或者套取敏感信息。需要在入口处做一层过滤，识别并拦截恶意请求。同时如果知识库资料包含公司隐私数据，需要部署本地大模型，对应的限流风控也需要做。
+
+**停止生成**
+
+用户发现答案不对，想中断重新问，系统得能响应停止指令，及时终止生成，不要傻傻地继续输出。
+
+**模型负载均衡**
+
+线上流量大的时候，单个模型实例扛不住。需要有负载均衡机制，多个模型实例之间分配请求。如果用的是第三方 API，还要处理限流、降级、多供应商切换等问题。
+
+**答案溯源**
+
+用户看到一个答案，想知道依据是什么。系统需要能标注出答案来自哪个文档的哪个部分，让用户可以点进去查看原文。这对于建立信任、方便核实很重要。
+
+**效果监控和反馈收集**
+
+系统上线后，怎么知道答得好不好？需要有机制收集用户的反馈（点赞、点踩、纠正），监控各个环节的指标，为后续优化提供数据支撑。
+
+---
+
+以上这些，每个点单独拎出来都不算特别难。但当它们组合在一起，形成一个完整的 RAG 系统时，复杂度是指数级上升的。
+
+> 这里总结的是高频难点清单，但并不意味着问题已穷尽。针对具体场景，持续补充解决策略。
+
+## 文末总结
+
+看到这里，相信你已经对 RAG 有了一个相对完整的认识。
+
+它的原理不复杂，但想要做好，真的有很多细节需要考虑。从数据处理、问题重写、意图识别，到检索策略、会话记忆，再到各种边边角角的功能，每一个环节都可能影响最终的效果。这也是为什么很多人 demo 跑得挺顺，一到生产环境就各种翻车。
+
+但也不用被吓到。
+
+接下来，我会以循序渐进的方式，带大家一步步深入 RAG 的世界：
+
+- **Spring AI 快速上手** ：先用最简单的方式搭一个能跑的 RAG，建立直观感受。
+
+- **向量数据库** ：理解 Embedding 和向量检索的原理，知道数据是怎么存、怎么查的。
+
+- **RAG 核心流程** ：拆解检索、重排、生成等关键环节，搞清楚每一步在干什么。
+
+- **本地部署大模型** ：不依赖外部 API，在本地跑通整个链路，方便调试和学习。
+
+- **Ragent 底层原理** ：最终带大家拆解 Ragent 项目的核心设计，看看一个企业级的 RAG 系统是怎么架构的。
+
+整个过程会基于 Java 技术栈，代码都能直接跑，不会让你看完还是不知道怎么下手。
+
+如果你也在准备面试，或者想在 AI 应用这块有所积累，建议先收藏 [这篇文章](https://nageoffer.com/ragent/rag) ，后续内容我会持续更新。
+
+![](data:image/png;base64,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)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524

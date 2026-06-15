@@ -1,0 +1,144 @@
+---
+title: "挖掘价值百万的 AI 产品创意的思路(+提示词)"
+source: "https://articles.zsxq.com/id_5diz47jwxea4.html"
+author:
+  - "[[雷哥]]"
+published:
+created: 2026-05-13
+description:
+tags:
+  - "clippings"
+---
+[来自： 雷哥AI 解决方案](https://wx.zsxq.com/group/28882285418421)
+
+做技术或者做产品的朋友，可能经常会陷入一个怪圈：
+
+手里拿着锤子（技术），满世界找钉子（需求）。
+
+我们往往沉迷于“我的 AI 模型有多强”、“我的代码写得有多优雅”，却忽略了商业变现中最本质的一环—— **技术到底是如何服务于商业的？**
+
+最近，我对这个问题做了一次深度的复盘和思考，总结出了一条也许能帮你打破迷茫的\*\*“价值逆向链条”\*\*。同时，为了让这个思维能真正落地，我编写了一套 AI 提示词（Prompt），希望能帮你像拿着显微镜一样，发现那些潜藏的软件机会。
+
+### 一、 商业的本质，是寻找“代偿”
+
+如果你问我，商业中最关键的一点是什么？
+
+我的答案是：寻找痛点。
+
+但“痛点”这个词太抽象了。怎么才算痛？
+
+有一个最简单、最粗暴的验证标准：看别人愿意为什么事情付费。
+
+更具体一点： **看别人愿意花钱“雇人”来做什么事。**
+
+当一个人愿意自掏腰包雇佣另一个人来完成某项任务时，就说明：
+
+- 1.
+	这件事很重要（刚需）。
+
+- 2.
+	这件事很麻烦（痛点）。
+
+- 3.
+	他对这件事目前的解决方案不满意（机会）。
+
+**这就是我们寻找软件产品机会的最佳切入点。**
+
+### 二、 从“雇佣行为”到“软件产品”的逆向工程
+
+很多成功的 SaaS 软件或 AI 产品，本质上都是把一段“人力服务”给标准化、软件化了。
+
+- 以前，我们需要雇佣一个懂外语的翻译随从；现在，我们用 DeepL 或 ChatGPT。
+
+- 以前，我们需要雇佣会计来处理报销单；现在，我们用费控 SaaS。
+
+所以，当我们想要做一个能赚钱的软件（尤其是结合 AI 的软件）时，正确的思考路径不应该是“我能做什么”，而是：
+
+- 1.
+	**观察：** 此时此刻，市场上哪个人力服务很贵、很火？
+
+- 2.
+	**洞察：** 雇主在这个服务中，真正想买的“核心交付物”是什么？
+
+- 3.
+	**反推：** 这个过程中，哪些步骤是重复的、基于规则的、或者可以通过 AI 的理解能力来替代的？
+
+- 4.
+	**产品化：** 将其固化为一套代码、一个工具。
+
+### 三、 最大的难点：从“现象”到“场景”
+
+道理大家都懂，但执行起来往往卡在第一步。
+
+我们很容易观察到“现象”（比如：很多电商老板花钱雇人写文案），但很难抽象出具体的“场景描述”，更难提炼出那个哪怕只有一点点缝隙、但却能撬动付费意愿的切入点。
+
+如果你没有做过那个行业，你很难理解那个痛点到底有多痛。
+
+怎么办？
+
+用魔法打败魔法。既然我们想做 AI 产品，为什么不让 AI 来帮我们做这个“深度洞察专家”呢？
+
+我设计了一套结构化的提示词（Prompt）。它的作用，就是当你把一个“雇佣现象”扔进去，它能像剥洋葱一样，运用“Jobs-to-be-Done（待办任务理论）”和“第一性原理”，帮你还原出用户掏钱那一刻的真实心理场景，并直接生成产品方案。
+
+### 四、 拿去即用的“商业痛点深挖”提示词
+
+你可以把下面这段话复制给 LLM。让它充当你的产品顾问。
+
+**【 📋 提示词：商业痛点深度洞察与产品化专家 】**
+
+Markdown
+
+```
+## Role: 商业痛点深度洞察与产品化专家
+
+## Background:
+我正在寻找商业机会，核心逻辑是：观察用户“花钱雇人”做了什么事，通过分析这个行为背后的真实痛点，将其转化为标准化的软件产品或 AI 解决方案。
+
+## Task:
+我将为你提供一个“用户付费雇人完成的任务”或一种“现有的服务交易现象”。
+你需要透过这个表象，运用第一性原理和“Jobs-to-be-Done（待办任务）”理论进行深度剖析，帮我找到那个“隐性但刚需”的场景，并提出 AI 软件产品化方案。
+
+## Analysis Framework (请严格按此步骤思考):
+
+1.  **【表象解构】(Deconstruct the Hire)**:
+    * 用户在这个交易中，购买的“显性价值”是什么？（例如：买的是时间、买的是专业技能、还是买的是心理安慰？）
+    * 为什么用户**无法**或**不愿**自己做这件事？（是因为太难、太枯燥、太耗时，还是风险太高？）
+
+2.  **【痛点深挖与场景还原】(Deep Dive & Scenario)**:
+    * **核心痛点**：请用一句话精准定义那个让用户“不得不掏钱”的瞬间。
+    * **关键场景描述**：请像写电影脚本一样，描绘出用户在决定付费之前的那一刻，他面临的具体困境是什么？（包含时间、地点、情绪、阻碍）。
+    * *这是最关键的一步，请务必具体。不要说“因为效率低”，要说“因为由于数据格式不统一，导致用户需要在三个Excel表格间反复复制粘贴，担心出错而焦虑”。*
+
+3.  **【AI/软件机会识别】(Software/AI Opportunity)**:
+    * 这个痛点中，哪一部分是可以通过代码或 AI 解决的？
+    * **AI 价值点**：AI 在这里是充当“提效工具”（Copilot），还是“完全替代者”（Agent）？
+    * **可行性评估**：为什么以前的软件没解决好？现在的 AI 能力（如 NLP 理解、图像识别、推理）如何能突破这个瓶颈？
+
+4.  **【产品MVP构想】(Product Concept)**:
+    * **产品定义**：用一句话描述这个软件/AI产品。
+    * **核心功能**：列出 3 个必须有的杀手级功能。
+    * **商业变现潜力**：针对这个软件，用户预期的付费意愿大概在什么层级？
+
+## Constraints:
+* 保持客观、犀利，不要说正确的废话。
+* 专注于寻找**高价值、可规模化**的软件机会。
+* 输出风格：结构清晰，逻辑严密，带有商业咨询顾问的口吻。
+
+---
+**现在，请根据上述框架，分析我提供的这个现象：**
+[在此处输入你观察到的现象，例如：很多视频博主花钱请人把长视频剪辑成短视频切片]
+```
+
+~
+
+我的测试效果:
+
+![CleanShot 2025-11-22 at 22.52.57@2x.png](https://article-images.zsxq.com/FjIzfIBbvtKTkZDW1NtrETtaWC_p)
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAQAElEQVR4AeycjY7jSA6D+7v3f+e90dwZ65LotuKfxI65mFpHMkmpWAMBKfT0f/7xf3bADjzWgf/8+D87YAce64AHwGOP3hu3Az8/HgD+W2AHHupAbNsDIFzwsgMPdcAD4KEH723bgXDAAyBc8LIDD3XAA+ChB+9tP9uBafceAJMTftqBBzrgAfDAQ/eW7cDkQHsAAD/w+TU1/uoTau+vakx4qFpQcxN+/oSKg5qbc5Y+Q48HPdxSnbU8rOvDOmapDlQurOeUHlSewqkcjNwOBkYOvCdWvalcewAosnN2wA7cz4F5xx4Aczf82Q48zAEPgIcduLdrB+YOeADM3fBnO/AwB3YNgH/++efnzHXkWag+oXchk/tQWhkTMVT9yOfV0YOqpXhQcbmeimEbL7RUH5GfL4WBWhNqTnHn2tPnjIOeFlQc1NxU59Vn7uvo+JV+MnbXAMhiju2AHbiXAx4A9zovd2sHDnXAA+BQOy1mB+7lgAfAvc7L3dqBzQ4o4uEDAOrlCaznVHPdHIz6igcjBpAXmIqbc9DTUpc9WWsphrGGwsGIAb2nrX1A1YdeTvWbc6ovlcu8iDs4hYHav8JFjTMX1D5gPXd0T4cPgKMbtJ4dsAPnOeABcJ63VrYDl3fAA+DyR+QG7cB+B5YUvnIAQP0upQyAbbiuFlT97vfNjFM1VQ5qzQ4u14tY8SLfWTD2obRgxAAKJv8VqgSmJFC4CfJSmPf9Evmi4K8cABf12m3Zgcs54AFwuSNxQ3bgfQ54ALzPa1eyAx9x4LeiHgC/ueN3duDLHfiKAZAvZ1TcPUfFzTmllTERKxxsu5gKvbyUvsrBek1YxyjtpVzuFXr6UHFZK2JVF0auwnRzUSOvLvdOuK8YAHcy3L3agSs54AFwpdNwL3bgYAfW5DwA1hzyezvwxQ54AHzx4XprdmDNgcMHQL446cZrjb7yHsbLIEDSVW9A+ekxGHOKpwp0cYqbczD2APpf/mVexKqPTi64eUHtA9Zzql7WXoqh6i9h53lVU+Vgm/681qufVR+d3Kt11vCHD4C1gn5vB+zAexzoVPEA6LhkjB34Ugc8AL70YL0tO9BxwAOg45IxduBLHdg1AKBensBxua7nMNZUlyldLYXLejDWAxRNXiZmrYiBgpWCByZhrNmVjn7zUtyMgbEe7LvEhHU9qBjVazcHo95WHow6sC9WfXRzuwZAt4hxdsAOXNMBD4Brnou7sgNvccAD4C02u4gduKYDHgDXPBd3ZQc2O/AKsT0A8qXOp2K1udwL1EsVxYMeTnE7udxXxHBuzU5fgYle5itynQW9/mHEzWtNnzv1AgOjFhDpTQs49cJ12tunn11z2gOgK2icHbAD93HAA+A+Z+VO7cDhDngAHG6pBe3A5xx4tbIHwKuOGW8HvsiB0wcA1EsXqDnlKVQc1Jzibs2pyxsYa3YwgGxBcSUwJbfyQgYoF1+wngtuXt0+Mi7rRAy1h8yLOLB5RT6vjNkTw3pve/QVF2pNGHOKtyd3+gDY05y5dsAOnOuAB8C5/lrdDrzNgS2FPAC2uGaOHfgSB9oDAMbvIqDjji/5u1vEUPUi31m5puJkTMQKB7WPwK6trhZs01f1oWqpPlRO6eVcl9fBQe0113slhqoHY+4VvQ4WRn3oxR3tJUz2dgm3Nd8eAFsLmGcH7MB1HfAAuO7ZuDM70HZgK9ADYKtz5tmBL3DAA+ALDtFbsANbHWgPgHwZEfHWol0e9C5ZYB2nakLlxb7yylyoPKi5rBNx1oo48nlFfr6g6s/fT5+h4qDmcj0VQ+VBLzf1Mz2VvspB1Z80jniqmt1crq94GRMxnLsn2K7fHgCxES87YAeu58CejjwA9rhnrh24uQMeADc/QLdvB/Y44AGwxz1z7cDNHWgPAOhdNMCI2+OPumRRuVyjg8mc32Kll3OKD6MX0P9d+Fkv11uKM29PvFQj5/fU2MrNPXTjbj1YPzuoGKWveoPK7eLgXy5s/zsVvbYHQIC97IAd+C4HPAC+6zy9GzvwkgMeAC/ZZbAd+C4HPAC+6zy9mwc5cMRWdw0AdWnRyXUbh/GyA3Sca0LF7amZuVD1cw8RZ17EULmwngtuXlB5UbezOlpQ9TMvYlUPRm7gtq6OPoz1YF98ZK9btYKX9x65I9euAXBkI9ayA3bg/Q54ALzfc1e0A5dxwAPgMkfhRuxA34GjkB4ARzlpHTtwQwd2DQBYv2hRnkDl5cuOV2JVo5Pr1shaipcxS7HiqlzmQ/UsY64U5z1Br//Mi1jtK/Jrq8vbg8tcOHafWf/oeNcAOLoZ69kBO/BeBzwA3uu3q9mB3Q4cKeABcKSb1rIDN3OgPQDWvm8tvYf6nUhhlW9QuQq3NQdVH2ou60PFQM1l3qdi2NabOieoWlBzn9grjH10e+juM+spnsplXsQw9go6Duzagspd40zv2wNgIvhpB+zA9zjgAfA9Z+mdPMCBo7foAXC0o9azAzdywAPgRoflVu3A0Q7sGgBQLx9gzKmGYcQACvajLlSAHxiXJDeSSl/RYKzX5SktlYNRH+qveVK8bk71C2PNPVpb9WHsAfqx6lf1kXOKp3KZF3HGQa/fzIs49DoLxhrBPXLtGgBHNmItO2AHfnfgjLceAGe4ak07cBMHPABuclBu0w6c4YAHwBmuWtMO3MSB0weAuujoegPjBQjUy7HQhxGn9AOX1x5c5mbtpRjGXuH8PUGt2ekfKg9qLmt1Y+VRlwu1D1jPKX2ovA6u2z9Ufag5VXPKTc9uzQm/9jx9AKw14Pd2wA58zgEPgM9578p24OMOeAB8/AjcgB34nAMeAJ/z3pXtQMuBM0HtAQDbLi1U892LjD24zIVe/1BxWUvtCSoPaq7LVbhODmrN3H/EWQt6vODmBevcXC9iWOdFrcDmFfm8MqYbZ52IO1yo/Xd4r2Cil/lS3Pn76bPCqVx7ACiyc3bADtzbAQ+Ae5+fu7cDuxzwANhln8l24FwHzlb3ADjbYevbgQs70B4A0+XCq0/YflECPS5UHIw5dQYwYkD/VJ7inp3LPqt6UPtXuE4u14tY8eC4mnv04dw+VG85Fx51VuYtxVD3BGNOcWHEAAomc+0BINlO2gE7cGsHPABufXxu/psdeMfePADe4bJr2IGLOuABcNGDcVt24B0OtAcAUH4XH9TckU2rCxalr3Bbc0o/56Due2u9JR6MNXIPEStu5POCUQvqZWfmLMXdmpmveCqXea/ESi/nXtHL2I4WrHuddaY414t4ejc9I3fkag+AI4tayw7Ygd8deNdbD4B3Oe06duCCDngAXPBQ3JIdeJcD7QEwfQdZe+bGFR7q9yQ4Lpd7iBh6+oHNC0Zufh8xjBgg0q0FlPuV7FtLaAcIag9Qc90SMHIVD0YM1LuJ8EFxI58XVD0Yc0oLRgygYKfn8n4i7hQNXF4dXmDaAyDAXnbADpzvwDsreAC8023XsgMXc8AD4GIH4nbswDsd8AB4p9uuZQcu5kB7AADloqqzF6i8fGERsdKK/JaltLo5qP12uWfilA976sG4z64WjDygSz0UB5S/j8qjnOs2AVUf1nN79IObF4w18/u9cXsA7C1kvh2wA9dzwAPgemfijuzA2xzwAHib1S5kB67ngAfA9c7EHT3UgU9suz0A8mVKxKphGC8tApcXjBhASZVLHmBzLvcQsSoa+bwyLr9fiqHXr+LDyM09RAwjBoj025fqPzcBlLPr8EKni4NaA8Zc6OWl9FUu87oxjD0AXepP7kMRgeKtwqlcewAosnN2wA7c2wEPgHufn7u3A7sc8ADYZZ/JduAYBz6l4gHwKedd1w5cwIFdAwDq5UPn0kLtO/NeiZVeJ6dqKF7GQd234p2dy31FrGpGfstSWt1cpx70fISKU/q5N4WBqgU1l7VUrPS7OaWnclB7gzGneN3crgHQLWKcHbAD13TAA+Ca5+KuHuTAJ7fqAfBJ913bDnzYAQ+ADx+Ay9uBTzqwawCoC4+8GRgvLIAMWYyBzT/htCg6ewHb9NW+oWopnMrBOnfW9iEfYax5iOhMBLbpw8iD7b8nELZrzbby0keoNbsCULn570tXq4vbNQC6RYyzA3ZAO/DprAfAp0/A9e3ABx3wAPig+S5tBz7twOEDAMbvMfk7TMTdTQc2rw43cyJWvMjnpXAw7glqrHjdXO4h4syFc2vmekfHUPuPfeal6kLldnAKc3Yu7yfiK9c8fACcvVnr24FvceAK+/AAuMIpuAc78CEHPAA+ZLzL2oErOOABcIVTcA924EMOtAcA9C5i4tJjvqDHg4qDXi57Bz0e9HDz/cTnXG8phqqvsFBxMOaibl5KS+Vg1IJerLS6udyriqH2oXAq1+3jTBzU/qGXU3119qkwUGsqfZVrDwBFds4O2IF7O+ABcO/zc/d2YJcDHgC77DPZDtzbAQ+Ae5+fu7+hA1dquT0Ajrx8UFrKlC5OcXOuq6VwMF6yKIzK5R4ihlEL9L92y3pQeaGXV+ZFnDERR36+InfkgtovjLluPRh5oOOsN9/f9Bkqd3o3f8I6LteLeK4xfY58Z0GtCWOuo/MKpj0AXhE11g7YgXs44AFwj3Nyl3bgFAc8AE6x1aJ2QDtwtawHwNVOxP3YgTc6sGsATJcc8yeMlxbzd9Pn7v5g1AJa1KnO/AmUXy82fz99hnVcq4k/oElz/vyTPvUPrPcf/cCIU00FrrP2cLM+jH1B75I060QMPS3Vv8rBqBc18lI8lcu8pThzYewBtD+ZtxTvGgBLos7bATtwDwc8AO5xTu7yCxy44hY8AK54Ku7JDrzJAQ+ANxntMnbgig5cZgAsXYJsyUO9KNljPlQ9GHNdfbUfGLWAlhyw+WIzF1B9ZcxSDLWPjIV1THBUH1C5UHPBn6+u1pzz2+es9xt2/i7zIp6/nz5D3VNg52vCHvW8zAA4akPWsQNXdOCqPXkAXPVk3JcdeIMDHgBvMNkl7MBVHTh8AMy/r8RnqN9rYHuuY2TUzUvxoPaReRFnbuTygqqVea/EMOp1uTDyQP+gyBX6h9qr2mfudSnOXOjpZ95SDKOewsGIgX6s9pVrKAzUGpm3FB8+AJYKOW8HnurAlfftAXDl03FvduBkBzwATjbY8nbgyg54AFz5dNybHTjZgfYAgO0XDVv30L3wgNobjLmtPQQv9xG5vDImYhh7ADJtMQ7+fCng/P30WeG25oDyg0ZQc1Pt357dHqDqKy5UHIy53/qZv1P6W3Nz3fgcS2lFPi8Y+wcKFShnUkAvJNoD4AVNQ+2AHbiJAx4ANzkot2kHznDAA+AMV61pB27igAfATQ7Kbd7PgTt0vGsAwLEXEtkw6OnnyxQVZ+2lGGpNGHNL3E4eRi3QP6mXtfbsKWupWOl3c1D3BGOuW1PhYNQCFOwn9wu0Lsygh8v6sgmRzLyIoVdTyJVU6OVVQAuJXQNgQdNpO2AHbuKAB8BNDspt2oEzHPAAOMNVhxi11gAACG9JREFUaz7egbsY4AFwl5Nyn3bgBAd2DYB88RAxjJcbkesstTfFUzgYa0KNu1oKl3PdHhQua0WscDkHdU8ZE3Ho5RX5vKDqwZjLnHfEufeIt9YNbl4w7hHYKt/mAa3LyI5g3k/EHd4SZtcAWBJ13g7YgXs44AFwj3Nylzdy4E6tegDc6bTcqx042AEPgIMNtZwduJMD7QEQlw15wfrlBlQM1FzWjhh6uGx4cPOCbVpZO2KoWpHvLKhcWM/l/UTcqbcHA+t9AbJE9DdfCgS0LsfmOtPnrh6MNRRv0lx7Km7OwVgPyJC/8Vqt6T0wePSXnP4HIwZIiOWwPQCWJfzGDtiByYG7PT0A7nZi7tcOHOiAB8CBZlrKDtzNAQ+Au52Y+7UDBzrQHgDAcBkByDamy4vfnooIFH2lAes4qBhVU+Vgnav66uZUTZXLegoD670GD9ZxuV7Ewe2swObV4SkMrPeqeCqXe4pY4aDWhNdz0Pun3aqHyEGtGfm1FfvKa40zvW8PgIngpx2wA9/jgAfA95yld2IHXnbAA+Bly0ywA9/jQHsA5O8YSzGM32OUVYqrcDBqQe871tn6UPvq9q9wql8YayheN6f0u9wODsZeocZ7eoCeXq4B23iho/Yd+aU15RVvT27SnZ57tBS3PQAU2Tk7YAfu7YAHwL3Pz93bgV0OeADsss9kO3BvBzwA7n1+7v4CDty5hfYAgHqhAjU3XVZMT6iYrmGTxvwJ63pQMXON6bPqAypX4XIOKm+qs/aEdS5UTO4hYujhAjtfsI0315h/znuG7fpZK+J5rekzjDWm/NoTRh7oy2aoOBhzqlb0mxeMPNA1ld6RufYAOLKoteyAHbiGAx4A1zgHd2EHPuKAB8BHbHfRb3Hg7vvwALj7Cbp/O7DDgfYAyJcYEXfqBi6vDi8wUC9KIp8XjLhcL+LMWYoDm1fG5vdLceYtxYqfsR1McLq4wK4tpaVySgeOOxOlr3Kqt5yDsS9ASclc1lIgoPyrVoXLWhHDOhcqBmpO1VS59gBQZOfsgB24twMeAPc+P3f/QQe+obQHwDecovdgBzY64AGw0TjT7MA3OHD4AIB6IQFjThkXlyBHLRjrgY5VPdBYOCav9r41p/pXWlB7V7hODqpWt4+sr3gql3kRQ+0Dxlzgti4YtaDGqleV6/aguDDW7Wp1cYcPgG5h4+zAnR34lt49AL7lJL0PO7DBAQ+ADaaZYge+xQEPgG85Se/DDmxwoD0AYLyMAFrl1MVGi/gHBJSfqoL1nKqpcn9KlD9dXCGKhNKC9f6hhxElpV8K18lB7UPxoOLy3qFioJdTNbO+iqHqK5zS/y03vYOqD9tzk+6rzz17ag+AV5sy3g7Yges74AFw/TNyh3bgNAc8AE6z1sJ24PoOtAeA+p7Rye2xoKMfmD01Mhfqd7iosbayzlKsdBQ24xSmm8ta3VjpK67CdXJKS+WUFtRzUrhOrlsztOZL8bq5uc70Gdb3pPQn/pZnewBsETfHDtiBazvgAXDt83F3duBUBzwATrXX4nbg2g54AFz7fNzdhRz4xlbaAwDqBQW8P9c5BOj1pbS2XrIoHvT6UNzcWweTOb/FMPb2G3b+DkYe6N9nDyOu2z+MPGBe/m2fu/3mhoDyw1gZc3QM22u2B8DRTVvPDtiBzzvgAfD5M3AHduBjDngAfMx6F76TA9/aqwfAt56s92UHGg7sGgDqouTIXKP/v5Bc82+y8T/oXZ5AxcGYa5T7C8m9Rvz3xcr/YKwHrDB+fx115+t39P63QLkcg5qb9zR97laHUW/iz59dra24ea3p81at4E0a0xPGPYK+hA1uZ+0aAJ0CxtgBO3BdBzwArns27uwiDnxzGx4A33y63psdWHHAA2DFIL+2A9/swOEDAOolBazn9pgMo77Smi5R1p4wagFFTmkU0M4EMFyaqZowYgBZFRi0oBcrsW4fGae0ujmo/Wb9iLMeVF7GRAwVBzUX2PmCioFebq4zfY495DW9m575fcRQa074tefhA2CtoN/bgTs58O29egB8+wl7f3bgFwc8AH4xx6/swLc74AHw7Sfs/dmBXxx4zACAelECNae8iouW+VIY6GlBDzevF5+hx1O9bc1F3bxgWx9ZZymGnj6s41QNWOdNfuVn1svvI86YV2JY7w3WMdFHdz1mAHQNMc4OPMkBD4Annbb3ageSAx4AyRCHduBJDngAPOm0vde2A08BfsUAyBct6vAyJuKtODj2Ikb10cnFHraurK90YPs+oXJhzOUelmLVm8JmHIz1AEX7ybyIJTAlA5dXgiyGQPnpTAWGEZfrRax43dxXDIDuZo2zA3ZgdMADYPTDkR14lAMeAI86bm+248CTMIcPgPhOsmV9wnTVJ4zfuYDSmuIV0AsJoPV9MEtC5UHNZV43VvtUua7eVhz09gQjbk+vigujvtoPjBjQseJ2clD1OrwlzOEDYKmQ83bADlzPAQ+A652JO7IDb3PAA+BtVrvQHRx4Wo8eAE87ce/XDswc2DUAoF5IwHG5WZ8vfexc4IDuUxUCjYV/84qn+lA5xc25rbys80oM/+4P/ve5y8/9dnldXNZXMfyvZ/j3qXDdmh3c0fpKL+c6fS1hdg2AJVHn7YAduIcDHgD3OCd3+QYHnljCA+CJp+4924H/O+AB8H8j/LADT3SgPQDyxcOn4q2H9Il+u72q3jpcxVM5pZVxHUxwtuKCm1dXK/MiVtycC1xeGfNKvFUr816JO/0pvQ4vMO0BEGAvO/CtDjx1Xx4ATz1579sO/HHAA+CPCf5jB57qgAfAU0/e+7YDfxzwAPhjgv8824En794D4Mmn770/3gEPgMf/FbABT3bAA+DJp++9P94BD4DH/xV4tgFP3/1/AQAA//8mdngcAAAABklEQVQDADUmSjv2yhcEAAAAAElFTkSuQmCC)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=28882285418421

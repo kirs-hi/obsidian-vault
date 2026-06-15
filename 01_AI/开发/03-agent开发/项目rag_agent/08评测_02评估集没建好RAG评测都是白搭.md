@@ -1,0 +1,252 @@
+---
+title: "《AI大模型Ragent项目》——评估集没建好，RAG 评测都是白搭"
+source: "https://articles.zsxq.com/id_gbvotq44sw7p.html"
+author:
+  - "[[马丁]]"
+published:
+created: 2026-06-07
+description:
+tags:
+  - "clippings"
+---
+[来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
+
+上一篇画了评测的全景图——两仓库、四流程、两套指标。地图有了，接下来开始落地。
+
+评测体系的第一步不是写代码，也不是装 RAGAS，而是准备一份靠谱的评估集。评估集就是评测的地基——后续所有指标（自建的 Hit@K、Recall@K、MRR，RAGAS 的 faithfulness、answer\_correctness 等）都建立在评估集的质量之上。地基歪了，后续的执行都是南辕北辙。
+
+## 抽几条线上 query 不行吗
+
+最直觉的想法：从线上日志里随机抽 50 条用户 query，跑一圈，看看指标不就行了？
+
+不行，三个原因。
+
+**分布不均。** 线上 80% 的问题可能集中在 3~5 个高频意图——这个手机多少钱、怎么退货、发货了吗。冷门意图（固件升级怎么操作、跨生态设备能不能联动、充电器兼容哪些型号）完全覆盖不到。而恰恰是这些低频场景最容易翻车——知识库文档少、检索容易漏、prompt 没覆盖过。你抽的 50 条可能全是高频的简单问题，指标好看得很，但一到冷门场景就崩。
+
+**没有 ground truth。** 线上日志有用户问题和系统回答，但没有标准答案，也没有“这条问题应该召回哪些文档”。没有 gold label，Hit@K 算不了（不知道该命中谁），Recall@K 算不了（不知道总共该召回几篇），RAGAS 的 `answer_correctness` 也算不了（没有 reference 做对比）。
+
+**隐私和合规。** 线上 query 可能包含订单号、用户名、手机号。直接拿来当评估集，存到仓库里、传到 RAGAS 的 judge 模型去打分，有合规风险。
+
+所以评估集需要专门设计——控制覆盖范围、标注 ground truth、脱敏处理。看着麻烦，但这是所有后续评测的前提。
+
+## 一条评估样本长什么样
+
+先看一条真实的评估样本，有个直觉感受：
+
+```json
+{
+  "query_id": "S1-01",
+  "query": "预算 3000 元左右，想买一台拍照还不错的手机，推荐哪款？",
+  "intent_l1": "SUPPORT",
+  "intent_l2": "S1_选购推荐",
+  "difficulty": "medium",
+  "requires_rag": true,
+  "expected_answer_type": "recommendation",
+  "expected_doc_ids": ["GUIDE_PHONE_002", "GUIDE_PHONE_003"],
+  "expected_doc_ids_nice": ["PROD_PHONE_006", "PROD_PHONE_003"],
+  "trap_type": "budget_scene",
+  "ground_truth": "3000 元内首选 Redmi K70（约 2499 元起）...",
+  "eval_metrics": ["recall@3", "recall@5"]
+}
+```
+
+一条评估样本 = 一个用户问题 + 一组标注信息。标注信息告诉评测系统：这条问题的意图是什么、应该召回哪些文档、标准答案长什么样、该用哪些指标来评。
+
+12 个字段不少，但不用一个个平铺着看。按重要性分三层： **核心字段** 决定评测能不能跑， **辅助字段** 让评测更精细， **分层字段** 提供额外口径。
+
+### 1\. 核心字段：决定评测能不能跑
+
+五个必须讲透的字段。
+
+#### 1.1 query：用户原始问题
+
+这不是格式化的标准提问，而是口语化的真实表达。比如“预算 3000 元左右，想买一台拍照还不错的手机，推荐哪款？”——就是用户在对话框里真正会打出来的话。
+
+评估集里的 query 要尽量贴近真实用户的表达习惯：有省略（“能退吗”而不是“我购买的商品可以退货吗”）、有口语（“那个扫地机器人咋配网”）、甚至有不完整的信息（“送父母礼物，想实用一点，买什么比较合适？”——没说品类、没说预算）。如果评估集里全是工整的标准句式，测出来的效果会比真实场景好看得多，但上线就会露馅。
+
+#### 1.2 intent\_l1 和 intent\_l2：两级意图标签
+
+意图分两级。 `intent_l1` 是粗粒度，三个取值： `SUPPORT` （售前售中售后咨询）、 `FEEDBACK` （故障报告 / 功能建议 / 投诉）、 `CHAT` （寒暄 / 越界提问）。 `intent_l2` 是细粒度，22 个取值，比如 `S1_选购推荐` 、 `S14_售后政策` 、 `C2_越界提问` 。
+
+被谁消费？意图 Top-1 准确率——评测系统拿 ragent 预测的意图跟这里标注的意图做比对，算准确率。
+
+为什么需要两级？如果只有 L1，你只知道 SUPPORT 类的意图准确率是 90%，但 SUPPORT 下面有 17 个二级意图，到底是 S1 选购推荐拉低了还是 S14 售后政策拉低了，看不出来。有了 L2，就能精确定位到最差的几个二级意图，定向优化。
+
+> 比特严选的完整意图体系是 3 个一级 + 22 个二级。意图体系的设计本身也是一门学问，但不在本篇展开——这里只需要知道评估集用两级标签覆盖了所有意图就够了。
+
+#### 1.3 requires\_rag：最关键的分流字段
+
+这是整个 schema 里最重要的一个布尔字段。 `true` = 这条问题应该走 RAG 检索， `false` = 不应该检索，应该走系统兜底（直接回复或转人工）。
+
+为什么必须有？看两个场景：
+
+**场景一：不该检索的样本污染检索指标。** 用户问“今天天气怎么样？”，这是越界提问，系统应该礼貌拒答引导回业务范围。如果没有 `requires_rag` 字段，这条也被拿去算 `Hit@5` ——检索肯定 miss，指标被拉低。但这不是检索的问题，是这条根本就不该检索。
+
+**场景二：该检索但没检索的误拒被淹没。** 用户问“手机电池能用多久？”，系统应该检索产品文档回答，但它说了“抱歉，找不到相关信息”——这是误拒。没有 `requires_rag=true` 的标记，你不知道这条是误拒还是本来就不该回答。
+
+`requires_rag` 的三个核心作用：
+
+- **检索指标的样本过滤** ：Hit@K、Recall@K、MRR 只统计 `requires_rag=true` 的样本，避免被天气、寒暄这类问题污染
+- **误拒率** ： `requires_rag=true` 但系统没有给出 RAG 答案的比例——该答的不答
+- **错答率（过召回）** ： `requires_rag=false` 但系统去检索了的比例——不该答的瞎答
+
+150 条里 132 条是 `true` （88%），18 条是 `false` （12%）。false 分布在四类意图里：
+
+| 意图 | 条数 | 正确行为 |
+| --- | --- | --- |
+| F2 功能建议 | 5 | 记录反馈，转工单系统 |
+| F3 投诉吐槽 | 3 | 安抚情绪，转人工客服 |
+| C1 寒暄问候 | 5 | 直接回复问候 |
+| C2 越界提问 | 5 | 礼貌拒答，引导回业务范围 |
+
+> 注意 F3 投诉吐槽有 5 条，但其中 2 条 `requires_rag=true` ——因为那两条投诉里夹带了故障描述（“洗地机用了三个月就坏了，太差了”），系统应该先检索故障排查文档再安抚，而不是直接转人工。 `requires_rag` 不是按意图一刀切的，是逐条标注的。
+
+#### 1.4 expected\_doc\_ids：标准召回文档集
+
+告诉评测系统这条问题应该召回哪些文档。这是检索指标的 gold set。
+
+拿前面那条 S1-01 举例， `expected_doc_ids` 是 `["GUIDE_PHONE_002", "GUIDE_PHONE_003"]` 。假设系统 Top-5 召回了 `[PROD_PHONE_001, GUIDE_PHONE_002, PROD_PHONE_006, GUIDE_PHONE_003, PROD_AIR_002]` ，三个检索指标分别这么算：
+
+- `Hit@5` ：Top-5 里有没有命中至少一个期望文档？ `GUIDE_PHONE_002` 在第 2 位就命中了，所以 Hit@5 = 1.0
+- `Recall@5` ：期望 2 篇文档，Top-5 里命中了 2 篇（第 2 位和第 4 位），Recall@5 = 2/2 = 1.0
+- `MRR` ：第一个命中文档排在第几位？ `GUIDE_PHONE_002` 排第 2，MRR = 1/2 = 0.5。如果它排第 1，MRR 就是 1/1 = 1.0——MRR 衡量的是排序质量，越靠前越好
+
+文档 ID 用业务码（ `GUIDE_PHONE_002` 、 `PROD_PHONE_006` ），不用数据库自增 ID。原因很实际：数据库 ID 每次重建知识库都会变，但业务码是稳定的。评估集和文档之间靠业务码关联，换环境也不用改。
+
+这里还有一层区分： `expected_doc_ids` 是最小核心证据集（must），系统至少要命中其中一个才算合格。另一个字段 `expected_doc_ids_nice` 是扩展证据（nice），召回了更好但不强求。150 条里只有 13 条标注了 nice，主要是选购推荐类——指南文档是 must，具体产品详情是 nice。对应两个 Recall 口径： `Recall@K (must)` 和 `Recall@K (inclusive)` 。标注规范的细节不在本篇展开，知道有这个区分就行。
+
+#### 1.5 ground\_truth：标准参考答案
+
+这个字段是 RAGAS 评分的基准线——相当于考试的标准答案。RAGAS 的两个核心指标都依赖它：
+
+- `answer_correctness` ：把模型的实际回答和 `ground_truth` 都拆成一条条事实声明（claim），逐条对比，算 F1 分数。F1 是精确率（回答中有多少比例是对的，没编造）和召回率（标准答案中有多少比例被回答覆盖了，没遗漏）的调和平均值，综合衡量“没多说假话”和“没少说真话”。
+- `context_recall` ：把 `ground_truth` 拆成一条条 statement（最小独立事实单元，比如“Redmi K70 起价约 2499 元”就是一条 statement），然后检查召回的 chunk 能不能覆盖这些 statement。如果标准答案拆出 4 条 statement，检索结果能支撑其中 3 条，context\_recall 就是 0.75。
+
+用 S1-01 那条选购推荐来看，好的 `ground_truth` 长这样：
+
+```
+3000 元内首选 Redmi K70（约 2499 元起）：5000 万像素主摄 + OIS 光学防抖，
+日常拍照表现稳定，搭配第二代骁龙 8、2K OLED 高刷屏和 120W 快充。
+若可上探预算到 3999 元，推荐小米 14——影像旗舰、徕卡光学镜头，
+人像/夜景/长焦明显优于 K70。K70 短板是没有独立长焦镜头，远景与人像特写受限。
+```
+
+RAGAS 能从里面拆出明确的 claim：Redmi K70 约 2499 元起、5000 万像素主摄、OIS 光学防抖、第二代骁龙 8……然后逐条跟模型的回答对比，哪些答对了、哪些漏了、哪些编造了，F1 分数就能算出来。
+
+但有一个数据质量问题： `ground_truth` 如果不是自然语言答案，而是元指令格式。比如：
+
+```
+应推荐 Redmi K70 和小米 14，说明拍照对比和价格差异。
+```
+
+对人类 review 来说，这当评判标准没问题——一看就知道该推荐什么。但 RAGAS 会把它拆成“应推荐 Redmi K70”“应说明拍照对比”这样的 claim，跟模型回答里“Redmi K70 搭载 5000 万像素主摄”这种具体表述对不上， `answer_correctness` 会系统性偏低。
+
+### 2\. 辅助字段：让评测更精细
+
+四个辅助字段不像核心字段那么关键，但各有价值。
+
+#### 2.1 difficulty 和 trap\_type：难度分层与失败归因
+
+`difficulty` 分三档：easy（40 条，26.7%）、medium（61 条，40.7%）、hard（49 条，32.7%）。
+
+它的作用是分层分析。假设整体 `Hit@5` 是 85%，这个数字好不好？不好说。分层看：easy 95%、medium 88%、hard 72%——问题出在 hard 样本。如果 easy 只有 80%，那说明基本检索都有问题，不是难度的事。没有 difficulty 字段，你只能看一个笼统的均值，分不清是能力问题还是覆盖问题。
+
+`trap_type` 更进一步，标记的是这条样本具体难在哪里。150 条有 116 种不同的 trap\_type，粒度很细。举几个例子说明它在失败归因时的价值：
+
+| trap\_type | 含义 | 失败时说明什么 |
+| --- | --- | --- |
+| `competitor_boundary` | 提到竞品，应拒答 | 拒答陷阱没拦住，意图识别或 prompt 需要加边界 |
+| `charger_power_reasoning` | 充电器功率多跳推理 | 跨文档推理能力不够，需要改检索策略或加 rerank |
+| `bluetooth_wifi_confusion` | 用户混淆蓝牙和 WiFi | 系统也被带偏了，检索方向错了 |
+| `time_boundary` | 退货期限边界判断 | 时间敏感信息处理不到位 |
+| `bundle_budget` | 预算内套装推荐 | 需要跨多篇文档组合信息 |
+
+有了 `trap_type` ，失败样本不再只是“这条错了”，而是“这条错了，错在跨文档推理”或“错在拒答陷阱”——优化方向清晰很多。
+
+#### 2.2 expected\_answer\_type 和 eval\_metrics
+
+> 这两个字段不参与最终的指标计算，简单了解即可。
+
+`expected_answer_type` 是给人看的备注——标记这条样本期望什么类型的回答，比如 `recommendation` （推荐）、 `steps` （操作步骤）、 `out_of_scope_refusal` （越界拒答）。翻看失败样例时，一眼就知道这条本来该干什么，不用回头重新读 query。
+
+`eval_metrics` 是给评分脚本看的标记——标记这条样本该跑哪些指标。比如 S1-01 标的是 `["recall@3", "recall@5"]` ，评分时只算检索指标；C2-01 标的是 `["intent_accuracy", "no_rag"]` ，评分时只检查意图对不对、有没有多余检索。简单说就是一个过滤条件：该检索的样本跑检索指标，不该检索的样本跑行为指标，各算各的不串。
+
+## 150 条和 20 条：全量评估集与主力评估集
+
+前面讲了评估集的 schema，接下来回答一个实际问题：这 150 条怎么用？
+
+### 1\. 全量评估集：150 条，覆盖完整
+
+150 条的覆盖逻辑是：3 个一级意图 × 22 个二级意图，每个二级意图 5~11 条不等，按业务频率加权。
+
+| 业务域 | 二级意图 | 条数 |
+| --- | --- | --- |
+| **售前** （56 条） | S1 选购推荐 / S2 参数咨询 / S3 对比选购 / S4 价格活动 / S5 库存到货 / S6 配件兼容 / S7 适用场景 | 9 / 11 / 9 / 7 / 6 / 7 / 7 |
+| **售中** （42 条） | S8 操作指引 / S9 配网连接 / S10 APP 功能 / S11 固件升级 / S12 生态联动 / S13 保养维护 | 8 / 7 / 7 / 5 / 6 / 9 |
+| **售后** （27 条） | S14 售后政策 / S15 退换货 / S16 物流配送 / S17 发票会员 | 8 / 7 / 6 / 6 |
+| **反馈** （15 条） | F1 故障报告 / F2 功能建议 / F3 投诉吐槽 | 5 / 5 / 5 |
+| **闲聊** （10 条） | C1 寒暄问候 / C2 越界提问 | 5 / 5 |
+
+售前占比最高（37%），因为电商客服场景里售前选购类的问题最多也最复杂——涉及预算匹配、多维对比、场景推荐。闲聊占比最低（7%），但这 10 条不能省：它们专门验证系统在不该回答时有没有正确拒答或转人工。
+
+### 2\. 实际跑的问题：150 条太贵了
+
+150 条全量跑一次评测，成本不低：
+
+- **Runner 阶段** ：150 条串行调两个接口（SSE + JSON），每条等 LLM 生成完，全跑下来要几十分钟
+- **RAGAS 阶段** ：每条 5 个指标，每个指标约 3 次 LLM judge 调用，还要跑 3 轮取均值才能消除方差——150 × 5 × 3 × 3 ≈ 6750 次 judge 调用，光 Token 费用就不少
+- **ground\_truth 维护** ：150 条的标准答案要写、要校验、改了知识库文档后还要回头更新对应的 ground\_truth，维护成本随条数线性增长
+
+日常迭代中，你不可能每改一行 prompt 就跑 150 条全量。
+
+### 3\. 主力评估集：20 条，覆盖广、跑得快
+
+实际做法是从 150 条里抽出 20 条作为主力评估集（ `eval_set_v1.jsonl` ），日常迭代用它跑。
+
+20 条的选取逻辑： **每个二级意图取一条代表** ，确保大多数意图里尽量都有覆盖。实际覆盖了 19 个二级意图（C1 寒暄问候、C2 越界提问、S7 适用场景暂未选入），难度分布 easy 13 条 / medium 4 条 / hard 3 条。
+
+| 评估集 | 文件 | 条数 | 用途 | 跑一次耗时 |
+| --- | --- | --- | --- | --- |
+| 主力集 | `eval_set_v1.jsonl` | 20 | 日常迭代，改 prompt / 换模型 / 调参数后快速验证 | 自建秒级，含 RAGAS 约 5~8 分钟 |
+| 全量集 | `eval_set_v1_all.jsonl` | 150 | 改版前后对比、正式评测报告、按意图切片分析 | 自建秒级，含 RAGAS 约 30~40 分钟 |
+
+20 条够日常用吗？绝大部分日常场景是够的，也看项目规模。它覆盖了绝大部分二级意图，改了 prompt 之后跑一圈几分钟出结果，能快速发现明显的回归。但 20 条不够做分层分析——每个意图只有 1 条，某条碰巧过了不代表这个意图没问题。需要出正式报告或做改版前后对比时，切回 150 条全量跑。
+
+> 起步建议：先用 20 条跑通整个流程，看到第一份报告。等流程稳定后，再用 150 条做一次完整 baseline。比 500 条标了三个月还没跑过第一次有用得多。
+
+## 评估集设计的三个坑
+
+最后讲几个实际踩过的坑。
+
+\*\*坑一： `ground_truth` 写成元指令。\*\* 前面提到过，v1 有约 106 条 ground\_truth 是“应推荐...”、“应命中...”这种格式。标注时觉得够用了——人类 review 样本时看这种格式没问题。但接入 RAGAS 后才发现， `answer_correctness` 把 reference 拆成 claim 跟 response 做 F1，元指令格式拆出来的 claim 跟真实答案对不上，分数系统性偏低。
+
+教训：标注 ground\_truth 时就要写成自然语言答案，不能偷懒写评判标准。如果已经有了一批元指令格式的，可以用 LLM 辅助改写——但要人工校验，LLM 改写可能引入新的事实错误。
+
+\*\*坑二： `expected_doc_ids` 标漏了。\*\* 某条问题实际需要两篇文档才能完整回答（一篇讲退货政策，一篇讲退款流程），但标注时只标了退货政策那篇。结果 Recall@K 永远算不到 1.0，你以为是检索有问题，查了半天发现是标注漏了。
+
+教训：标注 expected\_doc\_ids 时，最好让两个人独立标注再交叉校验。尤其是需要多篇文档组合才能回答的复杂问题，容易漏标。
+
+**坑三：难度分布不合理。** 初版设计时觉得 hard 样本更有价值就多标了一些，结果整体指标偏低，看着挺吓人。但这不是系统真的差，是评估集里 hard 占比过高，不反映真实用户分布。按真实业务场景校准后，easy: medium: hard 大约 27%: 41%: 33%，指标才回到合理区间。
+
+教训：评估集的难度分布应该贴近真实用户分布，而不是刻意出难题。如果想单独看系统处理 hard 问题的能力，用 `difficulty` 字段切片看就行，不需要在整体分布上做偏移。
+
+## 小结与下一篇预告
+
+评估集 = 150 条带标注的用户问题，12 个字段覆盖意图分类、检索证据、标准答案、难度分层、指标路由。它是评测体系的地基——后续所有指标都建立在这 150 条的质量之上。
+
+几个关键点回顾：
+
+- `requires_rag` 是最关键的分流字段，没有它检索指标会被非 RAG 样本污染
+- `expected_doc_ids` 是检索指标的 gold set，用业务码而不是数据库 ID
+- `ground_truth` 要写成自然语言答案，不能写元指令格式
+- `trap_type` 让失败归因从“错了”变成“错在哪类难点上”
+
+评估集准备好了，但 Ragent 还是空的——没有知识库、没有文档、没有意图树。下一篇讲怎么把评估集喂进 Ragent：建 4 个知识库、灌 115 篇文档、构建 22 个意图叶子节点。
+
+![](data:image/png;base64,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)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524

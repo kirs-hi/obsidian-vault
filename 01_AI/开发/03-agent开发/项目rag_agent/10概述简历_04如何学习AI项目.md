@@ -1,0 +1,309 @@
+---
+title: "《AI大模型Ragent项目》——如何学习AI项目？"
+source: "https://articles.zsxq.com/id_0oaux6bp2v2a.html"
+author:
+  - "[[马丁]]"
+published:
+created: 2026-06-07
+description:
+tags:
+  - "clippings"
+---
+[来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
+
+Ragent AI 覆盖了 RAG 从数据入库到问答生成的完整链路，模块多、设计细节也多。直接翻源码大概率迷失在各种类和接口之间。这篇文档帮你理清学习节奏，少走弯路。
+
+## 学习方式
+
+### 以文档为主，视频为辅
+
+教学内容以文档为主。文档可以按自己节奏来，遇到不理解的地方随时翻代码验证。后续会有部分视频补充操作演示和系统效果，但核心知识点都在文档里，不看视频不影响学习。
+
+> 文档写的非常详细，我觉得如果从讲解项目角度上，完全不需要视频。
+
+### 不建议从零写代码
+
+40000 行后端代码从零敲一遍，大量时间花在抄写上，对理解架构帮助有限。更推荐 **Debug + AI 辅助编码** ：
+
+- **Debug 跟代码** ：在关键方法上打断点，跑一次完整问答流程，跟着调用链走下去。比如在检索入口打断点，看多路检索怎么并行、后处理器链怎么串起来，比读代码直观得多
+
+- **AI 辅助理解** ：遇到看不懂的模块，直接把代码贴给 AI 工具。比如把熔断器的状态转换逻辑贴进去，让它解释状态流转条件。Cursor、Claude Code、Codex 都行，选顺手的
+
+- **小范围改代码验证** ：理解某个模块后做些小改动验证。比如改检索的 `topK` 看效果变化，或者在后处理器链里加个自定义节点，比从零写更能锻炼对架构的理解
+
+## 学习路线
+
+整体节奏： **补基础概念 → 跑通系统 → 带着问题深入模块代码** 。
+
+![无法获取该图片](https://oss.open8gu.com/iShot_2026-03-17_10.28.66.jpg "无法获取该图片")
+
+### 第一步：掌握 AI 基础知识
+
+如果之前没接触过 RAG 相关技术，先把基础篇过一遍。每篇都从零开始讲，不需要 AI 背景知识，并且附带完整可运行的 Java 代码示例。
+
+| 顺序 | 文档 | 核心收获 |
+| --- | --- | --- |
+| 1 | 什么是 RAG？ | 核心六步流程，准备阶段和运行阶段各做什么 |
+| 2 | 大模型基础 LLM | Token、上下文窗口、Temperature 等核心概念，主流模型选型 |
+| 3 | 模型调用 API | OpenAI 兼容协议的请求响应格式，流式与非流式调用 |
+| 4 | Prompt 工程 | 五要素框架，RAG 场景下怎么写 Prompt 才不容易出幻觉 |
+| 5 | 数据分块 Chunk | 为什么要分块，五种分块策略各自适合什么场景 |
+| 6 | 元数据管理 Metadata | 元数据在检索过滤、答案溯源中的作用 |
+| 7 | 向量化 Embedding | 文本怎么变成向量，余弦相似度怎么算 |
+| 8 | 向量数据库 VectorDatabase | Milvus 核心概念，IVF 和 HNSW 两种索引算法 |
+| 9 | 检索策略 RetrievalStrategy | BM25、混合检索、RRF 融合、Reranking 重排序 |
+| 10 | 生成策略 GenerationStrategy | 三段式 Prompt 结构，幻觉抑制，引用对齐 |
+| 11 | 函数调用 FunctionCall | Function Call 的本质和完整流程 |
+| 12 | MCP 协议 | MCP 三层架构，工具调用的标准化方案 |
+| 13 | 会话记忆 ConversationMemory | 五种记忆策略，Token 预算分配 |
+| 14 | Query 改写 QueryRewrite | 指代消解、上下文补全、口语化转正式 |
+| 15 | 意图识别与问题路由 IntentRouting | 四种意图类型，规则 + 大模型的混合分类方案 |
+| 16 | 评估与优化 Evaluation | 分层评估指标，LLM-as-Judge 自动评测 |
+
+不用急着一口气读完，跟着跑一遍代码示例效果更好。
+
+### 第二步：跑通一次完整问答
+
+基础概念到位后，按快速启动文档把系统跑起来。目标很简单： **至少完成一次从用户输入到系统返回答案的完整问答** 。
+
+跑通后在管理后台熟悉一下各功能：
+
+- 知识库管理：文档怎么上传和入库
+
+- 意图树：怎么配置
+
+- 链路追踪：一次问答经过哪些环节、每个环节耗时
+
+这一步不需要看代码，纯粹建立宏观认知——系统长什么样、有哪些功能、完整流程是什么。有这个整体感觉，后面深入代码才不会迷路。
+
+### 第三步：跟着实战章节 Debug 代码
+
+接下来深入代码。实战章节每篇聚焦一个模块，讲清设计思路和关键实现，跟着文档 Debug 即可掌握。
+
+已发布和规划中的内容：
+
+**知识库模块** —— 文档从上传到可检索的完整流程
+
+- 知识库系统宏观设计
+
+- 文件上传的限流策略和内存控制
+
+- 文档上传、分块、同步的接口实现
+
+- 定时同步的调度引擎与故障恢复
+
+**本地大模型** —— 为什么需要本地部署、怎么接入
+
+- 为什么要本地部署大模型
+
+- Ollama 核心概念与架构
+
+- Ollama 安装与模型调用实战
+
+**大模型调度引擎** —— 核心基础设施，模型路由、容错、流式处理
+
+- AI 基础设施层宏观设计
+
+- 多模型路由与智能选择
+
+- 三态熔断器与故障转移
+
+- Chat 同步调用与模板方法
+
+- SSE 流式解析与异步执行
+
+- 流式路由的首包探测机制
+
+- Embedding 向量化客户端
+
+- Rerank 重排序与辅助工具
+
+**SSE 系列** —— 流式响应的协议和工程实现
+
+- SSE 协议与流式响应
+
+- Spring Boot SSE 服务端实战
+
+**MCP 系列** —— 工具调用的协议规范和架构设计
+
+- JSON-RPC 2.0 标准说明
+
+- 工具调用架构设计指南
+
+- 工具调用稳定性与安全保障
+
+等等。
+
+每篇文章都会标明在哪个类打断点、跟着什么链路走、关注哪些关键逻辑。Debug 时结合文档一起看，比单独看代码或单独看文档都高效。
+
+## 怎么算学透了？
+
+不是每行代码看过就算学透，关键是能回答以下问题，并且知道对应代码在哪里。
+
+### 1\. RAG 核心链路
+
+主链路是系统骨架。入口 `RAGChatServiceImpl#streamChat` ，一个用户问题进来后经过七个环节： **记忆加载 → 改写拆分 → 意图解析 → 歧义引导 → 检索（KB + MCP）→ Prompt 组装 → 流式输出** 。
+
+需要搞清楚的问题：
+
+**改写和拆分是怎么一起做的？**
+
+`MultiQuestionRewriteService` 先做术语归一化（如缩写还原全称），再调一次 LLM 同时完成改写和多问句拆分，输出 `RewriteResult` 包含改写后的完整问题和子问题列表。LLM 调用失败时，用归一化后的问题 + 规则拆分兜底，不中断链路。
+
+**意图识别怎么处理多子问题？**
+
+`IntentResolver#resolve` 把每个子问题并行提交到 `intentClassifyExecutor` 线程池做意图分类。当子问题过多、意图总数超上限时，有一套截断策略——每个子问题至少保留一个最高分意图，剩余配额按分数从高到低分配。
+
+**歧义引导插在哪个环节？**
+
+在意图识别之后、检索之前。 `IntentGuidanceService#detectAmbiguity` 判断问题是否模糊，需要引导澄清时直接返回引导话术，跳过后续检索和生成。
+
+**改写后的问题和原始问题分别用在哪？**
+
+检索和 Prompt 组装用改写后的问题（语义更精准），会话记忆里存的是用户原始输入。
+
+### 2\. 多路检索引擎
+
+检索是最容易出效果问题的环节。分两层： `RetrievalEngine` 做顶层编排， `MultiChannelRetrievalEngine` 做通道级并行。
+
+**两个检索通道各自做什么？**
+
+`IntentDirectedSearchChannel` 根据意图识别结果做定向检索，只在命中意图关联的知识库范围内搜索； `VectorGlobalSearchChannel` 做全局向量检索，不限定范围。两个通道通过 `CompletableFuture` 并行执行，提交到专用的 `ragRetrievalExecutor` 线程池。
+
+**通道结果怎么合并？**
+
+两个通道的 `SearchChannelResult` 合并成一个 Chunk 列表，依次经过后处理器链： `DeduplicationPostProcessor` 按内容哈希去重， `RerankPostProcessor` 调 Reranker 模型精排序。执行顺序由 `getOrder()` 决定，某个处理器失败不中断整条链。
+
+**KB 检索和 MCP 工具调用怎么并行？**
+
+`RetrievalEngine#retrieve` 把每个子问题的 KB 检索和 MCP 调用分开。KB 走多通道检索引擎，MCP 走 `executeMcpTools` 并行调用多个工具，结果合并成 `RetrievalContext` ，分别填充到 Prompt 的不同区域。
+
+**`topK` 怎么动态确定？**
+
+不是简单的全局配置。 `resolveSubQuestionTopK` 先看意图节点上有没有节点级 `topK` ，多个意图节点都配了则取最大值；没有节点级配置才回退到全局默认值。
+
+### 3\. 模型路由与容错
+
+大模型 API 不稳定是常态， `infra-ai` 层做了一整套路由和容错机制。代码量不大，但并发控制细节密集。
+
+**同步调用的容错怎么做？**
+
+`ModelRoutingExecutor#executeWithFallback` 遍历候选模型列表依次尝试。每次调用前先问 `ModelHealthStore#allowCall` 模型是否可用，成功标记 `markSuccess` ，失败标记 `markFailure` 。全部失败才抛异常。
+
+**三态熔断器的状态转换条件？**
+
+`ModelHealthStore` 用 `ConcurrentHashMap` + `compute` 保证线程安全。 `CLOSED` 状态连续失败次数达 `failureThreshold` 切到 `OPEN` ； `OPEN` 到冷却时间（ `openDurationMs` ）自动切到 `HALF_OPEN` ； `HALF_OPEN` 只放一个请求（ `halfOpenInFlight` 标志位），成功回 `CLOSED` ，失败回 `OPEN` 。
+
+**流式调用的首包探测怎么做？**
+
+这是容错机制里最难的部分。 `RoutingLLMService#streamChat` 不能等完整响应再判断成败——连接建立但迟迟没内容也算失败。 `ProbeStreamBridge` 拦截在真正的 `StreamCallback` 前面，用 `CompletableFuture` 阻塞等首包。首包到了才算成功，超时或报错就取消当前连接、切下一个模型。首包到达前所有回调缓冲在 `buffer` 列表里，确认成功后 `commit` 批量回放给下游，用 `synchronized` + `volatile committed` 保证线程安全和可见性。
+
+### 4\. 会话记忆管理
+
+多轮对话的记忆管理要在 Token 成本、响应速度和上下文质量之间做平衡。
+
+**记忆加载的并行优化怎么做？**
+
+`DefaultConversationMemoryService#load` 并行加载摘要和历史记录（两个 `CompletableFuture` ），合并时摘要插在历史记录前面。摘要加载失败不阻塞整个流程，只跳过摘要。
+
+**摘要压缩的触发时机？**
+
+每次 `append` 新消息后， `ConversationMemorySummaryService#compressIfNeeded` 检查历史轮数是否超阈值，超过则异步触发摘要生成（提交到 `memorySummaryExecutor` 线程池），把早期对话压缩成一条摘要消息。
+
+**改写阶段怎么使用历史记录？**
+
+`MultiQuestionRewriteService#buildRewriteRequest` 从历史记录中过滤掉 System 摘要消息（避免浪费 Token），只保留最近 x 轮的 User 和 Assistant 消息拼到改写 Prompt 里。这样改写模型能理解上下文，把“那它的保修期呢”改写成“iPhone 16 Pro 的保修期是多久”。
+
+### 5\. 文档入库流水线
+
+文档从上传到可检索要经过完整流水线。 `IngestionEngine` 是执行引擎，基于节点连线的链式执行模型。
+
+**流水线的节点编排怎么实现？**
+
+`PipelineDefinition` 定义节点列表，每个 `NodeConfig` 有 `nodeId` 、 `nodeType` 、 `nextNodeId` 和可选 `condition` 。引擎启动时先通过路径追踪检测环，再找到起始节点（未被任何节点引用），然后链式执行。
+
+**节点执行失败怎么办？**
+
+失败中断整条流水线，状态置为 `FAILED` 并记录错误信息。每个节点的执行结果（耗时、输入输出、成功/失败）写入 `NodeLog` ，方便排查。
+
+**条件节点怎么跳过？**
+
+`NodeConfig` 可配置 `condition` ， `ConditionEvaluator` 执行前评估，不满足则跳过该节点直接走 `nextNodeId` 。
+
+**不同文档抓取方式怎么扩展？**
+
+`DocumentFetcher` 是策略接口，已有 `S3Fetcher` （对象存储）、 `LocalFileFetcher` （本地文件）、 `HttpUrlFetcher` （网页）、 `FeishuFetcher` （飞书文档）四种实现。新增抓取方式实现该接口即可。
+
+**分块策略怎么选？**
+
+`ChunkingStrategy` 是策略接口， `ChunkingStrategyFactory` 根据配置选择具体实现。不同文档类型适合不同策略，基础篇的数据分块章节有详细讲解。
+
+### 6\. MCP 工具调用
+
+知识检索和业务系统调用融合在同一套流程里，这是 Ragent AI 区别于简单 RAG 系统的地方。
+
+**知识检索和工具调用怎么在同一次问答中并存？**
+
+意图识别阶段给每个子问题打上 `IntentKind` —— `KB` （知识库检索）或 `MCP` （工具调用）。 `RetrievalEngine#buildSubQuestionContext` 按类型分别走不同路径，KB 走多通道检索，MCP 走工具执行，结果分别放入 `kbContext` 和 `mcpContext` ，最终都拼到 Prompt 里。
+
+**MCP 工具的参数怎么提取？**
+
+`MCPParameterExtractor` 根据工具定义（ `MCPTool` ）里声明的参数 Schema，用 LLM 从用户问题中提取参数。意图节点上还可配置 `paramPromptTemplate` 自定义提取提示词。
+
+**MCP 工具的注册和发现机制？**
+
+`MCPToolRegistry` 管理所有已注册的工具执行器（ `MCPToolExecutor` ），按 `toolId` 查找。工具定义遵循 JSON-RPC 2.0 协议，每个执行器实现 `execute` 方法处理请求并返回 `MCPResponse` 。
+
+### 7\. 分布式排队限流
+
+大模型 API 并发能力有限，不做限流会被打崩。 `ChatQueueLimiter` 实现了基于 Redis 的跨实例排队机制，是系统里并发控制最复杂的一块。
+
+**三个 Redis 数据结构各自的职责？**
+
+`RPermitExpirableSemaphore` 控制全局并发上限； `RScoredSortedSet` （ZSET）维护等待队列，score 是自增序列号保证 FIFO； `RTopic` （Pub/Sub）在 permit 释放时通知所有实例的等待者。
+
+**排队核心流程？**
+
+请求进来先尝试直接获取 permit，拿到就执行；拿不到就加入 ZSET 队列，启动定时轮询（ `scheduleAtFixedRate` ）。轮询时先用 Lua 脚本原子判断是否排到队首（ `claimIfReady` ），再尝试获取 permit。拿到 permit 后提交到 `chatEntryExecutor` 线程池执行。
+
+**为什么需要 Lua 脚本？**
+
+排队位置检查和出队必须原子操作。两步操作（先查排名再删除）在高并发下会出现多个请求同时认为自己排到队首的问题。
+
+**资源泄漏怎么防？**
+
+`SseEmitter` 的 `onCompletion` 、 `onTimeout` 、 `onError` 三个回调都注册了 `releaseOnce` ，用 `AtomicBoolean` + `AtomicReference` 保证 permit 只释放一次。 `PollNotifier` 内部有定时清理，5 分钟没轮询的注册者自动移除。
+
+**排队超时怎么处理？**
+
+超过 `globalMaxWaitSeconds` 后请求从队列移除，记录一条被拒绝的对话记录（用户消息 + 拒绝回复），通过 SSE 推送拒绝事件给前端。
+
+### 8\. 全链路追踪
+
+> 注意，如果学习时间比较紧，本章节可忽略。属于增强式功能，不在核心链路中。
+
+系统有 9 个专用线程池（MCP 批处理、RAG 上下文处理、RAG 通道检索、RAG 内部检索、意图分类、记忆摘要、模型流式输出、SSE 排队入口、知识库文档分块），一个请求可能跨越多个线程池，上下文不丢是实际工程问题。
+
+**Trace 上下文怎么跨线程透传？**
+
+`RagTraceContext` 用阿里 TTL（ `TransmittableThreadLocal` ）存储 `traceId` 、 `taskId` 和节点栈。所有线程池通过 `TtlExecutors.getTtlExecutor()` 包装，任务提交时 TTL 自动把父线程上下文拷贝到子线程。漏了这层包装，子线程取到的 `traceId` 就是 `null` 。
+
+**`@RagTraceNode` 注解做了什么？**
+
+AOP 切面注解，标记在关键方法上（改写、意图识别、检索、LLM 路由等）。切面在方法执行前 `pushNode` 、执行后 `popNode` ，形成调用栈结构，配合耗时记录，可在管理后台看到完整调用链路和每个环节的耗时分布。
+
+**Trace 记录的生命周期？**
+
+`ChatRateLimitAspect` 负责创建和收尾。排队获得 permit 后、执行 `streamChat` 前，生成 `traceId` 和 `taskId` ，写入 `RUNNING` 状态的 Trace Run 记录；执行完成后更新为 `SUCCESS` 或 `ERROR` ，记录总耗时。中间各环节通过 `@RagTraceNode` 自动记录子节点。
+
+## 小结
+
+不需要一次性把所有模块搞定。挑最感兴趣或和工作最相关的 2-3 个模块先深入，把对应的问题搞清楚，能结合代码讲出设计思路和工程取舍，这个系统就算掌握了。剩下的模块用到时再补，有了前面的基础，上手会很快。
+
+![](data:image/png;base64,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)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524

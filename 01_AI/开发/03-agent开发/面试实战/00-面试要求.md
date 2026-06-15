@@ -1,0 +1,32 @@
+**必备技能（Must Have）：**
+
+- **Python**（断层第一，出现125次/101个岗位）
+- **LLM理解**：大语言模型原理、Prompt Engineering、Function Calling
+- **Agent框架**：LangChain / LangGraph / Dify / AutoGen / LlamaIndex
+- **RAG技术**：检索增强生成、向量数据库（Milvus/Pinecone/Weaviate）
+- **API设计**：RESTful API开发、第三方AI接口集成
+
+**加分技能（Nice to Have）：**
+
+- Go/TypeScript/Java（第二梯队编程语言）
+- MCP协议（Model Context Protocol，最新热点）
+- Multi-Agent协作系统
+- 容器化：Docker/K8s
+- 前端能力：React/Vue（全栈加分）
+- 模型微调：SFT/LoRA/RLHF
+- AI Coding工具：Cursor、Claude Code等
+
+**软性要求：**
+
+- 0→1 项目落地经验（极为看重）
+- 快速学习能力和技术前沿敏感度
+- 跨团队协作沟通能力
+- 业务理解力——能将模糊需求转化为技术方案
+
+1. **核心竞争力建议**：
+    
+    - 精通Python + 一个Agent框架（LangChain/LangGraph首选）
+    - 有1-2个完整的Agent项目落地案例（如企业知识库、智能客服、工作流自动化）
+    - 掌握RAG全链路（文档解析 → 语义分块 → 向量检索 → 答案生成）
+    - 了解MCP协议（当前最热趋势）
+    - 如有全栈能力（Python后端 + React/Vue前端），竞争力显著提升

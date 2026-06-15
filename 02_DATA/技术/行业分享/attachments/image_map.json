@@ -1,0 +1,10 @@
+[
+  {
+    "index": 0,
+    "type": "drawio",
+    "filename": "fig_1.png",
+    "title": "",
+    "match_text": "```mermaid\n %% convert from drawio: https://km.sankuai.com/api/file/cdn/2707392456/156705088798?&isNewContent=false&contentType=0 \ngraph TD;\n    node_0\n    node_1\n    node_2\n    node_3\n    node_4\n    node_5\n    node_6\n    node_7\n    node_8\n    node_9\n    node_10((\"节点10\"))\n    node_11((\"节点11\"))\n    node_12((\"节点12\"))\n    node_13((\"构建企业级的一致性维度表，用于描述业务中的实体\"))\n    node_14((\"节点14\"))\n```",
+    "cdn_id": "156705088798"
+  }
+]

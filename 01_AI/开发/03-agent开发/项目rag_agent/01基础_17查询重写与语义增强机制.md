@@ -1,0 +1,590 @@
+---
+title: "《AI大模型Ragent项目》——查询重写与语义增强机制"
+source: "https://articles.zsxq.com/id_q10oxjrq6oww.html"
+author:
+  - "[[马丁]]"
+published:
+created: 2026-06-05
+description:
+tags:
+  - "clippings"
+---
+[来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
+
+上一篇讲了会话记忆，你的 RAG 系统终于能知道之前聊了什么了。用户先问“iPhone 16 Pro 的退货政策是什么”，再追问“那它的保修期呢”，模型看到了完整的对话历史，知道“它”指的是 iPhone 16 Pro，回答没问题。
+
+但别高兴得太早。
+
+RAG 系统在回答之前，要先去向量数据库检索相关的 chunk。检索系统拿到的 query 是什么？是用户的原始问题——那它的保修期呢。
+
+“它”这个字对检索系统来说没有任何语义信息。向量化之后，“那它的保修期呢”和“iPhone 16 Pro 保修期”的向量距离可能相差甚远。检索召回的结果大概率不是你想要的——可能是“笔记本电脑保修政策”“家电延保服务”这些不相关的内容。
+
+问题出在哪？ **模型有记忆，但检索系统没有** 。
+
+解法其实很直接：在检索之前，先把“那它的保修期呢”改写成“iPhone 16 Pro 的保修期”，再拿去检索。这就是今天要讲的 Query 改写（Query Rewrite）。
+
+## 检索系统的"失忆"问题
+
+### 1\. 模型有记忆，但检索没有
+
+用一张图来看看问题出在哪。
+
+**没有Query改写的流程** ——检索用的是原始 query，召回结果不相关：
+
+![无法获取该图片](https://oss.open8gu.com/iShot_2026-03-06_10.13.17.png "无法获取该图片")
+
+**加入Query改写的流程** ——先改写再检索，召回精准：
+
+区别就在中间多了一步 Query 改写。这一步把用户含糊的追问转化成了一个清晰、完整、独立的检索查询。
+
+### 2\. 不只是“它”的问题
+
+指代消解（把“它”替换成具体实体）是最常被提到的改写场景，但 Query 改写要解决的问题远不止这个。
+
+看几个电商客服场景下的典型问题：
+
+**省略上下文**
+
+用户在聊了几轮 iPhone 16 Pro 之后，突然问“还有别的颜色吗？”。别的颜色是什么产品的？检索系统不知道。如果直接拿“还有别的颜色吗”去检索，可能召回所有产品的颜色信息，而不是 iPhone 16 Pro 的。
+
+**口语化表达**
+
+用户说“东西坏了咋整？”。知识库里的文档标题大概率是产品故障维修流程或售后服务指南，不会写东西坏了咋整。口语化的 query 和正式文档之间存在语义鸿沟，检索效果打折扣。
+
+**多意图混合**
+
+用户问“退货流程是什么，运费谁承担？”。这一句话里其实包含两个独立的问题：退货流程和运费承担方。一次检索很难同时命中两个主题的 chunk。
+
+**模糊描述**
+
+用户说“那个很贵的手机”。哪个？多少钱算贵？检索系统没有上下文，无法理解这种模糊描述。
+
+这些问题的共同点是： **用户的原始query对检索系统不够友好** 。Query 改写要做的事情，就是在检索之前把原始 query 转化为一个独立的、完整的、对检索系统友好的查询。
+
+## Query 改写的五种策略
+
+### 1\. 指代消解（Coreference Resolution）
+
+指代消解，说白了就是把代词替换成它指代的具体实体。这是多轮对话中最高频的改写场景。
+
+常见的代词和指代表达：
+
+| 代词 / 指代表达 | 示例 | 改写结果 |
+| --- | --- | --- |
+| 它、它的 | 那它的保修期呢？ | iPhone 16 Pro 的保修期 |
+| 这个、那个 | 这个支持分期吗？ | iPhone 16 Pro 支持分期吗？ |
+| 上面说的 | 上面说的退货条件再详细说说 | iPhone 16 Pro 拆封后退货条件的详细说明 |
+| 同样的问题 | 另一款也是这样吗？ | iPhone 16 Plus 的退货政策和 iPhone 16 Pro 一样吗？ |
+
+指代消解的关键在于： **你必须结合对话历史才能确定代词指的是什么** 。脱离了对话历史，“它”可以是任何东西。
+
+需要注意一个边界情况：有时候“它”的指代并不明确。比如用户前面同时聊了 iPhone 16 Pro 和 AirPods Pro，然后问“它的保修期呢”，“它”到底指哪个？这种情况下，改写模型需要根据最近的上下文做判断——通常取最近一次被提到的实体。
+
+### 2\. 上下文补全（Context Completion）
+
+人在多轮对话中会自然地省略信息，因为他觉得对方应该知道上下文。但检索系统不知道。
+
+| 原始 query | 省略了什么 | 改写结果 |
+| --- | --- | --- |
+| 还有别的颜色吗？ | 什么产品的颜色 | iPhone 16 Pro 还有其他颜色可选吗？ |
+| 价格呢？ | 什么东西的价格 | iPhone 16 Pro 256GB 白色钛金属的价格是多少？ |
+| 能退吗？ | 什么产品、什么情况下退 | iPhone 16 Pro 拆封后能退货吗？ |
+| 多久能到？ | 什么产品发货到哪里 | iPhone 16 Pro 下单后多久能送到？ |
+
+上下文补全和指代消解经常同时出现。“价格呢”既省略了产品名（上下文补全），又省略了主语（可以理解为“它的价格呢”，指代消解）。实际改写时，大模型会一并处理，不需要你单独区分。
+
+### 3\. 口语化转正式（Colloquial to Formal）
+
+用户的提问方式和知识库里的文档写法通常差异很大。用户说人话，文档写书面语。
+
+| 口语 query | 知识库中的正式表达 | 改写结果 |
+| --- | --- | --- |
+| 东西坏了咋整 | 产品故障报修流程 | 产品故障后的维修和报修流程 |
+| 快递咋还没到 | 订单物流查询 / 发货时效 | 订单发货后物流状态查询 |
+| 能不能便宜点 | 优惠活动 / 促销政策 / 折扣信息 | 当前可用的优惠活动和折扣信息 |
+| 买贵了能补差价不 | 价格保护政策 | 商品降价后是否支持差价补偿 |
+
+这种改写有一个特点： **不依赖对话历史** 。即使是第一轮对话，口语化的 query 也需要转化成更正式的表达。所以口语化转正式其实在单轮对话的 RAG 中也有价值。
+
+不过要注意，口语化转正式不是“翻译”，而是“意图提取”。“能不能便宜点”的意图不是字面上的“降低价格”，而是“查询有没有优惠”。改写模型需要理解用户的真实意图。
+
+### 4\. 多意图拆分（Intent Decomposition）
+
+用户有时候一句话里包含多个问题：
+
+- 退货流程是什么，运费谁承担？→ 两个独立意图
+
+- iPhone 16 Pro 和 iPhone 16 Plus 有什么区别？→ 一个对比意图，不需要拆
+
+- 我想退货，另外帮我查一下保修期→ 两个完全不相关的意图
+
+拆分后，每个子查询分别去检索，各自召回最相关的 chunk，合并后再生成答案。
+
+> 不是所有长 query 都需要拆。“iPhone 16 Pro 的价格和颜色”虽然问了两个方面，但通常在同一个产品介绍 chunk 里就能找到，不需要拆成两次检索。拆分的判断标准是：两个意图是否可能分布在不同的 chunk 里。
+
+多意图拆分的实现复杂度比前面几种策略高，而且拆分后每个子查询都要走一遍检索流程，成本翻倍。在实际项目中，如果业务场景下多意图问题不多，可以先不实现这个策略。
+
+### 5\. 关键词扩展（Keyword Expansion）
+
+关键词扩展是补充同义词和相关术语，提高检索的召回率。
+
+| 原始 query | 扩展后 |
+| --- | --- |
+| 七天无理由退货 | 七天无理由退货 退换货政策 无条件退款 退货期限 |
+| 屏幕碎了 | 屏幕碎裂 屏幕破损 屏幕维修 碎屏险 |
+| 充不进去电 | 无法充电 充电故障 充电接口问题 电池问题 |
+
+这种改写主要对\*\*关键词检索（BM25）\*\*有帮助——BM25 是按词匹配的，同义词扩展能提高命中率。对向量检索来说，帮助有限，因为向量检索本身就能理解语义相似性（屏幕碎了和屏幕破损的向量已经很接近了）。
+
+如果你的 RAG 系统用的是混合检索（向量 + BM25），关键词扩展在 BM25 那一路上会有明显提升。
+
+### 6\. 五种策略对比
+
+| 策略 | 解决的问题 | 依赖对话历史 | 实现复杂度 | 对检索的影响 | 适用场景 |
+| --- | --- | --- | --- | --- | --- |
+| 指代消解 | 代词无法检索 | 是 | 低 | 必需，否则检索失败 | 多轮对话（最常用） |
+| 上下文补全 | 省略信息无法检索 | 是 | 低 | 必需，否则检索不精准 | 多轮对话 |
+| 口语化转正式 | 口语与文档的语义鸿沟 | 否 | 中 | 有提升，尤其对 BM25 | 单轮 + 多轮 |
+| 多意图拆分 | 一次检索无法覆盖多个意图 | 否 | 高 | 有提升，但成本翻倍 | 复杂咨询场景 |
+| 关键词扩展 | 同义词不匹配 | 否 | 低 | 对 BM25 有帮助 | 混合检索场景 |
+
+> 实际项目中，指代消解和上下文补全是必做的（不做的话多轮对话检索基本不可用）。口语化转正式建议做（投入产出比高）。多意图拆分和关键词扩展根据业务需要决定。
+
+## 用大模型做 Query 改写
+
+前面讲了五种改写策略，但在实际实现中，你不需要为每种策略单独写一套规则。用大模型做改写，一个 Prompt 就能覆盖大部分场景——指代消解、上下文补全、口语化转正式，大模型一次性搞定。
+
+### 1\. 改写 Prompt 的设计
+
+#### 1.1 基础版改写 Prompt
+
+这个 Prompt 适合大多数场景，简单直接：
+
+```
+你是一个查询改写助手。根据对话历史和用户的最新问题，将问题改写为一个独立的、完整的检索查询。
+
+要求：
+1. 如果最新问题中包含代词（它、这个、那个等）或省略了关键信息，请结合对话历史补全
+2. 如果问题已经足够完整清晰，请原样输出，不要画蛇添足
+3. 只输出改写后的查询，不要输出任何解释、前缀或多余内容
+4. 改写后的查询应该是一个独立的句子，不依赖对话历史也能理解
+
+对话历史：
+{history}
+
+用户最新问题：{query}
+
+改写后的查询：
+```
+
+看几个改写效果：
+
+| 对话历史 | 原始 query | 改写结果 |
+| --- | --- | --- |
+| 用户问了 iPhone 16 Pro 退货政策 | 那它的保修期呢？ | iPhone 16 Pro 的保修期是多久？ |
+| 用户在聊 AirPods Pro 的颜色 | 价格呢？ | AirPods Pro 的价格是多少？ |
+| 无历史（第一轮） | 东西坏了咋整？ | 产品故障后的维修流程 |
+| 用户在聊 iPhone 16 Pro | 还有别的吗？ | iPhone 16 Pro 还有其他配置或颜色可选吗？ |
+
+基础版 Prompt 能很好地处理指代消解和上下文补全，对口语化转正式也有一定效果。
+
+#### 1.2 进阶版改写 Prompt
+
+如果你的业务场景需要支持多意图拆分，可以用进阶版 Prompt。输出格式改为 JSON，方便程序解析：
+
+```
+你是一个查询改写助手。根据对话历史和用户的最新问题，将问题改写为适合检索的查询。
+
+要求：
+1. 补全代词和省略的上下文信息
+2. 将口语化表达转化为更正式、更适合检索的表达
+3. 如果问题包含多个独立意图，拆分为多个子查询
+4. 如果问题已经完整清晰且只有一个意图，只输出一个查询
+5. 以 JSON 格式输出，格式为：{"queries": ["查询1", "查询2"]}
+6. 不要输出 JSON 以外的任何内容
+
+对话历史：
+{history}
+
+用户最新问题：{query}
+```
+
+进阶版的输出示例：
+
+| 原始 query | 输出 JSON |
+| --- | --- |
+| 那它的保修期呢？ | `{"queries": ["iPhone 16 Pro 的保修期是多久"]}` |
+| 退货流程和运费谁承担？ | `{"queries": ["退货流程是什么", "退货运费由谁承担"]}` |
+| 东西坏了咋整？ | `{"queries": ["产品故障后的维修和报修流程"]}` |
+
+> 基础版够用就用基础版。进阶版虽然功能更强，但 JSON 解析增加了复杂度，模型偶尔也会输出格式不规范的 JSON。除非你的业务确实有多意图拆分的需求，否则基础版是更稳的选择。
+
+### 2\. 改写效果的好坏取决于什么
+
+改写质量受几个因素影响：
+
+**对话历史的质量** ：如果对话历史被摘要压缩得太狠，关键实体可能已经丢了。比如摘要里只写了“客户咨询手机售后”，没有提到具体型号，改写时就无法把“它”替换成具体产品名。所以会话记忆的摘要质量直接影响改写质量。
+
+**Prompt的设计** ：Prompt 里的规则要明确——什么时候改写、什么时候原样输出。如果 Prompt 没有说“已经完整的 query 不需要改写”，模型可能会画蛇添足，把一个本来就很好的 query 改得面目全非。
+
+**模型的能力** ：小模型在复杂指代消解（多个实体交替出现）和口语化理解上可能不够准确。改写任务对模型要求不高，Qwen2.5-7B-Instruct 级别的模型就能胜任大部分场景。
+
+常见的改写失败案例：
+
+| 失败类型 | 原始 query | 错误改写 | 问题原因 |
+| --- | --- | --- | --- |
+| 过度改写 | 它多少钱？ | iPhone 16 Pro 256GB 沙漠色钛金属版在京东平台的售价是多少？ | 用户没提过平台和颜色，模型自己加的 |
+| 改写不足 | 那个也是这个价吗？ | 那个也是这个价吗？ | “那个”和“这个”都没有替换 |
+| 偏离原意 | 能不能便宜点？ | 如何投诉商品定价过高？ | 用户想问优惠，不是投诉 |
+
+遇到这类问题，通常通过调整 Prompt 来解决。比如加一条“不要添加用户没有提到的信息”可以抑制过度改写。
+
+### 3\. 改写的成本与时机
+
+每次 Query 改写都要调一次大模型 API，增加大约 200~500ms 的延迟和一小笔 Token 费用。虽然单次成本不高，但并不是每次请求都需要改写。
+
+**什么时候可以跳过改写** ：
+
+- **第一轮对话** ：没有对话历史，不存在指代消解和上下文补全的需求。如果 query 本身够完整（iPhone 16 Pro 的退货政策是什么），直接检索就行
+
+- **query本身已经完整** ：用户的问题明确包含了主体、动作和对象，不包含代词和省略
+
+**什么时候必须改写** ：
+
+- query 包含代词：它、这个、那个、上面的
+
+- query 很短且缺少主体：还有吗？多少钱？怎么办？
+
+- 多轮对话中的追问（非第一轮）
+
+可以用一个简单的规则做预判断，减少不必要的 API 调用：
+
+```
+/**
+ * 判断是否需要 Query 改写
+ */
+public boolean needsRewrite(String query, List<Message> history) {
+    // 第一轮对话且 query 足够长，大概率不需要改写
+    if (history.isEmpty() && query.length() > 15) {
+        return false;
+    }
+    // 包含代词，需要改写
+    if (query.matches(".*[它它的这个那个这些那些上面].+")) {
+        return true;
+    }
+    // query 太短，大概率省略了上下文
+    if (query.length() < 10 && !history.isEmpty()) {
+        return true;
+    }
+    // 有对话历史的情况下，默认都改写（安全起见）
+    return !history.isEmpty();
+}
+```
+
+> 实际项目中，更稳的做法是：有对话历史就一律改写。改写 API 用小模型（如 Qwen2.5-7B-Instruct），成本很低，但可以避免因为规则没覆盖到而漏改的情况。
+
+## Java 实战：Query 改写的实现与效果
+
+### 1\. 基础改写器实现
+
+下面是一个完整可运行的 Query 改写器，基于 Java + OkHttp 调用 SiliconFlow API：
+
+```
+public class QueryRewriter {
+
+    private static final String API_URL = "https://api.siliconflow.cn/v1/chat/completions";
+    private static final String API_KEY = "you api key";
+    // 改写用小模型就够了，成本低、速度快
+    private static final String MODEL = "Qwen/Qwen2.5-7B-Instruct";
+    private static final OkHttpClient client = new OkHttpClient();
+    private static final Gson gson = new Gson();
+
+    /**
+     * 改写 Prompt 模板
+     */
+    private static final String REWRITE_PROMPT = """
+            你是一个查询改写助手。根据对话历史和用户的最新问题，\
+            将问题改写为一个独立的、完整的检索查询。
+            
+            要求：
+            1. 如果最新问题中包含代词（它、这个、那个等）或省略了关键信息，\
+            请结合对话历史补全
+            2. 如果问题已经足够完整清晰，请原样输出，不要画蛇添足
+            3. 不要添加用户没有提到的信息
+            4. 只输出改写后的查询，不要输出任何解释、前缀或多余内容
+            5. 改写后的查询应该是一个独立的句子，脱离对话历史也能理解
+            
+            对话历史：
+            %s
+            
+            用户最新问题：%s
+            
+            改写后的查询：""";
+
+    /**
+     * 执行 Query 改写
+     *
+     * @param history      对话历史（role + content 的列表）
+     * @param currentQuery 用户当前问题
+     * @return 改写后的查询
+     */
+    public static String rewrite(List<Message> history,
+                                 String currentQuery) throws IOException {
+        // 构建对话历史文本
+        StringBuilder historyText = new StringBuilder();
+        if (history.isEmpty()) {
+            historyText.append("（无历史对话）");
+        } else {
+            for (Message msg : history) {
+                String roleName = "user".equals(msg.role) ? "用户" : "助手";
+                historyText.append(roleName).append("：")
+                        .append(msg.content).append("\n");
+            }
+        }
+
+        // 构建改写请求
+        JsonObject body = getJsonObject(currentQuery, historyText);
+
+        Request request = new Request.Builder()
+                .url(API_URL)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
+                .post(RequestBody.create(body.toString(),
+                        MediaType.parse("application/json")))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            assert response.body() != null;
+            String responseBody = response.body().string();
+            JsonObject json = gson.fromJson(responseBody, JsonObject.class);
+            return json.getAsJsonArray("choices")
+                    .get(0).getAsJsonObject()
+                    .getAsJsonObject("message")
+                    .get("content").getAsString().trim();
+        }
+    }
+
+    private static @NonNull JsonObject getJsonObject(String currentQuery, StringBuilder historyText) {
+        String prompt = String.format(REWRITE_PROMPT,
+                historyText.toString(), currentQuery);
+
+        JsonObject body = new JsonObject();
+        body.addProperty("model", MODEL);
+        body.addProperty("temperature", 0.1);
+        body.addProperty("max_tokens", 256);
+        JsonArray messages = new JsonArray();
+        JsonObject userMsg = new JsonObject();
+        userMsg.addProperty("role", "user");
+        userMsg.addProperty("content", prompt);
+        messages.add(userMsg);
+        body.add("messages", messages);
+        return body;
+    }
+
+    /**
+     * 简单的消息数据结构
+     */
+    public static class Message {
+        public String role;
+        public String content;
+
+        public Message(String role, String content) {
+            this.role = role;
+            this.content = content;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        // ===== 场景 1：指代消解 =====
+        System.out.println("===== 场景 1：指代消解 =====");
+        List<Message> history1 = List.of(
+                new Message("user", "iPhone 16 Pro 的退货政策是什么？"),
+                new Message("assistant",
+                        "iPhone 16 Pro 因屏幕定制工艺，拆封后不支持七天无理由退货。" +
+                                "如有质量问题，可联系售后处理。")
+        );
+        String rewritten1 = rewrite(history1, "那它的保修期呢？");
+        System.out.println("原始 query：那它的保修期呢？");
+        System.out.println("改写结果：" + rewritten1);
+
+        // ===== 场景 2：上下文补全 =====
+        System.out.println("\n===== 场景 2：上下文补全 =====");
+        List<Message> history2 = List.of(
+                new Message("user", "iPhone 16 Pro 有什么颜色？"),
+                new Message("assistant",
+                        "iPhone 16 Pro 有沙漠色钛金属、自然色钛金属、" +
+                                "白色钛金属和黑色钛金属四种颜色。")
+        );
+        String rewritten2 = rewrite(history2, "价格呢？");
+        System.out.println("原始 query：价格呢？");
+        System.out.println("改写结果：" + rewritten2);
+
+        // ===== 场景 3：口语化转正式 =====
+        System.out.println("\n===== 场景 3：口语化转正式 =====");
+        List<Message> history3 = List.of();  // 无历史，第一轮对话
+        String rewritten3 = rewrite(history3, "东西坏了咋整？");
+        System.out.println("原始 query：东西坏了咋整？");
+        System.out.println("改写结果：" + rewritten3);
+
+        // ===== 场景 4：已经完整的 query，不需要改写 =====
+        System.out.println("\n===== 场景 4：不需要改写 =====");
+        List<Message> history4 = List.of();
+        String rewritten4 = rewrite(history4,
+                "iPhone 16 Pro 的退货政策是什么？");
+        System.out.println("原始 query：iPhone 16 Pro 的退货政策是什么？");
+        System.out.println("改写结果：" + rewritten4);
+    }
+}
+```
+
+### 2\. 改写前后的效果对比
+
+运行结果（示意）：
+
+```
+===== 场景 1：指代消解 =====
+原始 query：那它的保修期呢？
+改写结果：iPhone 16 Pro 的保修期是多久？
+
+===== 场景 2：上下文补全 =====
+原始 query：价格呢？
+改写结果：iPhone 16 Pro 的价格是多少？
+
+===== 场景 3：口语化转正式 =====
+原始 query：东西坏了咋整？
+改写结果：东西坏了怎么修理？
+
+===== 场景 4：不需要改写 =====
+原始 query：iPhone 16 Pro 的退货政策是什么？
+改写结果：iPhone 16 Pro的退货政策是什么？
+```
+
+几个关键观察：
+
+- **场景1** ：代词“它”被成功替换成了 iPhone 16 Pro，检索系统现在能精准命中 iPhone 16 Pro 保修相关的 chunk
+
+- **场景2** ：省略的主体被补全了，“价格呢”不再是一个孤立的、无法检索的 query
+
+- **场景3** ：即使没有对话历史，口语化的表达也被转化成了更适合检索的正式表达
+
+- **场景4** ：query 本身已经完整清晰，模型原样输出，没有画蛇添足——这一点很重要，过度改写比不改写更危险
+
+### 3\. 改写在 RAG 流程中的位置
+
+把 Query 改写加入后，多轮对话 RAG 的完整流程是这样的：
+
+注意两个细节：
+
+- 1.
+	**检索用改写后的query，但Prompt里放的是用户原始问题** 。改写的目的是让检索更精准，不是改变用户的问题。模型生成答案时，应该针对用户的原始问题回答，而不是改写后的 query。保险点改写问题前后放进去也可以。
+
+- 2.
+	**Query改写在会话记忆读取之后、检索之前** 。这个位置很关键——改写需要对话历史作为输入，改写的结果用于检索
+
+## 生产环境的注意事项
+
+### 1\. 改写质量的监控
+
+Query 改写是一个容易默默出错的环节——改写结果不好，检索不到相关内容，模型给出一个兜底回答或者答非所问，用户可能只是觉得这个 AI 不够聪明，不会意识到是改写环节出了问题。
+
+建议记录每次改写的完整信息：
+
+```
+{
+    "session_id": "session-001",
+    "original_query": "那它的保修期呢？",
+    "rewritten_query": "iPhone 16 Pro 的保修期是多久？",
+    "history_length": 2,
+    "rewrite_latency_ms": 320,
+    "timestamp": "2025-03-07T10:30:00Z"
+}
+```
+
+定期抽检改写日志，关注几个指标：
+
+- **改写率** ：所有请求中触发了改写的比例。如果太低，可能是判断规则太严格，该改写的没改写
+
+- **过度改写率** ：人工标注后发现模型画蛇添足的比例。如果太高，需要调整 Prompt
+
+- **改写后检索提升率** ：对比改写前后的检索命中率（需要配合人工标注或自动化评测）
+
+### 2\. 改写失败的兜底
+
+改写 API 可能因为网络超时、模型服务不可用、返回格式异常等原因失败。这时候应该用原始 query 兜底，而不是报错。
+
+```
+public String safeRewrite(List<Message> history, String query) {
+    try {
+        String rewritten = rewrite(history, query);
+        // 基本校验：改写结果不能为空，不能太长
+        if (rewritten != null && !rewritten.isEmpty()
+                && rewritten.length() < 500) {
+            return rewritten;
+        }
+    } catch (Exception e) {
+        log.warn("Query 改写失败，使用原始 query: {}", e.getMessage());
+    }
+    return query;  // 兜底：返回原始 query
+}
+```
+
+> Query 改写是锦上添花，不是雪中送炭。即使改写失败，用原始 query 检索也能有一定的效果（只是精度可能差一些）。千万不要因为改写失败就让整个 RAG 流程挂掉。
+
+### 3\. 改写缓存
+
+同一个 session 内，用户可能重复提问或者问类似的问题。可以用一个简单的缓存避免重复调用改写 API：
+
+```
+// 缓存 key = sessionId + 原始 query 的哈希
+Map<String, String> rewriteCache = new ConcurrentHashMap<>();
+
+public String rewriteWithCache(String sessionId, List<Message> history,
+                                String query) throws IOException {
+    String cacheKey = sessionId + ":" + query.hashCode();
+    return rewriteCache.computeIfAbsent(cacheKey,
+            k -> {
+                try {
+                    return rewrite(history, query);
+                } catch (IOException e) {
+                    return query;
+                }
+            });
+}
+```
+
+注意：缓存的粒度要包含 sessionId，因为同样的 query 在不同的对话上下文中，改写结果可能不同。“价格呢？”在聊 iPhone 时改写成 iPhone 的价格，在聊 AirPods 时改写成 AirPods 的价格。
+
+## 小结与下一篇预告
+
+这篇讲了 Query 改写，核心要点回顾：
+
+- 1.
+	**检索系统的失忆问题** ：会话记忆让模型有了上下文理解能力，但检索系统拿到的还是用户的原始 query，包含代词和省略信息的 query 检索效果很差
+
+- 2.
+	**五种改写策略** ：指代消解（必做）、上下文补全（必做）、口语化转正式（推荐）、多意图拆分（按需）、关键词扩展（混合检索场景有用）
+
+- 3.
+	**用大模型做改写** ：一个 Prompt 覆盖大部分改写场景，用小模型即可，成本低延迟小
+
+- 4.
+	**Prompt设计是关键** ：要明确告诉模型不要画蛇添足，避免过度改写
+
+- 5.
+	**改写在RAG流程中的位置** ：会话记忆之后、检索之前。检索用改写后的 query，生成回答用用户原始问题
+
+结合前面几篇，多轮对话 RAG 的完整链路已经清晰了：
+
+到这里，RAG 系统已经具备了完整的多轮对话能力。但还有一个问题没有解决：用户发来一条消息，系统怎么知道应该去检索知识库，还是去调用工具，还是直接闲聊？
+
+比如用户说“今天天气怎么样”，这明显不是一个知识库检索的问题；用户说“帮我查一下我的年假余额”，这应该调 Function Call；用户说“iPhone 16 Pro 的退货政策是什么”，这才需要走 RAG 检索。
+
+下一篇咱们来聊 **意图识别与问题路由** ——让 RAG 系统在收到用户消息后，自动判断应该走哪条路：知识库检索、工具调用、还是直接对话，做出正确的路由决策。
+
+![](data:image/png;base64,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)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524

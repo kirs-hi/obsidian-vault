@@ -1,0 +1,10 @@
+/* 隐藏 Iconize 已设置图标的文件夹/文件的默认图标 */
+.nav-folder-title:has(.iconize-icon) .nav-folder-collapse-indicator,
+.nav-file-title:has(.iconize-icon) .nav-file-icon {
+  display: none;
+}
+
+.nav-folder-title:has(.iconize-icon) svg.svg-icon,
+.nav-file-title:has(.iconize-icon) svg.svg-icon {
+  display: none;
+}

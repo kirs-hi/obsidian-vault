@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "lastModified": 1776167645794,
+  "highlights": {
+    "highlight-361299730-3952": {
+      "text": "reducebykey等聚合类shuffle算子",
+      "position": 3952,
+      "created": 1776167645789,
+      "updated": 1776167645789,
+      "backgroundColor": "#ffeb3b",
+      "comments": [
+        {
+          "id": "comment-1776167645789-cij6n4e2c",
+          "content": "这段讲的是：**聚合类倾斜时，给 key 加随机前缀，把一个大 key 拆散成多个小 key 分布到多个 task 上，先局部聚合再全局合并**。\n\n---\n\n## 核心思路：两阶段聚合\n\n```\n原始数据 → 加随机前缀 → 局部聚合 → 去掉前缀 → 全局聚合 → 最终结果\n```\n\n---\n\n## 具体例子\n\n假设统计每个活动的点击次数，`activity_id = 'A001'` 有 **1000 万条**，其他活动只有几千条——严重倾斜。\n\n**不加前缀时**（倾斜）：\n\n| task | 处理的 key | 数据量 |\n|------|-----------|--------|\n| task-1 | A001 | **1000 万条** ⚠️ |\n| task-2 | A002 | 3000 条 |\n| task-3 | A003 | 5000 条 |\n\ntask-1 一个人扛了所有 A001 的数据。\n\n**加随机前缀后**（打散）：\n\n```sql\n-- 第一步：给 key 加 1~10000 的随机前缀，打散成 10000 份\nSELECT \n  concat(cast(ceiling(rand(1)*10000) as int), activity_id) AS activity_id,\n  count(1) AS cnt\nFROM t\nGROUP BY concat(cast(ceiling(rand(1)*10000) as int), activity_id)\n```\n\n原来的 `A001` 变成了 `1_A001`、`2_A001`、`3_A001`…`10000_A001`，1000 万条数据分散到 10000 个 task：\n\n| task | 处理的 key | 数据量 |\n|------|-----------|--------|\n| task-1 | 1_A001 | ~1000 条 ✅ |\n| task-2 | 2_A001 | ~1000 条 ✅ |\n| ... | ... | ... |\n| task-10000 | 10000_A001 | ~1000 条 ✅ |\n\n```sql\n-- 第二步：去掉前缀，做全局汇总\nSELECT \n  substr(activity_id, instr(activity_id, '_') + 1) AS activity_id,  -- 去掉前缀\n  sum(cnt) AS total_cnt\nFROM above_result\nGROUP BY substr(activity_id, instr(activity_id, '_') + 1)\n```\n\n最终把 `1_A001`、`2_A001`…的局部 count 加在一起，得到 A001 的总点击数。\n\n---\n\n## 代码里的 `rand(1)` 和 `rand(3)` 是什么意思？\n\n```sql\nconcat(cast(ceiling(rand(1)*10000) as int), activity_id)\nconcat(cast(ceiling(rand(3)*10000) as int), action_id)\n```\n\n- `rand(1)` / `rand(3)`：括号里是**随机种子**，固定种子保证同一行的两列前缀一致（不然同一行的 activity_id 和 action_id 前缀不同，group by 结果就乱了）\n- `ceiling(rand(1)*10000)`：生成 1~10000 的随机整数\n- `concat(..., activity_id)`：拼成 `\"3721A001\"` 这样的新 key\n\n---\n\n## 为什么只适合聚合，不适合 join？\n\n- **聚合（count/sum/avg）**：局部聚合后全局再聚合，结果不变 ✅\n- **join**：两张表的 key 加了不同随机前缀，`1_A001` 和 `2_A001` 就关联不上了 ❌（join 类倾斜要用维表扩容的方式，见 3.3.4）",
+          "created": 1776167645789,
+          "updated": 1776167645789
+        }
+      ]
+    }
+  }
+}

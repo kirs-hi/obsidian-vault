@@ -1,0 +1,324 @@
+---
+title: "《AI大模型Ragent项目》——测评数据初始化"
+source: "https://articles.zsxq.com/id_h0gjwioc5fuw.html"
+author:
+  - "[[马丁]]"
+published:
+created: 2026-06-07
+description:
+tags:
+  - "clippings"
+---
+[来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
+
+上一篇讲了评估集的 schema——150 条样本，12 个字段，每个字段为什么存在、被谁消费。评估集设计好了，但 Ragent 还是空的。
+
+评估集里标了 S1-01 应该召回 `GUIDE_PHONE_002` ，但如果 Ragent 的知识库里压根没有这篇文档，评测就是空转——检索指标算出来全是 0，不是系统差，是根本没东西可检索。意图树也一样，评估集标了 `S1_选购推荐` ，但 Ragent 没建这个意图节点，意图识别就无从谈起。
+
+这篇讲的是评测的基建：怎么用三个 Python 脚本把 Ragent 从空白状态搭到可评测状态——有知识库、有文档、有意图树。
+
+## 初始化总览：从空白到可评测
+
+执行初始化之前，需要先安装 Python 环境，版本不得低于 3.11，参考 [廖雪峰老师 Python 安装教程](https://liaoxuefeng.com/books/python/install/index.html) 。
+
+### 1\. 三步数据流
+
+初始化分三步，每步依赖上一步的产物，必须按顺序执行：
+
+![plantuml-8.png](https://article-images.zsxq.com/FiMos7i55uwCNzrgzgVGwz7rj6zr)
+
+三步跑完后，Ragent 就有了 4 个知识库、115 篇已分块的文档、30 个意图节点，处于可评测状态。
+
+### 2\. 运行前配置
+
+跑之前需要配三个环境变量：
+
+```bash
+export RAGENT_BASE_URL=http://localhost:9090/api/ragent
+export RAGENT_USERNAME=admin
+export RAGENT_PASSWORD=admin
+```
+
+所有脚本通过 `POST /auth/login` 获取 token，后续请求带 `Authorization` header 鉴权。
+
+## 初始化第一步：建 4 个知识库
+
+### 1\. 为什么按文档类型建库
+
+第一个问题：为什么是 4 个知识库而不是 22 个？
+
+如果按意图切，每个二级意图一个知识库，就要建 22 个 KB。管理成本高不说，很多意图其实共享同一批文档——S14 售后政策和 S15 退换货查的都是政策类文档，S8 操作指引和 S9 配网连接查的都是使用手册。按意图切会导致大量重复灌入。
+
+所以按文档类型切成 4 个：
+
+| KB Key | 名称 | 文档数 | 覆盖场景 |
+| --- | --- | --- | --- |
+| product | 比特严选-商品库 | 65 | 商品详情、选购指南、对比评测 |
+| manual | 比特严选-使用手册库 | 25 | 操作手册、配网指南、APP 指南 |
+| policy | 比特严选-政策库 | 15 | 保修、退换货、物流、发票会员政策 |
+| faq | 比特严选-FAQ库 | 10 | 故障排查、错误码手册 |
+
+一个意图通过意图树关联到对应的 KB（下一步讲），简洁且灵活。
+
+### 2\. 运行脚本与产物
+
+运行命令：
+
+```bash
+python eval/rag/init/create_kbs.py
+```
+
+脚本调用 `POST /knowledge-base` 接口逐个创建，产出 `kb_ids.json` ——记录每个 KB 的 ragent snowflake ID：
+
+```json
+{
+  "product": {
+    "kb_id": "2058461026313089024",
+    "name": "比特严选-商品库",
+    "collection_name": "kb-product",
+    "embedding_model": "qwen-emb-8b"
+  }
+}
+```
+
+> 注意：这个脚本没有幂等性——跑两次会建两套重复的 KB。这是有意为之，知识库创建是一次性操作，不值得为幂等增加复杂度。如果需要重建，先用 `reset_kbs.py` 清理再跑。
+> 
+> 可以看到 `embedding_model` 的值是 qwen-emb-8b，这个也是 Ragent 项目默认的向量模型。如果调整了 Ragent，记得这里也要调整。
+
+## 初始化第二步：灌入 115 篇文档
+
+### 1\. 文档怎么组织
+
+115 篇 Markdown 文档按知识库类型分目录存放：
+
+```
+knowledge_base/
+├── 01_product/     → product KB（65 篇）
+│   ├── detail/       45 篇商品详情
+│   └── guide/        20 篇选购指南
+├── 02_manual/      → manual KB（25 篇）
+│   ├── app/          5 篇 APP 指南
+│   ├── network/      5 篇配网指南
+│   └── product/      15 篇产品手册
+├── 03_policy/      → policy KB（15 篇）
+│   ├── warranty/     5 篇保修政策
+│   ├── return/       4 篇退换货政策
+│   ├── logistics/    3 篇物流政策
+│   └── invoice_vip/  3 篇发票会员政策
+└── 04_faq/         → faq KB（10 篇）
+    ├── error_code/   6 篇错误码手册
+    └── trouble/      4 篇故障排查
+```
+
+目录名前缀（ `01_` 、 `02_` 等）决定了文档归属哪个知识库。业务码就是文件名去掉 `.md` 后缀—— `PROD_PHONE_001.md` 的业务码是 `PROD_PHONE_001` ，跟评估集里 `expected_doc_ids` 用的是同一套编码。
+
+### 2\. 上传 + 异步分块
+
+每篇文档的上传分两步走：
+
+1. **上传文件** ： `POST /knowledge-base/{kb-id}/docs/upload` （multipart form），传 `.md` 文件，返回 ragent 的 `doc_id`
+2. **触发分块** ： `POST /knowledge-base/docs/{doc-id}/chunk` ，立即返回，分块在后台异步执行
+
+分块参数：
+
+```python
+{
+    "targetChars": 1400,   # 目标 chunk 大小
+    "maxChars": 1800,      # 单个 chunk 上限
+    "minChars": 600,       # 单个 chunk 下限
+    "overlapChars": 0      # chunk 间无重叠
+}
+```
+
+为什么不重叠？因为这些文档是结构化 Markdown，按标题层级切分已经有足够的语义边界，加重叠反而引入冗余。
+
+运行命令：
+
+```bash
+# 先 dry-run 看看文件分布，确认没问题
+python eval/rag/init/upload_docs.py --dry-run
+
+# 正式上传，每篇之间等 1 秒避免触发限制
+python eval/rag/init/upload_docs.py --sleep 1
+```
+
+### 3\. 断点续传：doc\_id\_map.json
+
+这是 `upload_docs.py` 最重要的设计。每上传成功一篇，立即把业务码 → ragent doc\_id 的映射追加写入 `doc_id_map.json` ：
+
+```json
+{
+  "PROD_PHONE_001": {
+    "ragent_doc_id": "2058461148245700608",
+    "kb_key": "product",
+    "kb_id": "2058461026313089024",
+    "rel_path": "knowledge_base/01_product/detail/PROD_PHONE_001.md"
+  }
+}
+```
+
+下次启动时读取这个文件，已上传的跳过。115 篇上传到第 60 篇网络断了？重跑脚本自动从第 61 篇继续，不会重复上传前 60 篇。
+
+这个映射文件还有另一个关键作用：runner 跑评测时，ragent 返回的是内部 doc\_id，需要通过 `doc_id_map.json` 反查出业务码，才能跟评估集的 `expected_doc_ids` 做比对算 Hit@K。
+
+### 4\. 等待异步分块完成
+
+这里有个容易踩的坑： `/chunk` 接口只是触发分块任务，不等完成就返回了。115 篇全部上传完后，后台可能还在分块——文档上传了但 chunk 还没生成，检索什么都搜不到。
+
+怎么确认分块完成？调 `GET /knowledge-base/{kb-id}/docs` 看每篇文档的 `chunkCount` ，大于 0 才算就绪。实际操作中上传完等几分钟就行，也可以去 Ragent 管理后台的文档列表页直接看状态。
+
+## 初始化第三步：构建意图树
+
+### 1\. 意图树长什么样
+
+意图树是三层结构，共 30 个节点：3 个 DOMAIN → 5 个 CATEGORY → 22 个 TOPIC。
+
+```
+SUPPORT (DOMAIN)
+├── SUPPORT_PRESALE (CATEGORY)
+│   ├── S1_选购推荐  → product KB
+│   ├── S2_参数咨询  → product KB
+│   ├── S3_对比选购  → product KB
+│   ├── S4_价格活动  → policy KB
+│   ├── S5_库存到货  → product KB
+│   ├── S6_配件兼容  → product KB
+│   └── S7_适用场景  → product KB
+├── SUPPORT_USAGE (CATEGORY)
+│   ├── S8_操作指引  → manual KB
+│   ├── S9_配网连接  → manual KB
+│   ├── S10_APP功能  → manual KB
+│   ├── S11_固件升级 → manual KB
+│   ├── S12_生态联动 → manual KB
+│   └── S13_保养维护 → manual KB
+└── SUPPORT_AFTERSALES (CATEGORY)
+    ├── S14_售后政策 → policy KB
+    ├── S15_退换货   → policy KB
+    ├── S16_物流配送 → policy KB
+    └── S17_发票会员 → policy KB
+
+FEEDBACK (DOMAIN)
+└── FEEDBACK_ALL (CATEGORY)
+    ├── F1_故障报告  → faq KB
+    ├── F2_功能建议  → SYSTEM ⭐
+    └── F3_投诉吐槽  → SYSTEM ⭐
+
+CHAT (DOMAIN)
+└── CHAT_ALL (CATEGORY)
+    ├── C1_寒暄问候  → SYSTEM ⭐
+    └── C2_越界提问  → SYSTEM ⭐
+```
+
+22 个 TOPIC 叶子分两种：
+
+- **KB-kind** （18 个）：意图命中后，去关联的知识库做 RAG 检索
+- **SYSTEM-kind** （4 个，带 ⭐）：不走 RAG，直接返回系统预设回复
+
+呼应上一篇讲的 `requires_rag` 字段：评估集里 `requires_rag=false` 的 18 条样本，大部分就落在这 4 个 SYSTEM-kind 叶子上。
+
+### 2\. KB 归属怎么决定
+
+每个 KB-kind 叶子关联哪个知识库，不是手工指定的，而是从评估集数据里投票算出来的。
+
+算法很直观：
+
+1. 读评估集 150 条样本
+2. 对每条样本，取 `intent_l2` 和 `expected_doc_ids`
+3. 通过 `doc_id_map.json` 查出每个文档属于哪个 KB
+4. 按多数投票决定该意图关联哪个 KB
+
+举个例子：S8-操作指引 的 8 条样本， `expected_doc_ids` 里的文档 90% 在 manual KB，投票结果 → S8 关联 manual。S14-售后政策 的 8 条样本，文档 85% 在 policy KB，投票结果 → S14 关联 policy。
+
+好处：不用手工维护意图和 KB 的映射关系。改了评估集里的 `expected_doc_ids` ，重建意图树时 KB 归属自动调整。
+
+### 3\. 易混淆意图的边界描述
+
+创建 TOPIC 节点时，除了 `intentCode` 和 `kbId` ，还有一个 `description` 字段。脚本里硬编码了 4 对容易混淆的意图，在描述里加了边界区分：
+
+| 容易混淆的两个意图 | 区分方式 |
+| --- | --- |
+| S4 价格活动 vs S14 售后政策 | 价格优惠 / 促销 → S4；保修维修 / 售后服务 → S14 |
+| S5 库存到货 vs S16 物流配送 | 下单前问什么时候能到 → S5；下单后问快递到哪了 → S16 |
+
+这种边界描述帮助 Ragent 的意图识别模型区分相近意图。比如用户问“买了三天了还没发货”，没有边界描述可能误分到 S5 库存到货，有了描述就能正确识别为 S16 物流配送。
+
+另外还有一个 `examples` 字段——从评估集中取该意图的最多 5 条 query 作为示例。示例越贴近真实用户表达，意图识别越准。
+
+运行命令：
+
+```bash
+python eval/rag/init/build_intent_tree.py
+```
+
+脚本按 DOMAIN → CATEGORY → TOPIC 的顺序逐层创建节点（子节点依赖父节点的 `parentCode` ，顺序不能乱），产出 `intent_ids.json` 记录所有节点的 ragent ID。
+
+## 重置与本地产物
+
+### 1\. 重置：从头再来
+
+什么时候需要重置？换了 embedding 模型需要重新灌库、文档内容大面积更新、评估集改了需要重建意图树。
+
+`reset_kbs.py` 做的事情：遍历所有知识库 → 逐个删除其下所有文档 → 删除知识库本身 → 清理本地映射文件。
+
+安全设计上做了几层保护：
+
+```bash
+# 默认 dry-run，只打印将要删除的内容，不实际执行
+python eval/rag/init/reset_kbs.py
+
+# 加 --yes 才会真正删除，删前还有 3 秒倒计时可 Ctrl-C 取消
+python eval/rag/init/reset_kbs.py --yes
+```
+
+> 重置后三个映射文件全部失效，需要从第一步开始重跑完整的初始化流程。需要注意，意图识别树 `t_intent_node` 表和 RustFS 中的 Bucket 需要登录控制台手动删除。
+
+### 2\. 三个映射文件为什么不进 git
+
+初始化过程中产出三个映射文件，它们都在 `.gitignore` 里：
+
+| 文件 | 内容 | 为什么不进 git |
+| --- | --- | --- |
+| `kb_ids.json` | KB 名 → ragent snowflake ID | 每次建库 ID 都不同 |
+| `doc_id_map.json` | 业务码 → ragent doc ID | 换机器 / 换数据库 ID 全变 |
+| `intent_ids.json` | intentCode → ragent 节点 ID | 同上 |
+
+这三个文件是本地运行产物，不是源码。每个开发者拉完代码后跑一遍初始化自己生成。如果有人把自己的 `doc_id_map.json` 提交到 git，另一个开发者 pull 下来直接用——但他的 ragent 实例里的 doc\_id 跟你的完全不同，所有检索都会 miss。
+
+## 初始化踩过的坑
+
+### 1\. 分块没等完就跑评测
+
+115 篇上传完，兴冲冲跑 runner，结果检索指标惨不忍睹——Hit@5 只有 0.3。排查了半天检索逻辑，最后发现是后台还在分块，很多文档的 `chunkCount` 还是 0。向量库里没有数据，检索当然什么都搜不到。
+
+教训：上传完等几分钟，或者调 API 确认所有文档的 `chunkCount > 0` 再跑评测。
+
+### 2\. 意图树节点创建顺序错了
+
+改了脚本逻辑后，TOPIC 节点在 CATEGORY 之前创建，API 报错找不到 `parentCode` 。意图树是树形结构，子节点依赖父节点存在，必须按 DOMAIN → CATEGORY → TOPIC 的顺序逐层创建。
+
+教训：初始化脚本的执行顺序很重要，不只是三步之间有依赖，同一步内部也有层级依赖。
+
+### 3\. 文档更新后忘了重建意图树
+
+加了几篇新文档到 policy KB，重跑了 `upload_docs.py` 。检索没问题，但意图识别出了偏差——因为意图树的 KB 归属是从评估集投票算的，新文档如果改变了投票结果，需要重建意图树才能生效。
+
+教训：文档变更后，不只要重跑第二步（上传），还要看看第三步（意图树）是否需要更新。三步是有依赖链的。
+
+## 小结与下一篇预告
+
+初始化 = 三步走：
+
+1. `create_kbs.py` ：建 4 个知识库，产出 `kb_ids.json`
+2. `upload_docs.py` ：灌 115 篇文档 + 异步分块，产出 `doc_id_map.json` （增量保存，断点续传）
+3. `build_intent_tree.py` ：构建 30 个意图节点（3 层结构，18 个 KB-kind + 4 个 SYSTEM-kind），KB 归属数据驱动投票，产出 `intent_ids.json`
+
+三个映射文件串联三步，都不进 git。跑完之后 Ragent 处于可评测状态。
+
+系统搭好了，接下来怎么把评估集里的 query 逐条喂进去拿数据？runner 要同时调两个接口——SSE 流拿真实答案和首字耗时，JSON 旁路拿检索证据。两个接口的数据怎么聚合？TTFT 的打点口径是什么？见第 4 篇：《一条 query 怎么跑：评测旁路接口 + SSE 聚合 + TTFT 打点》。
+
+![](data:image/png;base64,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)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524

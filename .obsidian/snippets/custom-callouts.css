@@ -1,0 +1,20 @@
+/* 自定义 Callout 样式 - 让提示框更精致 */
+
+/* 统一 callout 圆角和阴影 */
+.callout {
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left-width: 4px;
+}
+
+/* 自定义 callout 类型：进度 */
+.callout[data-callout="progress"] {
+  --callout-color: 59, 130, 246;
+  --callout-icon: lucide-trending-up;
+}
+
+/* 自定义 callout 类型：人物 */
+.callout[data-callout="person"] {
+  --callout-color: 168, 85, 247;
+  --callout-icon: lucide-user;
+}

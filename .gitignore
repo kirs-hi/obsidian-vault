@@ -1,0 +1,25 @@
+.DS_Store
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspace-*.json
+.obsidian/cache/
+.trash/
+
+# hi-note plugin metadata (avoid merge conflicts)
+.hinote/metadata/
+
+# 插件代码无需版本管理（丢失可重装），仅保留 data.json 配置，避免 git 历史膨胀
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+.obsidian/plugins/*/*.wasm
+.obsidian/plugins/*/*.map
+.obsidian/icons/**/*.zip
+
+# 备份文件不入库
+*.bak
+*.bak-*
+
+# 插件备份/图标原始数据(可重装,不入库)
+*.js.backup
+*.backup
+.obsidian/icons/

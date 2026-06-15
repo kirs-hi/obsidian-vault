@@ -1,0 +1,17 @@
+/* 图片居中与圆角 */
+
+/* 阅读模式图片居中 */
+.markdown-preview-view img:not(.emoji) {
+  display: block;
+  margin: 1em auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 图片标题居中 */
+.markdown-preview-view .image-embed figcaption {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}

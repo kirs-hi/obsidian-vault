@@ -1,0 +1,209 @@
+---
+title: "Claude Code之父的13大cc使用技巧"
+source: "https://articles.zsxq.com/id_j1cw1ane7z3a.html"
+author:
+  - "[[花叔]]"
+published:
+created: 2026-05-23
+description:
+tags:
+  - "clippings"
+---
+[来自： 花叔（只工作不上班版](https://wx.zsxq.com/group/15555848445442)
+
+一大早起来在X上看到Boris Cherny发了条长帖，分享他自己怎么用Claude Code的。感觉是我2026年看到最有价值的一条内容了。所以很想在这里也给大家完整分享下。
+
+![](https://article-images.zsxq.com/FvzqJXOt0QcRPYDDcPs74ahcE4Ga)
+
+Boris是Claude Code的创建者。2024年9月，他把Claude Code作为副项目做出来，没想到后来成了AI编程领域最火的工具之一。
+
+**创建者亲自出来写使用技巧，这很难得。** 他是真的懂这个产品的优势和缺陷的，从他的视角肯定能获得一些不一样的启发。
+
+更让我有信心的是，他是真的在长期高频使用自己的产品。前段时间他发过一条推文：
+
+![](https://article-images.zsxq.com/FrCVymA5RsXT2qbA4e9ClaOHB8m5)
+
+过去30天，我提交了259个PR——497次commit，新增4万行代码，删除3.8万行。每一行都是Claude Code + Opus 4.5写的。
+
+他还晒了自己的使用数据：47天里有46天都在用，最长连续使用42天，最长单次session跑了1天18小时50分钟，总共消耗了3.25亿tokens。
+
+![](https://article-images.zsxq.com/Fk4WfufSiF8JbWxTHJFy4GsTQRSH)
+
+看到创建者本人是这么用自己产品的，确实让人对cc更有信心。毕竟很多产品的创始人自己都不怎么用自己做的东西。
+
+回到这次的13条技巧。Boris在推文开头说：
+
+我的配置可能出乎意料地朴素！Claude Code开箱即用就很好，所以我个人并没有太多自定义。
+
+仔细看完13条建议，确实不是什么神秘hack，但出奇的实用，给我带来不少启发，希望对你也是！
+
+## 1\. 并行跑5个Claude
+
+Boris在终端里同时运行5个Claude Code实例，标签页编号1-5，用系统通知来知道哪个需要输入。
+
+![](https://article-images.zsxq.com/Fgtq9Pa3OiuC1RV2W_SgCBEiwVC4)
+
+这点我之前也提过，不过我更习惯在Cursor、Trae等IDE里开5-10个终端跑不同任务，相互没有干扰。因为我不只是用Claude Code写代码，还会让他写脚本、写文章之类的，所以用IDE看看cc跑的成果我觉得会更方便。但总之一次性开多个cc窗口，去多完成一些任务的思维我是完全认可的，Boris这个系统通知的思路也确实优雅。
+
+## 2\. 本地+网页双线作战
+
+除了本地5个Claude，Boris还在claude.ai/code上同时跑5-10个。用&把本地会话交接到网页端，或者用--teleport在两边切换。
+
+![](https://article-images.zsxq.com/FuI_MkjKR7HKV40Rew635gi16Or8)
+
+这个我之前完全没用过。我一直只在终端用，没意识到他们网页端居然做得这么好了。我打算试试了，毕竟平时外出拿手机就能用网页去控制cc的产出，也真是一刻不耽误。
+
+[https://claude.ai/code](https://claude.ai/code)
+
+## 3\. 全程用Opus 4.5 + 思考模式
+
+Boris说所有工作都用Opus 4.5，并开启思考模式。
+
+他的理由是：虽然Opus比Sonnet更大更慢，但因为你需要更少的引导，工具使用能力更强，最终几乎总是比用小模型更快。
+
+这点我完全认同，除了慢一点，以及费钱外，Opus 4.5真的没啥缺点。当然，「贵」这事也不算Claude的问题，是我的问题，我最近又把Claude Max给续订回来了。
+
+![](https://article-images.zsxq.com/FgNvUyP1uq6D9YymKY1ZgGEFwNNG)
+
+## 4\. 团队共享CLAUDE.md
+
+Boris团队共享同一个CLAUDE.md文件，check进git，整个团队每周都会贡献多次。
+
+关键机制： **每当看到Claude做错了什么，就加到CLAUDE.md里，这样Claude下次就知道不要这么做了。**
+
+这形成了一个飞轮：Claude犯错 → 记录 → Claude学会 → 犯更少的错。
+
+![](https://article-images.zsxq.com/FoGvRCk3ZyIX0HrHiYtsmRsaQFhv)
+
+这个思路我完全认可。CLAUDE.md并不是一次性的文档，你应该里面不停更新，让cc的运行规则更符合你的要求。比如我的写作Agent的CLAUDE.md文档已经迭代了几十次...大版本号都更新到6.0了。
+
+![](https://article-images.zsxq.com/FrqWlYPSr0E5t-WX4-H6ta8jBNZM)
+
+## 5\. Code Review时自动更新规则
+
+Boris在代码审查时，会在同事的PR上@.claude，让它把某条规则加到CLAUDE.md中。
+
+他们用Claude Code的GitHub Action来实现。
+
+设置：/install-github-action
+
+![](https://article-images.zsxq.com/FrR1t1jzoeffJ6EPePWFE6cuEAvA)
+
+## 6\. 大多数会话从Plan模式开始
+
+Boris说大多数会话都从Plan模式开始（按两次shift+tab）。
+
+流程是：先用Plan模式来回讨论直到满意计划，然后切换到自动接受编辑模式，Claude通常能一次完成。
+
+他强调： **一个好的计划真的很重要！**
+
+![](https://article-images.zsxq.com/Fhow2TB34xLPQMijM9XMJ2yyrvN2)
+
+这点确实。直接让Claude开干，经常做到一半发现方向错了。
+
+## 7\. 斜杠命令用于高频工作流
+
+Boris对每天重复做很多次的"内循环"工作流都用斜杠命令，放在.claude/commands/目录下。
+
+关键是：这不只是节省打字，还能让Claude自己也调用这些命令。比如Claude写代码时可以调用你定义的/review来自己检查。
+
+![](https://article-images.zsxq.com/Frgg8bX5gGdkljF-7bRs0bzCyPhX)
+
+## 8\. 用子代理自动化常见流程
+
+Boris用几个子代理：
+
+1. code-simplifier：Claude工作完成后简化代码
+2. verify-app：端到端测试的详细指令
+
+他把子代理看作自动化大多数PR都要做的工作流。
+
+![](https://article-images.zsxq.com/FtAwAhhxDfrCHzcmI7KioPj9-J4r)
+
+但这里有个坑：不要搞一堆"专家子代理"（Python专家、前端专家），这会把上下文分割开，让主Claude无法整体推理。用子代理做"流程自动化"是对的，但不要用来做"专家分工"。
+
+## 9\. PostToolUse钩子自动格式化
+
+他们用PostToolUse钩子来格式化Claude的代码。Claude通常开箱就能生成格式良好的代码，钩子处理最后10%，避免后续CI中的格式错误。
+
+![](https://article-images.zsxq.com/Fq_dxLXhFZHvb3Fc1_0NNIpQDebX)
+
+这个思路可以推广：用钩子在关键检查点做验证，而不是限制每一步动作。
+
+## 10\. 用/permissions预授权，而非跳过权限
+
+Boris说他不使用--dangerously-skip-permissions。
+
+他用/permissions预先允许已知安全的bash命令，大部分设置check进.claude/settings.json并与团队共享。
+
+![](https://article-images.zsxq.com/Fub8KbtxdHAf4YxJARhVrfyf-juC)
+
+哈哈，这点来说，我倒是更激进一些，我每次默认启动cc的时候都是允许所有命令自动运行的，至今没出过事。但是这个就看个人性格吧，看喜欢安全地慢慢确认，还是接受一些风险，但是要更自动化。
+
+## 11\. Claude使用所有工具
+
+Boris让Claude Code帮他用各种工具：
+
+1. 通过MCP服务器搜索和发Slack消息
+2. 运行BigQuery查询回答分析问题
+3. 从Sentry抓取错误日志
+
+确实，Claude Code的定位不只是"写代码的工具"。我之前用Claude Code + Chrome Devtools MCP做B站和YouTube的自动回复，让Claude Code翻译Paul Graham的100篇文章，都是把它当成通用Agent在用。
+
+![](https://article-images.zsxq.com/FtrKOFkptCovUbqAkgK03E91VwRw)
+
+## 12\. 长任务的处理策略
+
+对于非常长的任务，Boris用三种方式：
+
+1. 提示Claude完成后用后台代理验证
+2. 用agent Stop钩子做验证
+3. 使用ralph-wiggum插件（让Claude自动循环直到完成）
+
+ralph-wiggum这个名字来自《辛普森一家》的角色，核心是让Claude在完成后自动继续，直到真正达到目标。
+
+插件： [https://github.com/anthropics/claude-plugins-official/tree/main/plugins/ralph-wiggum](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/ralph-wiggum)
+
+![](https://article-images.zsxq.com/FuJJsSgli32XUkJu3OpmA_IdVY-N)
+
+## 13\. 最重要的建议：给Claude验证工作的方式
+
+Boris说这是从Claude Code获得最佳结果的最重要的事：
+
+给Claude一种验证工作的方式。如果Claude有这个反馈循环，最终结果的质量会提升2-3倍。
+
+他的做法是用Chrome扩展测试每一个改动：Claude打开浏览器，测试UI，迭代直到代码正常工作。
+
+验证在每个领域不同：可能是运行bash命令，或跑测试套件，或在浏览器/手机模拟器中测试。
+
+**确保在这个环节投入精力。**
+
+![](https://article-images.zsxq.com/FsWBVahjTu5RsI1gqL18SIvgg-Fq)
+
+这点确实是最有价值的洞察。很多时候让Claude写完代码就完事了，没有给它验证的机会。但如果Claude能自己测试、自己发现问题、自己修复，质量会好很多。
+
+## 几点感受
+
+读完Boris的13条，有几个感受：
+
+**基础功能用到极致比黑魔法更有效。** Boris的配置确实朴素，没什么神秘hack。但他把Plan模式、CLAUDE.md、子代理、钩子这些基础功能用得很彻底。
+
+**并行思维很重要。** 本地5个 + 网页端5-10个，这个并行规模超出我之前想象。我在Cursor里开5个终端跑Claude Code就觉得够多了，Boris直接翻倍。
+
+**验证机制是关键。** 第13条是最重要的：给Claude验证的能力。写代码 → 测试 → 发现问题 → 修复 → 再测试，这个闭环形成了，输出质量就上去了。
+
+最后，Boris说：
+
+Claude Code团队的每个人使用方式都非常不同。没有一种"正确"的使用方式。
+
+这点我认同。这13条是他的用法，不一定适合每个人。但至少给了一个参考：创建者本人是这么用的。
+
+**相关链接** ：
+
+![](data:image/png;base64,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)
+
+扫码加入星球
+
+查看更多优质内容
+
+https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=15555848445442

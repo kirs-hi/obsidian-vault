@@ -1,0 +1,56 @@
+/* 多彩复选框 - 支持不同状态标记 */
+/* 用法: - [/] 进行中  - [?] 疑问  - [!] 重要  - [*] 星标  - [-] 取消 */
+
+/* 进行中 */
+input[data-task="/"]:checked,
+li[data-task="/"] > input:checked,
+li[data-task="/"] > p > input:checked {
+  --checkbox-color: var(--color-blue);
+  --checkbox-color-hover: var(--color-blue);
+}
+li[data-task="/"] {
+  text-decoration: none;
+  color: var(--text-normal);
+}
+
+/* 疑问 */
+input[data-task="?"]:checked,
+li[data-task="?"] > input:checked,
+li[data-task="?"] > p > input:checked {
+  --checkbox-color: var(--color-yellow);
+  --checkbox-color-hover: var(--color-yellow);
+}
+li[data-task="?"] {
+  text-decoration: none;
+  color: var(--text-normal);
+}
+
+/* 重要 */
+input[data-task="!"]:checked,
+li[data-task="!"] > input:checked,
+li[data-task="!"] > p > input:checked {
+  --checkbox-color: var(--color-red);
+  --checkbox-color-hover: var(--color-red);
+}
+li[data-task="!"] {
+  text-decoration: none;
+  color: var(--text-normal);
+}
+
+/* 星标 */
+input[data-task="*"]:checked,
+li[data-task="*"] > input:checked,
+li[data-task="*"] > p > input:checked {
+  --checkbox-color: var(--color-orange);
+  --checkbox-color-hover: var(--color-orange);
+}
+li[data-task="*"] {
+  text-decoration: none;
+  color: var(--text-normal);
+}
+
+/* 取消 */
+li[data-task="-"] {
+  text-decoration: line-through;
+  color: var(--text-faint);
+}

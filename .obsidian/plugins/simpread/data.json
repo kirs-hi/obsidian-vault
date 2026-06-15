@@ -1,0 +1,22 @@
+{
+  "config": "simpread_config.json",
+  "host": "localhost",
+  "port": 7027,
+  "count": "10",
+  "override": true,
+  "folder": "网页收藏",
+  "sub_folder": true,
+  "path": "",
+  "assets_root": "root",
+  "assets": "",
+  "img_relative": true,
+  "annote": false,
+  "frequency": "-1",
+  "tag_prefix": "#",
+  "tag_suffix": " ",
+  "format": "{\"headingStyle\":\"atx\",\"hr\":\"---\",\"bulletListMarker\":\"-\"}",
+  "ext_uri": "",
+  "title": "{{id}}-{{title}}{{mode}}",
+  "template": "---\ntitle: \"<%= title %>\"\naliases: [\"<%= title %>\"]\ntype: SimpRead\ntags:\n<% tags.forEach(function(tag){ %>- <%= tag_prefix + tag + tag_suffix %>\n<% }); %>---\n\n> [!summary] Metadata\n> - **URL**: [<%= title %>](<%= url %>)\n> - **Date**: <%= date %>\n\n<%= body %>",
+  "annotation": "\n<mark style=\"background: <%= color %>;\">&nbsp;<%= text %>&nbsp;</mark>\n<% if (note) { %>> **Note**: <%= note %>\n<% } %>"
+}

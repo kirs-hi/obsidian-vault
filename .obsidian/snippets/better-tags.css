@@ -1,0 +1,35 @@
+/* 标签美化 - 让标签看起来像小药丸 */
+
+/* 阅读模式标签 */
+a.tag {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent) !important;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  text-decoration: none !important;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+a.tag:hover {
+  opacity: 1;
+}
+
+/* 编辑模式标签 */
+.cm-s-obsidian span.cm-hashtag {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent) !important;
+  padding: 2px 0;
+  font-size: 0.85em;
+}
+
+.cm-s-obsidian span.cm-hashtag-begin {
+  border-radius: 12px 0 0 12px;
+  padding-left: 8px;
+}
+
+.cm-s-obsidian span.cm-hashtag-end {
+  border-radius: 0 12px 12px 0;
+  padding-right: 8px;
+}
