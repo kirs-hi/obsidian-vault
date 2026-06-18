@@ -1,4 +1,4 @@
-理论篇讲了 Worktree 如何给每个子 [[07-Agent|Agent]] 一份独立的文件空间，这篇来走读 Java 版 MewCode 的实现。单文件方案，242 行的 `WorktreeManager.java` 包含了全部逻辑。Java 的写法偏传统 OOP，Record 类型和 Optional 的使用让代码既简洁又类型安全。
+理论篇讲了 Worktree 如何给每个子 Agent 一份独立的文件空间，这篇来走读 Java 版 MewCode 的实现。单文件方案，242 行的 `WorktreeManager.java` 包含了全部逻辑。Java 的写法偏传统 OOP，Record 类型和 Optional 的使用让代码既简洁又类型安全。
 
 ## 模块概览
 

@@ -34,7 +34,7 @@ export interface LLMClient {
 }
 ```
 
-返回 `AsyncGenerator<StreamEvent>` ，调用方用 `for await (const event of stream)` 消费。这是 [[Day2-JavaScript和TypeScript|TypeScript]] 异步迭代器的惯用模式，配合 `async function*` 使用。
+返回 `AsyncGenerator<StreamEvent>` ，调用方用 `for await (const event of stream)` 消费。这是 TypeScript 异步迭代器的惯用模式，配合 `async function*` 使用。
 
 注意第三个参数 `abortSignal` ，这是 Web 标准的取消机制。用户按 Ctrl+C 时，通过 `AbortController.abort()` 中断请求，信号传到 SDK 内部终止 HTTP 连接。
 
@@ -171,7 +171,7 @@ const params: Anthropic.MessageCreateParamsStreaming = {
 };
 ```
 
-system prompt 标记了 `cache_control` ，是 Anthropic 的 prompt cache 机制。tool schema 的最后一个也标记了缓存控制，因为工具定义在[[01基础_16多轮对话记忆设计|多轮对话]]间基本不变。
+system prompt 标记了 `cache_control` ，是 Anthropic 的 prompt cache 机制。tool schema 的最后一个也标记了缓存控制，因为工具定义在多轮对话间基本不变。
 
 thinking 配置分两种模式。 `supportsAdaptiveThinking` 判断模型版本：
 
@@ -225,7 +225,7 @@ for await (const event of response) {
 
 ### 第四步：事件消费
 
-[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 用 `for await` 加 switch 消费：
+Agent Loop 用 `for await` 加 switch 消费：
 
 ```plain
 for await (const event of client.stream(conv, tools)) {
@@ -375,7 +375,7 @@ export class ContextTooLongError extends LLMError {}
 | --- | --- | --- |
 | `AuthenticationError` | 401 / API key 无效 | 提示检查配置 |
 | `RateLimitError` | 429 / 限流 | 等待 retryAfter 后重试 |
-| `ContextTooLongError` | 413 / prompt too long | 触发[[理论学习_上下文压缩与_Token_管理|上下文压缩]] |
+| `ContextTooLongError` | 413 / prompt too long | 触发上下文压缩 |
 | `NetworkError` | 非 API 错误 | 提示网络问题 |
 | `LLMError` | 其他 API 错误 | 通用错误展示 |
 
@@ -445,14 +445,14 @@ export function createModelResolver(
 }
 ```
 
-`{ ...baseCfg, model: ... }` 用 spread 创建新对象，不会修改原 config。这个 resolver 用于子 [[07-Agent|Agent]] 场景，让不同 Agent 可以使用不同的模型但共享同一个 provider 配置。
+`{ ...baseCfg, model: ... }` 用 spread 创建新对象，不会修改原 config。这个 resolver 用于子 Agent 场景，让不同 Agent 可以使用不同的模型但共享同一个 provider 配置。
 
 ## 小结
 
 | 设计决策 | 实现方式 |
 | --- | --- |
 | 供应商抽象 | `LLMClient` 接口 + 异步工厂函数（动态 import） |
-| [[01基础_20SSE协议与流式响应|流式响应]] | async generator， `yield` 生产 `for await` 消费 |
+| 流式响应 | async generator， `yield` 生产 `for await` 消费 |
 | 事件类型 | discriminated union， `type` 字段做穷尽检查 |
 | 消息模型 | `Message` interface，可选的 thinking / toolUses / toolResults |
 | 序列化 | 三套 `build*` 函数：Anthropic / OpenAI Responses / Chat Completions |

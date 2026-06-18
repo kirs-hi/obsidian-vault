@@ -2,7 +2,7 @@
 
 ## 本章需要做什么 ？
 
-上一章我们给 MewCode 装上了 Worktree，让每个子 [[07-Agent|Agent]] 拥有独立的文件系统，彻底消除了并行修改的冲突。但那套模型还是「星型」的：主 Agent 在中心，子 Agent 在周围，所有通信都要经过主 Agent，而且主Agent还得自己下场干活，一旦任务复杂，可能就力不从心
+上一章我们给 MewCode 装上了 Worktree，让每个子 Agent 拥有独立的文件系统，彻底消除了并行修改的冲突。但那套模型还是「星型」的：主 Agent 在中心，子 Agent 在周围，所有通信都要经过主 Agent，而且主Agent还得自己下场干活，一旦任务复杂，可能就力不从心
 
 这一章要给 MewCode 装上 Agent Team 机制。Lead 还可以开启 Coordinator Mode 专注调度，从而应对更复杂的任务
 
@@ -14,7 +14,7 @@
 -   **Mailbox** **消息系统**：按 agentID 分文件存储，tmux 后端额外 send-keys 唤醒
 -   **团队生命周期管理** ：TeamCreate / TeamDelete 顶层工具，队员 spawn、收敛合并、清理
 -   **队员空闲与续写** ：磁盘 transcript 持久化，Lead 可通过 SendMessage 恢复已停止的队员
--   **Coordinator Mode** ：双锁激活、工具集收窄、四阶段工作流[[提示词]]注入
+-   **Coordinator Mode** ：双锁激活、工具集收窄、四阶段工作流提示词注入
 
 这章 **不做** ：跨机器的分布式 Agent Team、队员之间的实时流式通信。
 
@@ -43,7 +43,7 @@
 
 ### 正式开发
 
-三份文档有了之后，就相当于施工图纸已经定好了，然后让 [[Claude Code 命令与最佳实践|Claude Code]] 根据这三份文档进行开发
+三份文档有了之后，就相当于施工图纸已经定好了，然后让 Claude Code 根据这三份文档进行开发
 
 ![](实战演练_动手实现_Agent_Teams-1.jpeg)
 
@@ -101,7 +101,7 @@
 
 到这里，MewCode 的核心能力已经全部搭建完毕。
 
-恭喜你！从终端原型，到工具系统、Agent 循环、权限管理、[[理论学习_上下文压缩与_Token_管理|上下文压缩]]、Hook 系统、[[理论学习_SubAgent_子任务分发|SubAgent]]、Worktree，再到现在的 Agent Team，你亲手完成了一个完整的 [[理论学习_什么是_Coding_Agent_|Coding Agent]]！
+恭喜你！从终端原型，到工具系统、Agent 循环、权限管理、上下文压缩、Hook 系统、SubAgent、Worktree，再到现在的 Agent Team，你亲手完成了一个完整的 Coding Agent！
 
 ---
 

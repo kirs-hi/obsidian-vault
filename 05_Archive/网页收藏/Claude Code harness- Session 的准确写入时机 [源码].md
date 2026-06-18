@@ -10,7 +10,7 @@ tags:
 banner: "https://article-images.zsxq.com/FkQv2R8tFKKHo6lsJRFeJv7jpYBn"
 banner_icon: 🔖
 ---
-基于源码，(考虑到有些人还没有源码, 可以翻到最下边去下载) [[Claude Code 命令与最佳实践|Claude Code]] 对于 “**Session Memory 驱动的[[理论学习_上下文压缩与_Token_管理|上下文压缩]]**”，并不是在触发压缩的那一刻，才去用 Prompt 问大模型 “请帮我总结一下”。
+基于源码，(考虑到有些人还没有源码, 可以翻到最下边去下载) Claude Code 对于 “**Session Memory 驱动的上下文压缩**”，并不是在触发压缩的那一刻，才去用 Prompt 问大模型 “请帮我总结一下”。
 
 实际上，它分成了两步：
 

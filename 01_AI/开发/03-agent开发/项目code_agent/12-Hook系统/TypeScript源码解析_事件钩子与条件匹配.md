@@ -41,7 +41,7 @@ const validActions = new Set([
 ]);
 ```
 
-四种动作都在合法列表里。 `command` 用 `execSync` 同步执行 shell 命令， `prompt` 直接返回文本， `http` 用 `fetch` 发请求， `agent` 通过注入的回调启动子 [[07-Agent|Agent]]。
+四种动作都在合法列表里。 `command` 用 `execSync` 同步执行 shell 命令， `prompt` 直接返回文本， `http` 用 `fetch` 发请求， `agent` 通过注入的回调启动子 Agent。
 
 ### Hook 配置
 

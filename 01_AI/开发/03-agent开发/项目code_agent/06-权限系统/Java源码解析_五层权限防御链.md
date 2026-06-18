@@ -169,7 +169,7 @@ public CheckResult check(
 
 Layer 0 是 Plan Mode 的例外处理，放在所有其他检查之前。
 
-Layer 0 做了两件事：第一，[[07-Agent|Agent]]、ToolSearch、AskUserQuestion 这三个工具在 Plan Mode 下始终放行，因为它们是规划流程必需的。第二，写入 `.mewcode/plans/` 目录下的文件也始终放行，因为 Plan 文件就存在这个目录。
+Layer 0 做了两件事：第一，Agent、ToolSearch、AskUserQuestion 这三个工具在 Plan Mode 下始终放行，因为它们是规划流程必需的。第二，写入 `.mewcode/plans/` 目录下的文件也始终放行，因为 Plan 文件就存在这个目录。
 
 ```plain
 private static final Set<String>
@@ -352,7 +352,7 @@ if (content != null) {
 
 反向遍历规则列表，最后一条匹配的规则胜出。 `switch` expression 直接在匹配到的规则上做 allow/deny 分发。
 
-规则列表是扁平的（所有层的规则合并成一个 `ArrayList` ）。加载顺序决定优先级：用户级最先加载排在前面，本地级最后加载排在后面。反向遍历时本地级先被检查到，所以本地级优先级最高。这跟 [[Claude Code 命令与最佳实践|Claude Code]] 一致：越具体、越靠近当前项目的配置优先级越高。另外 deny 规则跨层合并不可翻转，任何一层的 deny 都不能被其他层的 allow 盖掉。
+规则列表是扁平的（所有层的规则合并成一个 `ArrayList` ）。加载顺序决定优先级：用户级最先加载排在前面，本地级最后加载排在后面。反向遍历时本地级先被检查到，所以本地级优先级最高。这跟 Claude Code 一致：越具体、越靠近当前项目的配置优先级越高。另外 deny 规则跨层合并不可翻转，任何一层的 deny 都不能被其他层的 allow 盖掉。
 
 ### Layer 4b：Session 级别的始终允许
 

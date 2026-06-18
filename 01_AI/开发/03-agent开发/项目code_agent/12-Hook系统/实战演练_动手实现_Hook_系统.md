@@ -2,7 +2,7 @@
 
 ## 本章需要做什么
 
-上一章我们给 MewCode 装上了 Skill 技能包系统，让 [[07-Agent|Agent]] 能通过 Slash Command 加载预定义的[[提示词]]和工具集合。但每次 Agent 写完文件你还是要手动跑格式化，每次看到危险命令你还是得自己盯着审批弹窗，每次开始新对话你还是要手动说「先读一下 ARCHITECTURE.md」。
+上一章我们给 MewCode 装上了 Skill 技能包系统，让 Agent 能通过 Slash Command 加载预定义的提示词和工具集合。但每次 Agent 写完文件你还是要手动跑格式化，每次看到危险命令你还是得自己盯着审批弹窗，每次开始新对话你还是要手动说「先读一下 ARCHITECTURE.md」。
 
 这些事情触发条件明确、执行动作固定，完全不需要你来做。这一章要给 MewCode 装上 Hook 系统，让你在 Agent 的生命周期事件上挂载自动化动作。做完之后，格式化、拦截、上下文注入全部自动化，你不用再当人肉 CI。
 
@@ -16,10 +16,10 @@
 -   **执行控制** ：once（只执行一次）、async（后台执行）、command 的 timeout 超时
 -   **拦截机制** ：pre\_ tool\_ use + reject 返回 ToolRejectedError，LLM 看到拒绝原因后调整策略
 -   **HookEngine 核心** ：runHooks（非拦截事件）+ runPreToolHooks（pre\_ tool\_ use 专用）
--   **[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 集成** ：在会话、轮次、消息、工具的生命周期节点插入 Hook 调用
+-   **Agent Loop 集成** ：在会话、轮次、消息、工具的生命周期节点插入 Hook 调用
 -   **配置加载与校验** ：从 YAML 加载，校验事件名、action 类型、reject/async 约束、必填字段
 
-这章 **不做** ：once 标记的持久化（只做运行时标记，重启即重置）、Hook 执行顺序的显式优先级字段、agent 执行器的真实实现（留给后续的 [[理论学习_SubAgent_子任务分发|SubAgent]] 章节）。
+这章 **不做** ：once 标记的持久化（只做运行时标记，重启即重置）、Hook 执行顺序的显式优先级字段、agent 执行器的真实实现（留给后续的 SubAgent 章节）。
 
 ---
 
@@ -49,7 +49,7 @@
 
 ### 正式开发
 
-三份文档有了之后，就相当于施工图纸已经定好了，然后让 [[Claude Code 命令与最佳实践|Claude Code]] 根据这三份文档进行开发
+三份文档有了之后，就相当于施工图纸已经定好了，然后让 Claude Code 根据这三份文档进行开发
 
 ![](实战演练_动手实现_Hook_系统-1.jpeg)
 

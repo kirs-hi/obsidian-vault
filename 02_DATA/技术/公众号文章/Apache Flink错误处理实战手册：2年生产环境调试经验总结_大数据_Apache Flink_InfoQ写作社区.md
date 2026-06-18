@@ -14,7 +14,7 @@ tags:
 
 ## 前言
 
-在流处理领域，Apache [[Flink SQL 完整语法教程|Flink]] 已经成为企业级实时数据处理的首选框架。然而，在生产环境中，开发者和运维人员经常会遇到各种看似神秘的问题。基于过去两年中大量客户在真实场景中的使用案例，可以观察到一些反复出现的问题模式。
+在流处理领域，Apache Flink 已经成为企业级实时数据处理的首选框架。然而，在生产环境中，开发者和运维人员经常会遇到各种看似神秘的问题。基于过去两年中大量客户在真实场景中的使用案例，可以观察到一些反复出现的问题模式。
 
 本文源自 2025 年数据科学峰会上的演讲《The Flink Mistake Playbook》，结合 Ververica 客户成功经理 Naci Simsek 的实践经验，总结了在生产环境中最容易踩的“三大坑”。这些问题并非理论推演，而是广泛存在于多个真实项目中的典型挑战。
 
@@ -293,7 +293,7 @@ env.getConfig().disableGenericTypes();
 
 1. **状态管理是架构设计的一部分** UID 不仅是标识符，更是状态生命周期的控制开关。理解其机制可避免大量“神秘”问题。
 2. **性能优化始于数据模型设计** 75% 的性能差异源自序列化策略。优先使用 Flink 原生支持类型，避免无意中触发 Kryo。
-3. **负载均衡需面向真实数据分布** [[数据倾斜实践|数据倾斜]]是常态。系统设计必须包含应对不均分布的策略。
+3. **负载均衡需面向真实数据分布** 数据倾斜是常态。系统设计必须包含应对不均分布的策略。
 4. **版本升级需有章法** 每次 API 升级都应伴随状态兼容性评估与测试验证，而非简单替换。
 
 ### 实战建议
@@ -317,7 +317,7 @@ env.getConfig().disableGenericTypes();
 
 ### 活动推荐
 
-阿里云基于 Apache Flink 构建的企业级产品-实时计算 Flink 版现开启活动：新用户复制点击下方链接或者扫描二维码即可 0 元免费试用 Flink + [[paimon|Paimon]] [实时计算 Flink 版](https://xie.infoq.cn/link?target=https%3A%2F%2Ffree.aliyun.com%2F%3Futm_content%3Dg_1000395379%26productCode%3Dsc) （3000CU\*小时，3 个月内）了解活动详情： [https://free.aliyun.com/?utm\_content=g\_1000395379&productCode=sc](https://xie.infoq.cn/link?target=https%3A%2F%2Ffree.aliyun.com%2F%3Futm_content%3Dg_1000395379%26productCode%3Dsc)
+阿里云基于 Apache Flink 构建的企业级产品-实时计算 Flink 版现开启活动：新用户复制点击下方链接或者扫描二维码即可 0 元免费试用 Flink + Paimon [实时计算 Flink 版](https://xie.infoq.cn/link?target=https%3A%2F%2Ffree.aliyun.com%2F%3Futm_content%3Dg_1000395379%26productCode%3Dsc) （3000CU\*小时，3 个月内）了解活动详情： [https://free.aliyun.com/?utm\_content=g\_1000395379&productCode=sc](https://xie.infoq.cn/link?target=https%3A%2F%2Ffree.aliyun.com%2F%3Futm_content%3Dg_1000395379%26productCode%3Dsc)
 
 ![](https://static001.geekbang.org/infoq/b7/b7e97a203dfde6df982036a998ba6ed1.jpeg?x-oss-process=image%2Fresize%2Cp_80%2Fauto-orient%2C1)
 

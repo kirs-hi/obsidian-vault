@@ -67,7 +67,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 *   "写周报太浪费时间了" → 可能的产品：AI 自动生成周报工具
     
 
-*   "面试前准备材料太麻烦" → 可能的产品：简历优化 + [[面试题]]生成工具
+*   "面试前准备材料太麻烦" → 可能的产品：简历优化 + 面试题生成工具
     
 
 **为什么有效？**  
@@ -85,7 +85,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 **进阶技巧（AI 自动化）：**  
 使用 AI + 自动化工具批量收集：
 
-*   使用 [[理论学习_MCP_协议与开放工具生态|MCP]] 工具（如 chrome-mcp-dev）让 AI 自动浏览和提取
+*   使用 MCP 工具（如 chrome-mcp-dev）让 AI 自动浏览和提取
     
 
 #### 方法三：参考优秀 AI 产品
@@ -101,7 +101,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 
 #### 第一步：向 AI 描述你的 Idea
 
-**[[提示词]]模板：**
+**提示词模板：**
 
 textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyaml Copy
 
@@ -139,7 +139,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 
 #### 第三步：反复打磨直到满意
 
-与 AI [[01基础_16多轮对话记忆设计|多轮对话]]，不断优化：
+与 AI 多轮对话，不断优化：
 
 *   "如果只有 1 周开发时间，应该先做哪 3 个功能？"
     
@@ -365,10 +365,10 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 
 **推荐工具栈：**
 
-*   AI 助手：**[[Claude Code 命令与最佳实践|Claude Code]]** （代码理解和修改）
+*   AI 助手：**Claude Code** （代码理解和修改）
     
 
-*   后端（如果需要）：[[Day4-Next.js核心|Next.js]] API Routes 或独立后端
+*   后端（如果需要）：Next.js API Routes 或独立后端
     
 
 **为什么选这套工具？**

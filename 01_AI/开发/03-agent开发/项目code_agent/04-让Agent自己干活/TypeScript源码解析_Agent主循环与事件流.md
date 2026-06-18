@@ -1,10 +1,10 @@
 # TypeScript源码解析：Agent 主循环与事件流
 
-理论篇讲了 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 的设计理念和 ReAct 范式，这篇带你走读 MewCode 的真实代码，看看「调 LLM → 执行工具 → 喂回结果」这条主线是怎么实现的。
+理论篇讲了 Agent Loop 的设计理念和 ReAct 范式，这篇带你走读 MewCode 的真实代码，看看「调 LLM → 执行工具 → 喂回结果」这条主线是怎么实现的。
 
 ## 模块概览
 
-[[07-Agent|Agent]] Loop 的代码集中在 `src/agent/` 目录，三个文件：
+Agent Loop 的代码集中在 `src/agent/` 目录，三个文件：
 
 | 文件 | 职责 |
 | --- | --- |
@@ -83,7 +83,7 @@ async *run(): AsyncGenerator<AgentEvent> {
 
 `async *run()` 是一个 async generator 方法。调用方用 `for await (const event of agent.run())` 消费事件，每次 `yield` 一个事件就暂停 generator，等消费方准备好再继续。这种惰性推送不需要显式的缓冲区管理。
 
-启动前先过滤工具列表：如果有 [[skill]] 设置了 `toolFilter` ，只保留通过过滤的工具和系统工具。然后触发 session\_start 生命周期事件。
+启动前先过滤工具列表：如果有 skill 设置了 `toolFilter` ，只保留通过过滤的工具和系统工具。然后触发 session\_start 生命周期事件。
 
 几个局部变量追踪循环状态： `maxTokensEscalated` 记录输出上限是否已提升过， `consecutiveUnknown` 计数连续未知工具调用次数， `outputRecoveries` 计数分段续写次数。
 
@@ -126,7 +126,7 @@ for await (const event of stream) {
 }
 ```
 
-`for await` 遍历 LLM 的流式事件。每收到一个 `text_delta` 就立刻 yield 出去，TUI 实时渲染。 `tool_call_complete` 收集到列表。 `stream_end` 记录停止原因和 Token 用量，同时刷新 usage anchor 用于下一轮的[[理论学习_上下文压缩与_Token_管理|上下文管理]]。
+`for await` 遍历 LLM 的流式事件。每收到一个 `text_delta` 就立刻 yield 出去，TUI 实时渲染。 `tool_call_complete` 收集到列表。 `stream_end` 记录停止原因和 Token 用量，同时刷新 usage anchor 用于下一轮的上下文管理。
 
 每次进入 `for await` 的循环体前都检查 `abortSignal` ，确保用户取消能及时响应。
 
@@ -152,7 +152,7 @@ if (toolUses.length > 0) {
 
 有工具调用就执行工具、把结果追加到对话、 `continue` 进入下一轮。没有工具调用就设 `looping = false` ，发 `loop_complete` 事件。
 
-`onLoopComplete` 是 fire-and-forget 回调，失败了也不影响主循环。第9章的[[理论学习_跨会话记忆与会话持久化|记忆系统]]会挂在这里，循环结束后异步提取对话中的记忆。
+`onLoopComplete` 是 fire-and-forget 回调，失败了也不影响主循环。第9章的记忆系统会挂在这里，循环结束后异步提取对话中的记忆。
 
 ### 工具结果收集
 
@@ -414,7 +414,7 @@ if (skillReminder) {
 
 `buildActiveSkillsReminder` 把所有激活的 Skill SOP 拼成一段文本，每轮重新注入，确保模型在长对话中始终能看到。
 
-双层保障：[[提示词]]引导 LLM 自觉只做探索和规划，权限系统兜底拦截不听话的写操作。Plan 文件路径自动放行。
+双层保障：提示词引导 LLM 自觉只做探索和规划，权限系统兜底拦截不听话的写操作。Plan 文件路径自动放行。
 
 ## 小结
 

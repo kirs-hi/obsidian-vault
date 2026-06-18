@@ -129,7 +129,7 @@ public BlockingQueue<StreamEvent> stream(
 
 这段代码做的事情很简洁：创建一个容量 64 的阻塞队列，启动一个虚拟线程去执行真正的流式请求，然后立刻把队列返回给调用方。调用方可以马上开始 `take()` ，虚拟线程在后台不断往队列里 `put()` 事件。
 
-为什么用虚拟线程而不是 `CompletableFuture` 或 Reactor？因为 [[01基础_20SSE协议与流式响应|SSE]] 流式读取本质上是一个阻塞循环：不断读下一个事件，直到流结束。用虚拟线程写阻塞代码，读起来像同步逻辑一样直白，但不会占用平台线程。队列容量设成 64 是一个背压机制：如果消费方处理不过来，生产方在 `put()` 时会自动阻塞，不会把内存撑爆。
+为什么用虚拟线程而不是 `CompletableFuture` 或 Reactor？因为 SSE 流式读取本质上是一个阻塞循环：不断读下一个事件，直到流结束。用虚拟线程写阻塞代码，读起来像同步逻辑一样直白，但不会占用平台线程。队列容量设成 64 是一个背压机制：如果消费方处理不过来，生产方在 `put()` 时会自动阻塞，不会把内存撑爆。
 
 外层的 catch 也值得注意：任何异常都不会悄悄丢失，而是被 `classifyError()` 翻译成业务异常后，包装成 `StreamEvent.Error` 塞进队列。这样消费方不需要额外的错误回调，只要在正常的事件循环里处理 `Error` 事件就行。一条通道，既走数据又走错误。
 
@@ -262,7 +262,7 @@ if ("assistant".equals(msg.getRole())
 
 当一条 assistant 消息同时包含思考块、文本和工具调用时，需要把它们全部塞进一个 `ContentBlockParam` 列表里。SDK 的 `MessageParam` 对 content 字段有两种表达：纯文本可以直接传 String，混合内容则要用 `contentOfBlockParams()` 传一个列表。
 
-思考块特别需要注意 `signature` 字段。Claude 的 API 要求[[01基础_16多轮对话记忆设计|多轮对话]]中，上一轮的 thinking 在回传时必须带上签名，用于验证这确实是模型自己产出的思考内容而不是用户伪造的。这就是为什么 `ThinkingComplete` 事件里有 signature，而 `ThinkingBlock` record 里也保存了它。
+思考块特别需要注意 `signature` 字段。Claude 的 API 要求多轮对话中，上一轮的 thinking 在回传时必须带上签名，用于验证这确实是模型自己产出的思考内容而不是用户伪造的。这就是为什么 `ThinkingComplete` 事件里有 signature，而 `ThinkingBlock` record 里也保存了它。
 
 ### 连续同角色消息合并
 
@@ -354,7 +354,7 @@ private LlmException classifyError(Exception e) {
 
 对比之前手动解析 HTTP 状态码的版本，现在直接 `instanceof` SDK 的异常类型，既准确又不容易遗漏。 `BadRequestException` 比较特殊：它涵盖了多种 400 错误，所以还需要检查消息内容来区分「上下文太长」和其他 bad request。
 
-这个翻译层看着不起眼，但它让上层代码完全不需要知道底层用的是哪家 SDK。[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 里只需要 `catch (LlmException e)` 然后检查是不是 `RateLimitException` 、是不是 `ContextTooLongException` ，处理逻辑就明确了。
+这个翻译层看着不起眼，但它让上层代码完全不需要知道底层用的是哪家 SDK。Agent Loop 里只需要 `catch (LlmException e)` 然后检查是不是 `RateLimitException` 、是不是 `ContextTooLongException` ，处理逻辑就明确了。
 
 ## 模型解析与能力探测
 

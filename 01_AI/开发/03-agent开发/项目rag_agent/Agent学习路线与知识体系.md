@@ -1,6 +1,6 @@
 # Agent 学习路线与知识体系
 
-> 来源：[datawhalechina/[[07-Agent|Agent]]-Learning-Hub](https://github.com/datawhalechina/Agent-Learning-Hub)
+> 来源：[datawhalechina/Agent-Learning-Hub](https://github.com/datawhalechina/Agent-Learning-Hub)
 > 整理时间：2026-06-02
 > 核心理念：Build useful, reliable agents — 不是收藏链接，而是照着执行
 
@@ -10,10 +10,10 @@
 
 | 优先级 | 方向 | 为什么 |
 |:---:|------|------|
-| 1 | **Coding Agents**（[[Claude Code 命令与最佳实践|Claude Code]] / Codex 风格） | 真实代码库 + shell + 文件编辑 + 测试 + 权限 + [[理论学习_上下文压缩与_Token_管理|上下文压缩]] = 最好的 agent 工程样本 |
+| 1 | **Coding Agents**（Claude Code / Codex 风格） | 真实代码库 + shell + 文件编辑 + 测试 + 权限 + 上下文压缩 = 最好的 agent 工程样本 |
 | 2 | **Agent Harness Engineering** | agent 的能力大量来自 harness：工具协议、权限、状态、反馈、回放、CI、评测 |
-| 3 | **Personal Agents**（[[00_OpenClaw_MOC|OpenClaw]] / Hermes 风格） | 长运行、本地优先、跨应用、记忆、skills、消息入口 → "个人操作系统" |
-| 4 | **Skills / [[理论学习_MCP_协议与开放工具生态|MCP]] / A2A / ACP** | skills = 能力复用，MCP = 连接工具，A2A = 连接 agent，ACP = 连接宿主应用 |
+| 3 | **Personal Agents**（OpenClaw / Hermes 风格） | 长运行、本地优先、跨应用、记忆、skills、消息入口 → "个人操作系统" |
+| 4 | **Skills / MCP / A2A / ACP** | skills = 能力复用，MCP = 连接工具，A2A = 连接 agent，ACP = 连接宿主应用 |
 | 5 | **Evaluation & Safety** | 没有 eval、trace、权限边界的 agent 只能算 demo |
 
 > ⚠️ 不建议重押老式 crew/role-play 框架——可以了解，但不应成为主线。
@@ -46,7 +46,7 @@
 - [ ] 加最大步数、超时和错误处理
 
 📖 必读：
-- [OpenAI [[01基础_12理解函数调用Function Call|Function Calling]]](https://platform.openai.com/docs/guides/function-calling)
+- [OpenAI Function Calling](https://platform.openai.com/docs/guides/function-calling)
 - [Gemini Function Calling](https://ai.google.dev/gemini-api/docs/function-calling)
 - [Claude Tool Use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview)
 
@@ -79,7 +79,7 @@
 | [mem0](https://github.com/mem0ai/mem0) | agent 长期 memory 组件 |
 | [Letta](https://github.com/letta-ai/letta) | stateful agent 的 memory/context 管理 |
 | [Onyx](https://github.com/onyx-dot-app/onyx) | 企业级 connectors + hybrid search + 权限 |
-| [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | 初学者友好的本地 [[06-RAG|RAG]] + agents |
+| [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | 初学者友好的本地 RAG + agents |
 
 ---
 
@@ -131,7 +131,7 @@
 
 ### Stage 5：Skills、协议与能力打包
 
-**产出：一个可复用 [[skill]]（如 code-review / research-report / pdf-extraction）**
+**产出：一个可复用 skill（如 code-review / research-report / pdf-extraction）**
 
 > Skill ≠ Tool ≠ Prompt ≠ MCP。Skill 是可发现、可版本化、可分发的能力包。
 
@@ -225,9 +225,9 @@
 |---|----------|-------|
 | **从零构建** | [learn-claude-code](https://github.com/shareAI-lab/learn-claude-code) · [claw0](https://github.com/shareAI-lab/claw0) · [hello-agents](https://github.com/datawhalechina/hello-agents) | agent loop · tool registry · session · context compaction · gateway · trace · subagents |
 | **个人 / 常驻 Agent** | [OpenClaw](https://github.com/openclaw/openclaw) · [Hermes Agent](https://github.com/NousResearch/hermes-agent) · [CyberClaw](https://github.com/ttguy0707/CyberClaw) | 长运行 · skills · 记忆 · 消息入口 · 权限 · 安全审计 |
-| **[[理论学习_什么是_Coding_Agent_|Coding Agent]]** | [Claude Code](https://code.claude.com/docs/en/overview) · [Codex](https://github.com/openai/codex) · [OpenCode](https://github.com/opencode-ai/opencode) · [OpenHands](https://github.com/All-Hands-AI/OpenHands) · [SWE-agent](https://github.com/SWE-agent/SWE-agent) · [pi](https://github.com/earendil-works/pi) | 真实代码库编辑 · shell · 测试 · sandbox · PR 工作流 |
+| **Coding Agent** | [Claude Code](https://code.claude.com/docs/en/overview) · [Codex](https://github.com/openai/codex) · [OpenCode](https://github.com/opencode-ai/opencode) · [OpenHands](https://github.com/All-Hands-AI/OpenHands) · [SWE-agent](https://github.com/SWE-agent/SWE-agent) · [pi](https://github.com/earendil-works/pi) | 真实代码库编辑 · shell · 测试 · sandbox · PR 工作流 |
 | **Deep Research / RAG** | [DeerFlow](https://github.com/bytedance/deer-flow) · [LlamaIndex](https://docs.llamaindex.ai/) | 搜索 · 抓取 · 检索 · rerank · 引用 · 报告生成 |
-| **教程百科** | [GenAI_Agents](https://github.com/NirDiamant/GenAI_Agents) · [smolagents](https://github.com/huggingface/smolagents) · [agents-towards-production](https://github.com/NirDiamant/agents-towards-production) | 横向比较 [[理论学习_ReAct_范式与_Agent_Loop|ReAct]] · Plan-and-Execute · Multi-Agent · production patterns |
+| **教程百科** | [GenAI_Agents](https://github.com/NirDiamant/GenAI_Agents) · [smolagents](https://github.com/huggingface/smolagents) · [agents-towards-production](https://github.com/NirDiamant/agents-towards-production) | 横向比较 ReAct · Plan-and-Execute · Multi-Agent · production patterns |
 | **浏览器 / 多模态** | [browser-use](https://github.com/browser-use/browser-use) · [UI-TARS-desktop](https://github.com/bytedance/UI-TARS-desktop) | 浏览器/桌面操作 · 视觉理解 · 动作空间 · 失败恢复 |
 
 ---

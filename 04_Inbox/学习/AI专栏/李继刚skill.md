@@ -1,4 +1,4 @@
-以下是李继刚（GitHub: lijigang）的 Skill 完整汇总。他是中文 AI Prompt 领域的标杆人物，使用 Lisp 风格语法编写[[提示词]]，主要面向 Claude 模型。
+以下是李继刚（GitHub: lijigang）的 Skill 完整汇总。他是中文 AI Prompt 领域的标杆人物，使用 Lisp 风格语法编写提示词，主要面向 Claude 模型。
 
 ---
 
@@ -6,7 +6,7 @@
 
 | 仓库 | 说明 | 链接 |
 |------|------|------|
-| ljg-skills | [[Claude Code 命令与最佳实践|Claude Code]] 自定义技能集（主力仓库，⭐5000+） | [GitHub](https://github.com/lijigang/ljg-skills) |
+| ljg-skills | Claude Code 自定义技能集（主力仓库，⭐5000+） | [GitHub](https://github.com/lijigang/ljg-skills) |
 | write-prompt | 公众号 Write Prompt 发布的 Prompt 同步记录 | [GitHub](https://github.com/lijigang/write-prompt) |
 | prompts | 早期结构化 Prompts 合集 | [GitHub](https://github.com/lijigang/prompts) |
 
@@ -59,7 +59,7 @@
 |--------|------|
 | **ljg-word** | 单词精通，深度拆解一个英语单词的核心语义 |
 | **ljg-travel** | 旅行研究，输入城市名，生成深度文化研究文档 + 便携卡片 |
-| **ljg-[[skill]]-map** | 技能地图，扫描所有已安装技能，渲染可视化总览 |
+| **ljg-skill-map** | 技能地图，扫描所有已安装技能，渲染可视化总览 |
 | **ljg-x-download** | X/Twitter 媒体下载 |
 | **ljg-push** | 推送引擎，把本地技能一键同步到 GitHub |
 

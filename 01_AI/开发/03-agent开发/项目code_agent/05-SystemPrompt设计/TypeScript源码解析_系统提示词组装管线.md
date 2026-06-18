@@ -1,6 +1,6 @@
 # TypeScript源码解析：系统提示词组装管线
 
-理论篇讲了 [[理论学习_System_Prompt_如何设计_|System Prompt]] 的七个信息来源和三条通道，这篇带你走读 MewCode 的真实代码，看看七个信息来源是怎么被编排成最终发给 LLM 的那段长文本的。
+理论篇讲了 System Prompt 的七个信息来源和三条通道，这篇带你走读 MewCode 的真实代码，看看七个信息来源是怎么被编排成最终发给 LLM 的那段长文本的。
 
 ## 模块概览
 
@@ -138,7 +138,7 @@ return b.build();
 | `systemSection` | 10 | 输出格式、system-reminder 标签说明、Hook 反馈 |
 | `doingTasksSection` | 20 | 先读再改、优先编辑已有文件、不做过度设计 |
 | `executingActionsSection` | 30 | 区分可逆和高风险操作，高风险需确认 |
-| `usingToolsSection` | 40 | 专用工具优先于 Bash、并行调用、[[07-Agent|Agent]] 委派 |
+| `usingToolsSection` | 40 | 专用工具优先于 Bash、并行调用、Agent 委派 |
 | `toneStyleSection` | 50 | 简洁、不用 emoji、引用代码带行号 |
 | `outputEfficiencySection` | 60 | 先说意图、过程简短更新、结尾一两句总结 |
 
@@ -168,9 +168,9 @@ export function identitySection(): Section {
 }
 ```
 
-[[Day2-JavaScript和TypeScript|TypeScript]] 也有模板字符串（反引号 \`\`\` ），但 MewCode 这里没有使用。字符串拼接 `+` 的好处是换行位置完全可控，每个 `\n` 都是显式的。缺点是阅读起来不够直观，几十行的 `+` 连接看着比较拥挤。
+TypeScript 也有模板字符串（反引号 \`\`\` ），但 MewCode 这里没有使用。字符串拼接 `+` 的好处是换行位置完全可控，每个 `\n` 都是显式的。缺点是阅读起来不够直观，几十行的 `+` 连接看着比较拥挤。
 
-的[[提示词]]文本使用中文。这不影响功能，只是本地化策略的选择。
+的提示词文本使用中文。这不影响功能，只是本地化策略的选择。
 
 ## 环境探测：detectEnvironment
 
@@ -257,7 +257,7 @@ export function buildPlanModeReminder(
 }
 ```
 
-[[Claude Code 命令与最佳实践|Claude Code]] 的完整五阶段工作流在这里精简成了四步，措辞也更简洁。 `planExist` 参数用三元运算符 `? :` 选择不同的提示文本。
+Claude Code 的完整五阶段工作流在这里精简成了四步，措辞也更简洁。 `planExist` 参数用三元运算符 `? :` 选择不同的提示文本。
 
 `iteration` 参数传进来了但没有使用。每次调用都返回相同结构的提醒，不区分完整版和精简版。这意味着 目前不做频率控制，每轮都发同样的 Plan Mode 提示词。这种策略更简单，但如果 Plan Mode 的对话轮次很长，会多消耗一些 Token。
 

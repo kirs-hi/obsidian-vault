@@ -4,7 +4,7 @@
 
 | 文件 | 职责 |
 | --- | --- |
-| `compact/ContextCompactor.java` | 两层[[理论学习_上下文压缩与_Token_管理|上下文压缩]]全在这：Layer 1 溢写裁剪 + Layer 2 摘要旧消息、保留近期原文，外加熔断、手动入口和恢复块渲染 |
+| `compact/ContextCompactor.java` | 两层上下文压缩全在这：Layer 1 溢写裁剪 + Layer 2 摘要旧消息、保留近期原文，外加熔断、手动入口和恢复块渲染 |
 | `llm/AnthropicClient.java` | `buildMessages` + `mergeConsecutiveSameRole` ：消息序列化和连续同角色消息合并 |
 | `session/SessionManager.java` | 会话持久化：保存 compact_boundary 记录，resume 时定位恢复点 |
 

@@ -282,7 +282,7 @@ banner_icon: 🔖
 *   REST 还是 GraphQL
     
 
-*   是否有 [[01基础_20SSE协议与流式响应|SSE]] / WebSocket
+*   是否有 SSE / WebSocket
     
 
 *   文件上传怎么走
@@ -879,7 +879,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 
 ## 十四、最后给一个最实用的落地建议
 
-如果你现在就准备把 AI coding 引入一个 React + Python 的项目，不要先去优化[[提示词]]，也不要先追求让 AI 多写几个页面。
+如果你现在就准备把 AI coding 引入一个 React + Python 的项目，不要先去优化提示词，也不要先追求让 AI 多写几个页面。
 
 先做下面这五件事：
 

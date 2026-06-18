@@ -5,7 +5,7 @@ tags: [skill-review, darwin-skill, procurement, 数仓]
 
 # 采购取数分析 Skill — Darwin 8维评估报告
 
-> 评估方法：[darwin-[[skill]]](https://friday.sankuai.com/mcp/skill-detail?activeTab=overview&id=36199) 8维 Rubric（Karpathy autoresearch 方法论）
+> 评估方法：[darwin-skill](https://friday.sankuai.com/mcp/skill-detail?activeTab=overview&id=36199) 8维 Rubric（Karpathy autoresearch 方法论）
 > 评估对象：`procurement-data-analysis` V9（作者：weijianzhong，Skill ID: 7014）
 > 评估模式：结构维度(1-7) 静态分析 + 效果维度(8) dry_run 模拟推演
 > 评估日期：2026-04-21

@@ -1,4 +1,4 @@
-理论篇讲了[[理论学习_跨会话记忆与会话持久化|记忆系统]]的三类记忆和提取机制，这篇带你走读 Go 版 MewCode 的真实代码，看看「让 [[07-Agent|Agent]] 拥有长期记忆」是怎么用文件系统和后台子 Agent 实现的。
+理论篇讲了记忆系统的三类记忆和提取机制，这篇带你走读 Go 版 MewCode 的真实代码，看看「让 Agent 拥有长期记忆」是怎么用文件系统和后台子 Agent 实现的。
 
 ## 模块概览
 
@@ -9,7 +9,7 @@
 | 文件 | 职责 |
 | --- | --- |
 | `memory.go` | Manager 结构体，管理记忆目录的读写和列举 |
-| `memory_types.go` | 四种记忆类型定义和完整的类型描述[[提示词]] |
+| `memory_types.go` | 四种记忆类型定义和完整的类型描述提示词 |
 | `instructions.go` | 项目指令文件的发现、加载、@include 展开 |
 | `find_relevant_memories.go` | LLM 驱动的记忆召回 |
 | `memdir.go` | 记忆行为提示词组装，MEMORY.md 截断保护 |

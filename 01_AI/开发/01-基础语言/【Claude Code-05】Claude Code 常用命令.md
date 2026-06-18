@@ -21,11 +21,11 @@ tags:
 > 
 > 项目完成后，帮我进行代码 review
 
-命令 是你在 Claude 的交互式会话中用来控制行为的快捷方式，是你可以去把自己重复使用的这个流程[[提示词]]，把它结合起来，下次就能复用了
+命令 是你在 Claude 的交互式会话中用来控制行为的快捷方式，是你可以去把自己重复使用的这个流程提示词，把它结合起来，下次就能复用了
 
 Claude Code主要分为几类：
 
-1. 内置命令：[[Claude Code 命令与最佳实践|Claude Code]] 自带，例如 /help、/clear、/model
+1. 内置命令：Claude Code 自带，例如 /help、/clear、/model
 2. Skills：你自己定义的命令，基于 SKILL.md 文件，例如 /optimize、/pr
 3. 插件命令：来自已安装插件的命令，例如 /frontend-design:frontend-design
 

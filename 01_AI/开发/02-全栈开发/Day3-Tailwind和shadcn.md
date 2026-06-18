@@ -288,7 +288,7 @@ export default function Page() {
 npm install next-themes
 ```
 
-然后创建一个 ThemeProvider 组件包裹你的应用，再做一个切换按钮。具体代码在 Day 4 的 [[Day4-Next.js核心|Next.js]] 项目里会实操，这里先了解概念。
+然后创建一个 ThemeProvider 组件包裹你的应用，再做一个切换按钮。具体代码在 Day 4 的 Next.js 项目里会实操，这里先了解概念。
 
 ### 4.5 切换主题风格
 

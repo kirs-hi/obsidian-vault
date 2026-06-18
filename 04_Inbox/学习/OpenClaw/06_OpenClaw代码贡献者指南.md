@@ -1,6 +1,6 @@
 # OpenClaw 代码贡献者完全指南
 
-> 本文面向希望成为 [[00_OpenClaw_MOC|OpenClaw]] 代码贡献者的开发者，涵盖从环境搭建到 PR 合并的完整流程。
+> 本文面向希望成为 OpenClaw 代码贡献者的开发者，涵盖从环境搭建到 PR 合并的完整流程。
 > 
 > 参考来源：[CONTRIBUTING.md](https://github.com/openclaw/openclaw/blob/main/CONTRIBUTING.md) · [VISION.md](https://github.com/openclaw/openclaw/blob/main/VISION.md) · [DeepWiki](https://deepwiki.com/openclaw/openclaw/8-development)
 
@@ -36,7 +36,7 @@ OpenClaw 采用"仁慈独裁者"（Benevolent Dictator）模式，由 **Peter St
 |------|---------|------|
 | Node.js | 22+ | 必须的运行时基础 |
 | pnpm | 10.23.0 | 主包管理器，必须使用 lockfile |
-| Bun | 1.3.9+ | [[Day2-JavaScript和TypeScript|TypeScript]] 执行和测试的首选工具 |
+| Bun | 1.3.9+ | TypeScript 执行和测试的首选工具 |
 | Python | 3.12 | 用于 `skills/` 脚本和 CI 工具 |
 
 > ⚠️ Node 和 Bun 两条路径都必须保持可用。修改依赖时，`pnpm-lock.yaml` 和 Bun 补丁必须保持同步。
@@ -259,7 +259,7 @@ OpenClaw 支持两种 Memory 后端：
 
 沙箱模式（`agents.defaults.sandbox.mode`）：
 - `off` — 不使用沙箱
-- `non-main` — 非主 [[07-Agent|Agent]] 使用沙箱
+- `non-main` — 非主 Agent 使用沙箱
 - `all` — 所有 Agent 使用沙箱
 
 ---

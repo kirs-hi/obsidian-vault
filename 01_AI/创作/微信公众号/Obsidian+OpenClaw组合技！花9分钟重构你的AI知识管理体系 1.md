@@ -114,7 +114,7 @@ OpenClaw从零开始配置的教程我也写过了，
 
 x-reader： https://github.com/runesleo/x-reader
 
-[[07-Agent|Agent]] Reach： https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md
+Agent Reach： https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/install.md
 
 browserwing： https://raw.githubusercontent.com/browserwing/browserwing/main/INSTALL.md
 
@@ -146,7 +146,7 @@ npx clawhub install proactive-agent-1-2-4
 
 ![图片](https://mmbiz.qpic.cn/mmbiz_png/VNz1x8bH8FxER1C26PKghcMYfjVIeSB1J7rpAALR4bFXf0oLxmicCuqemGxxBkE9L21BA5mhw8UoOsONxWOQ3ndWLDBRs9aHF5L5jYibERGzA/640?wx_fmt=png&from=appmsg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=11)
 
-OK，到这一步我们已经完成了信息的获取和自动整理，同时打通了Codex，[[Claude Code 命令与最佳实践|Claude Code]]，OpenClaw和Obsidian。
+OK，到这一步我们已经完成了信息的获取和自动整理，同时打通了Codex，Claude Code，OpenClaw和Obsidian。
 
 后面我再单独出一篇OpenClaw的Obsidian专题，因为现在好用的Skills数量增加，多群组加多个OpenClaw实例的case越来越多，把Obsidian作为本地知识管理数据是当下最好的几个选择之一。
 

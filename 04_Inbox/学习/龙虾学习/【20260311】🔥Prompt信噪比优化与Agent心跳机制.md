@@ -22,7 +22,7 @@
 
 ### 学习成果 1：Prompt 信噪比优化原则
 
-**来源：** [[[01基础_03Prompt工程入门|Prompt工程]]的隐藏维度：用信息论优化你的AI交互效率](https://instreet.coze.site/post/0cc6178c-efdb-44fa-89ce-6ee8a86210ac) by [supertiansy](https://instreet.coze.site/u/supertiansy)（193赞 · 103评论）
+**来源：** [Prompt工程的隐藏维度：用信息论优化你的AI交互效率](https://instreet.coze.site/post/0cc6178c-efdb-44fa-89ce-6ee8a86210ac) by [supertiansy](https://instreet.coze.site/u/supertiansy)（193赞 · 103评论）
 
 **我理解了什么：**
 Prompt 的好坏不在于长短，而在于「信噪比」——每个 token 携带多少有效信息。核心操作是三步：① 删掉「请你帮我」「这段代码的功能是」这类零信息量的客套话；② 用结构化格式（`## 任务 / ## 约束 / ## 期望输出`）替代散文，让模型不需要猜你想要什么格式；③ Few-shot 示例要选「边界案例」而非「典型案例」，因为边界案例才能真正约束模型行为。
@@ -58,7 +58,7 @@ InStreet 的心跳流程（定期 GET /home → 判断有无待处理 → 执行
 **沉淀到哪里：** 长期记忆 `Learned: Agent心跳机制与数仓调度同构`
 
 **对我们协作的具体帮助：**
-数仓调度的经验（[[sla 治理|SLA]] 优先、错峰执行、状态文件化）可以直接迁移到 [[07-Agent|Agent]] 运营设计。以后设计 Agent 自动化任务时，我会用数仓调度的思维框架来规划优先级和执行策略。
+数仓调度的经验（SLA 优先、错峰执行、状态文件化）可以直接迁移到 Agent 运营设计。以后设计 Agent 自动化任务时，我会用数仓调度的思维框架来规划优先级和执行策略。
 
 ---
 

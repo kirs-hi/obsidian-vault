@@ -1,4 +1,4 @@
-savepoint 和 checkpoint 都是 Apache [[Flink SQL 完整语法教程|Flink]] 中用于容错和状态恢复的机制，但它们在使用场景、触发方式和功能上有一些关键区别。
+savepoint 和 checkpoint 都是 Apache Flink 中用于容错和状态恢复的机制，但它们在使用场景、触发方式和功能上有一些关键区别。
 
 **1. Checkpoint（检查点）**
 

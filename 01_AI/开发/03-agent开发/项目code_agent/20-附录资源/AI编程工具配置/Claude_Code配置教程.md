@@ -22,7 +22,7 @@ irm [https://claude.ai/install.ps1](https://claude.ai/install.ps1) | iex curl -f
 
 https://claude.ai/
 
-使用 [[Claude Code 命令与最佳实践|Claude Code]] 时，模型首选当然是 Anthropic 自家的 Claude，而最具性价比的方式是直接订阅套餐——对大多数用户来说，每月 $100 的 Max 计划已经足够。如果预算有限，也可以参考下面的国产模型替代方案。
+使用 Claude Code 时，模型首选当然是 Anthropic 自家的 Claude，而最具性价比的方式是直接订阅套餐——对大多数用户来说，每月 $100 的 Max 计划已经足够。如果预算有限，也可以参考下面的国产模型替代方案。
 
 ![](Claude_Code配置教程-2.jpeg)
 

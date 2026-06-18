@@ -284,7 +284,7 @@ yield StreamEnd(
 )
 ```
 
-`stop_reason` 告诉上层 LLM 为什么停了。 `"end_turn"` 表示模型认为说完了， `"tool_use"` 表示模型想调用工具。[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 根据这个值决定是结束循环还是继续执行工具。
+`stop_reason` 告诉上层 LLM 为什么停了。 `"end_turn"` 表示模型认为说完了， `"tool_use"` 表示模型想调用工具。Agent Loop 根据这个值决定是结束循环还是继续执行工具。
 
 ## 两层消息模型
 
@@ -315,7 +315,7 @@ def add_system_reminder(self, content: str) -> None:
     )
 ```
 
-为什么系统提醒是 user 角色？因为 Anthropic API 的 system 参数只有一个，已经被系统[[提示词]]占了。后续动态注入的提醒只能塞进 user 消息里，用 XML 标签包裹来告诉模型这是系统级信息。
+为什么系统提醒是 user 角色？因为 Anthropic API 的 system 参数只有一个，已经被系统提示词占了。后续动态注入的提醒只能塞进 user 消息里，用 XML 标签包裹来告诉模型这是系统级信息。
 
 ### 外层：双协议序列化
 
@@ -428,7 +428,7 @@ def inject_long_term_memory(
     self.ltm_injected = True
 ```
 
-这个方法对齐了 [[Claude Code 命令与最佳实践|Claude Code]] 的注入方式：把所有上下文信息（项目指令、自动记忆、当前日期）合并进一条 `<system-reminder>` 标签包裹的 user message，插到对话最前面。 `pos` 的计算考虑了环境信息是否已注入：如果已注入就插到第二条，否则插到头部。整个注入只生成一条消息，不需要额外的 assistant 确认消息来维持交替结构。
+这个方法对齐了 Claude Code 的注入方式：把所有上下文信息（项目指令、自动记忆、当前日期）合并进一条 `<system-reminder>` 标签包裹的 user message，插到对话最前面。 `pos` 的计算考虑了环境信息是否已注入：如果已注入就插到第二条，否则插到头部。整个注入只生成一条消息，不需要额外的 assistant 确认消息来维持交替结构。
 
 ## 流式响应处理
 
@@ -556,7 +556,7 @@ async with self._client.messages.stream(**kwargs) as stream:
 | 设计决策 | Python 的实现方式 |
 | --- | --- |
 | 供应商抽象 | ABC 抽象基类 + `create_client` 工厂函数 |
-| [[01基础_20SSE协议与流式响应|流式响应]] | async generator，yield 驱动，天然背压 |
+| 流式响应 | async generator，yield 驱动，天然背压 |
 | 事件类型 | 7 个 dataclass + Union 类型别名 |
 | 消息模型 | Message dataclass，5 字段覆盖所有情况 |
 | 双协议序列化 | `serialize("anthropic"/"openai")` ，内部分发 |
@@ -622,7 +622,7 @@ def _mark_last_tool_for_cache(tools):
 ```
 
 打标记的位置有三处：
-1. **[[理论学习_System_Prompt_如何设计_|System Prompt]]**（每次都相同，最适合缓存）
+1. **System Prompt**（每次都相同，最适合缓存）
 2. **Tool Schema 尾部**（工具列表跨轮次稳定）
 3. **最后一条 user 消息尾部**（把尽可能多的历史缓存住）
 
@@ -704,4 +704,4 @@ def replace_history(self, new_messages: list[Message]) -> None:
     self.anchor_count = 0
 ```
 
-这个方法是 context window 管理系统（`auto_compact`）的入口，详见第08章[[理论学习_上下文压缩与_Token_管理|上下文压缩]]的解析。
+这个方法是 context window 管理系统（`auto_compact`）的入口，详见第08章上下文压缩的解析。

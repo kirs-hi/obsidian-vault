@@ -1,10 +1,10 @@
 # TypeScript源码解析：上下文压缩与溢写
 
-走读 MewCode 的[[理论学习_上下文压缩与_Token_管理|上下文管理]]代码，看「工具结果预算（Layer 1）」和「摘要旧消息、保留近期原文（Layer 2）」这两层压缩怎么实现。
+走读 MewCode 的上下文管理代码，看「工具结果预算（Layer 1）」和「摘要旧消息、保留近期原文（Layer 2）」这两层压缩怎么实现。
 
 ## 模块概览
 
-的上下文管理代码分布在两个目录里。Layer 1（工具结果预算）在 `src/toolresult/` ，Layer 2（摘要压缩）在 `src/compact/` 。两层各管各的，[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 先调 Layer 1 再调 Layer 2。
+的上下文管理代码分布在两个目录里。Layer 1（工具结果预算）在 `src/toolresult/` ，Layer 2（摘要压缩）在 `src/compact/` 。两层各管各的，Agent Loop 先调 Layer 1 再调 Layer 2。
 
 | 文件 | 职责 |
 | --- | --- |
@@ -370,7 +370,7 @@ if (e instanceof ContextTooLongError) {
 }
 ```
 
-[[07-Agent|Agent]] Loop 在捕获 `ContextTooLongError` 后调用 `forceCompact` ，跳过所有阈值判定和熔断器直接压缩。压缩成功后把 `usageAnchor` 清零（旧锚点已经无意义），yield 一个 compact 事件，然后 continue 重试。
+Agent Loop 在捕获 `ContextTooLongError` 后调用 `forceCompact` ，跳过所有阈值判定和熔断器直接压缩。压缩成功后把 `usageAnchor` 清零（旧锚点已经无意义），yield 一个 compact 事件，然后 continue 重试。
 
 自动压缩是预防，紧急压缩是治疗。
 

@@ -2,7 +2,7 @@
 
 ## 前置准备
 
-这门课教的是 **语言无关的 [[07-Agent|Agent]] 架构**
+这门课教的是 **语言无关的 Agent 架构**
 
 实战篇是为了让你 **动手把理论落地** ，真正理解 Agent 架构的运作方式， 你可以用任何你熟悉的编程语言来实现 MewCode。
 
@@ -33,7 +33,7 @@
 
 ![](前置准备_AI_编程工具与环境准备-1.jpeg)
 
-如果没有用过 [[Claude Code 命令与最佳实践|Claude Code]] 或者对它不熟悉的同学，也不用担心，学起来很快的，我们也准备了一些新手入门 Claude Code 的资料：
+如果没有用过 Claude Code 或者对它不熟悉的同学，也不用担心，学起来很快的，我们也准备了一些新手入门 Claude Code 的资料：
 
 文档资料：
 
@@ -44,11 +44,11 @@
 
 B站优质Claude Code入门教程推荐：
 
--   [Claude Code 从 0 到 1 全攻略：[[理论学习_MCP_协议与开放工具生态|MCP]] / [[理论学习_SubAgent_子任务分发|SubAgent]] / Agent Skill / Hook / 图片 / 上下文处理/ 后台任务](https://www.bilibili.com/video/BV14rzQB9EJj/?spm_id_from=333.337.search-card.all.click&vd_source=894a223b85ae44e61e16dcd1a7356db0)
+-   [Claude Code 从 0 到 1 全攻略：MCP / SubAgent / Agent Skill / Hook / 图片 / 上下文处理/ 后台任务](https://www.bilibili.com/video/BV14rzQB9EJj/?spm_id_from=333.337.search-card.all.click&vd_source=894a223b85ae44e61e16dcd1a7356db0)
 -   [全网最全！60分钟全面掌握Claude Code～【附完整文档】](https://www.bilibili.com/video/BV1NvRyBzEhq/?spm_id_from=333.1365.list.card_archive.click&vd_source=894a223b85ae44e61e16dcd1a7356db0)
 -   [5个 Claude Code 高性价比技巧，让你 Vibe Coding 效率翻倍！| AI 实战](https://www.bilibili.com/video/BV1mdXWB2Et3/?spm_id_from=333.1007.tianma.12-4-46.click&vd_source=894a223b85ae44e61e16dcd1a7356db0)
 
-⚠️强调：有一些同学会误解 Claude 模型不是国内用不了吗？那还能用 Claude Code？这两个不是一个东西哈，Claude Opus 是大模型，确实要有魔法才能用，但是 Claude Code 只是一个客户端，也就是[[2026-03-02-AI编程工具|AI编程工具]]，无需苛刻的网络环境，实际上用 Claude Code 并不是只能用 Claude 自家的模型，它是可以接入其他大模型来用的，比如可以接入国内的模型来进行编程。
+⚠️强调：有一些同学会误解 Claude 模型不是国内用不了吗？那还能用 Claude Code？这两个不是一个东西哈，Claude Opus 是大模型，确实要有魔法才能用，但是 Claude Code 只是一个客户端，也就是AI编程工具，无需苛刻的网络环境，实际上用 Claude Code 并不是只能用 Claude 自家的模型，它是可以接入其他大模型来用的，比如可以接入国内的模型来进行编程。
 
 当然大家也可以选择自己更熟悉的 AI编程 工具， 比如Codex 、Cursor、Trae、 Qoder都可以 。
 
@@ -60,7 +60,7 @@ B站优质Claude Code入门教程推荐：
 
 在开始动手之前，聊聊这门课的学习方式，因为它跟传统的编程课不一样。
 
-每一章的后半部分，你会看到一个「Vibe Coding [[提示词]]」。你把它复制到你的 AI 编程助手里（比如 Claude Code、Cursor 、Codex 、 Trae ），告诉它你用什么语言，AI 会帮你生成代码。
+每一章的后半部分，你会看到一个「Vibe Coding 提示词」。你把它复制到你的 AI 编程助手里（比如 Claude Code、Cursor 、Codex 、 Trae ），告诉它你用什么语言，AI 会帮你生成代码。
 
 虽然我会采用VibeCoding的方式来实现，但这不意味着你可以不思考。恰恰相反，Vibe Coding 要求你 **想得更清楚** 。你得理解前面讲的概念和设计原则，才能判断 AI 生成的代码好不好。
 

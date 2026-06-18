@@ -1,4 +1,4 @@
-理论篇讲了 [[07-Agent|Agent]] Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 Python 版 MewCode 的真实代码。11 个文件，约 1058 行，是 Python 版最大的单模块。虽然文件多，但每个文件职责分明，架构非常清晰。
+理论篇讲了 Agent Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 Python 版 MewCode 的真实代码。11 个文件，约 1058 行，是 Python 版最大的单模块。虽然文件多，但每个文件职责分明，架构非常清晰。
 
 ## 模块概览
 
@@ -7,7 +7,7 @@ Agent Teams 的代码集中在 `mewcode/teams/` 目录下：
 | 文件 | 行数 | 职责 |
 | --- | --- | --- |
 | `manager.py` | 253 | 核心。TeamManager 类，团队和成员的全部生命周期管理 |
-| `coordinator.py` | 243 | 协调者模式：系统[[提示词]]、工具白名单、模式匹配 |
+| `coordinator.py` | 243 | 协调者模式：系统提示词、工具白名单、模式匹配 |
 | `models.py` | 123 | 数据类型定义：BackendType、TeammateInfo、AgentTeam |
 | `registry.py` | 40 | AgentNameRegistry 单例，名字到 agent_ id 的映射 |
 | `mailbox.py` | 122 | 基于文件的收件箱，读/写/消费/广播 |

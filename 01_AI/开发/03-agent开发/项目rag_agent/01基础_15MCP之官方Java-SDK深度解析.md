@@ -11,7 +11,7 @@ tags:
 ---
 [来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
 
-前面几篇 [[理论学习_MCP_协议与开放工具生态|MCP]] 文章，你用 Spring AI 的 `@McpTool` 注解定义工具，用 `@McpResource` 暴露资源，用 `@McpPrompt` 注册[[提示词]]模板，60 行代码就能把一个 MCP Server 跑起来，Claude Desktop 和 Cursor 都能直接调。
+前面几篇 MCP 文章，你用 Spring AI 的 `@McpTool` 注解定义工具，用 `@McpResource` 暴露资源，用 `@McpPrompt` 注册提示词模板，60 行代码就能把一个 MCP Server 跑起来，Claude Desktop 和 Cursor 都能直接调。
 
 但你有没有想过这么一个问题：当你在方法上标了 `@McpTool` ，框架到底做了什么？
 
@@ -21,7 +21,7 @@ tags:
 
 - 你的项目不用 Spring Boot（比如纯 Java 应用、或者 Android 端要嵌入一个 MCP Client）
 
-- 你想自定义 Transport 实现（比如走 WebSocket 而不是 [[01基础_20SSE协议与流式响应|SSE]]）
+- 你想自定义 Transport 实现（比如走 WebSocket 而不是 SSE）
 
 - 你想理解 Spring AI 为什么能自动发现你的工具，出了 bug 好排查
 
@@ -35,7 +35,7 @@ tags:
 
 在 GitHub 搜索 MCP，前排结果基本都来自 [modelcontextprotocol](https://github.com/modelcontextprotocol) 组织——这是 Anthropic 主导成立的开放组织，专门维护 MCP 协议规范和各语言 SDK。
 
-MCP 从设计之初就定位为开放标准：协议规范公开、SDK 全部 MIT 许可证、任何人都可以提 PR 贡献代码。这与 OpenAI 的 [[01基础_12理解函数调用Function Call|Function Call]] 形成对比——后者是 API 的一部分，由 OpenAI 单方面定义。MCP 的目标是成为大模型工具调用领域的通用协议。
+MCP 从设计之初就定位为开放标准：协议规范公开、SDK 全部 MIT 许可证、任何人都可以提 PR 贡献代码。这与 OpenAI 的 Function Call 形成对比——后者是 API 的一部分，由 OpenAI 单方面定义。MCP 的目标是成为大模型工具调用领域的通用协议。
 
 ### 2\. 官方仓库全景
 
@@ -45,7 +45,7 @@ MCP 从设计之初就定位为开放标准：协议规范公开、SDK 全部 MI
 | --- | --- | --- |
 | `modelcontextprotocol` | 协议规范 | MCP 协议的完整定义，所有接口、消息格式、行为约束都在这里。所有 SDK 都以这份规范为基准来实现 |
 | `java-sdk` | Java SDK | 这篇的主角，官方 Java 实现 |
-| `typescript-sdk` | [[Day2-JavaScript和TypeScript|TypeScript]] SDK | 最早的 SDK 实现，也是参考实现（Reference Implementation）。TypeScript 版是第一个跑通协议全流程的 |
+| `typescript-sdk` | TypeScript SDK | 最早的 SDK 实现，也是参考实现（Reference Implementation）。TypeScript 版是第一个跑通协议全流程的 |
 | `python-sdk` | Python SDK | 在 AI / ML 生态中使用最广的版本 |
 | `servers` | 社区 MCP Server 集合 | 各种现成的 MCP Server：文件系统、GitHub、数据库、Web 搜索等 |
 

@@ -22,7 +22,7 @@ AIcoding 的代码我整理好了, 源码在文章最后.
 
 **为什么重要：**
 
-**Lovable [[提示词]]：**
+**Lovable 提示词：**
 
 textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyaml Copy
 
@@ -33,7 +33,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 
 ## 整理需求
 
-如果已经有了展示页面或现有系统，在此基础上开发时，我们已经知道要开发什么，这时候需要整理需求。每个项目整理需求的方式都不同，需要根据独特的需求进行梳理，然后与 AI 进行[[01基础_16多轮对话记忆设计|多轮对话]]，最后整理成一篇需求文档。
+如果已经有了展示页面或现有系统，在此基础上开发时，我们已经知道要开发什么，这时候需要整理需求。每个项目整理需求的方式都不同，需要根据独特的需求进行梳理，然后与 AI 进行多轮对话，最后整理成一篇需求文档。
 
 以我的笔记系统为例，我要为这个笔记系统做一个后端，提供一些 API，使用 Python 开发。
 
@@ -61,7 +61,7 @@ cp -r /Users/dulei/Documents/project/auto_coding/{.claude,.mcp.json,docs,scripts
 
 ### 权限自动化知识背景
 
-完成上面的步骤后，一个关键点是沙箱环境。使用 [[Claude Code 命令与最佳实践|Claude Code]] 做 AI coding 时，它会持续询问权限。我们可以配置权限，但不能完全放开，这是关键。如果放开全部权限，Claude Code 出现问题时可能会删除关键文件，难以挽回。因此必须使用沙箱环境。我选择的是 Docker。在 Docker 沙箱环境中，启动时将当前目录挂载进去，其他目录和系统文件都看不到，这样可以放开容器内的所有权限，让它直接操作。
+完成上面的步骤后，一个关键点是沙箱环境。使用 Claude Code 做 AI coding 时，它会持续询问权限。我们可以配置权限，但不能完全放开，这是关键。如果放开全部权限，Claude Code 出现问题时可能会删除关键文件，难以挽回。因此必须使用沙箱环境。我选择的是 Docker。在 Docker 沙箱环境中，启动时将当前目录挂载进去，其他目录和系统文件都看不到，这样可以放开容器内的所有权限，让它直接操作。
 
 ## docker sanbox
 

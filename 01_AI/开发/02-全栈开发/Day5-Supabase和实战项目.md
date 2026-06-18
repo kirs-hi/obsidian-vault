@@ -9,7 +9,7 @@ description: 连接云数据库，完成一个真正的全栈应用
 
 ## 一、Supabase 是什么？
 
-前四天你学会了做页面（HTML + [[Day3-Tailwind和shadcn|Tailwind]]）、写交互（JS）、搭框架（[[Day4-Next.js核心|Next.js]]）。但数据存在哪？用户信息怎么管理？这就是 Supabase 要解决的事。
+前四天你学会了做页面（HTML + Tailwind）、写交互（JS）、搭框架（Next.js）。但数据存在哪？用户信息怎么管理？这就是 Supabase 要解决的事。
 
 **Supabase = 云端 PostgreSQL 数据库 + 用户认证 + 文件存储 + 实时订阅**
 

@@ -43,7 +43,7 @@ openclaw gateway --port 18789
 
 ## 方式二：Docker 部署（推荐生产环境）
 
-Docker 是运行 [[00_OpenClaw_MOC|OpenClaw]] 最安全的方式——容器化、隔离且可复现。
+Docker 是运行 OpenClaw 最安全的方式——容器化、隔离且可复现。
 
 ### 快速启动
 

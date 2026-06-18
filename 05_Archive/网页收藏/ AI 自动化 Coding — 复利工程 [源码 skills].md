@@ -51,7 +51,7 @@ banner_icon: 🔖
 
 写得好，AI 能准确理解项目、稳定产出；写得烂，AI 乱写一通，你越改越累。
 
-本文不深入讲这一块。固定的编程范式、记忆机制等更复杂的话题也先不展开。如何设计 `agents.md` 的细节，之前的《[[AI 自动化 Coding 2.0 多子项目最佳实践]]》那篇文章已经讲过结构了， 后续我做好 skills 再分享给大家
+本文不深入讲这一块。固定的编程范式、记忆机制等更复杂的话题也先不展开。如何设计 `agents.md` 的细节，之前的《AI 自动化 Coding 2.0 多子项目最佳实践》那篇文章已经讲过结构了， 后续我做好 skills 再分享给大家
 
 ### 拼图二：如何把完成的经验回流到 Harness
 
@@ -155,7 +155,7 @@ textjavascripttypescriptcsshtmlbashjsonmarkdownpythonjavaccpprubygorustphpsqlyam
 
 ## 五、落地成果：已经封装成 skill
 
-基于上面这一整套思路，我已经把它封装成了一个 **[[skill]]**。
+基于上面这一整套思路，我已经把它封装成了一个 **skill**。
 
 实际用下来，**效果非常好**，强烈推荐大家也用起来。
 

@@ -1,8 +1,8 @@
-理论篇讲了 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 的设计理念和 ReAct 范式，这篇带你走读 Python 版 MewCode 的真实代码，看看这些概念在 asyncio 的世界里是怎么落地的。
+理论篇讲了 Agent Loop 的设计理念和 ReAct 范式，这篇带你走读 Python 版 MewCode 的真实代码，看看这些概念在 asyncio 的世界里是怎么落地的。
 
 ## 模块概览
 
-Python 版把 [[07-Agent|Agent]] Loop 的所有代码集中在一个文件里：
+Python 版把 Agent Loop 的所有代码集中在一个文件里：
 
 | 文件 | 职责 |
 | --- | --- |
@@ -35,7 +35,7 @@ class Agent:
 
 `max_iterations` 默认 50，选择了比较保守的默认值，防止 Agent 失控运行。
 
-额外多出来的几个字段值得注意： `compact_breaker` 是[[理论学习_上下文压缩与_Token_管理|上下文压缩]]的熔断器，防止压缩反复失败时陷入死循环； `_loop_count` 追踪循环完成次数，用于触发定期记忆提取； `active_skills` 管理当前激活的技能[[提示词]]。
+额外多出来的几个字段值得注意： `compact_breaker` 是上下文压缩的熔断器，防止压缩反复失败时陷入死循环； `_loop_count` 追踪循环完成次数，用于触发定期记忆提取； `active_skills` 管理当前激活的技能提示词。
 
 ### AgentEvent：用 Union 模拟代数类型
 

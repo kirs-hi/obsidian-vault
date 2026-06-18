@@ -8,13 +8,13 @@ description: "摘要：本文整理自鹰角大数据开发工程师，Apache H
 tags:
   - "clippings"
 ---
-![鹰角基于 [[Flink SQL 完整语法教程|Flink]] + [[paimon|Paimon]] + Trino 构建湖仓一体化平台实践项目](https://static001.geekbang.org/infoq/87/87ba7e886802049ea2f251ab4cb1a841.png)
+![鹰角基于 Flink + Paimon + Trino 构建湖仓一体化平台实践项目](https://static001.geekbang.org/infoq/87/87ba7e886802049ea2f251ab4cb1a841.png)
 
 > 摘要：本文整理自鹰角大数据开发工程师，Apache Hudi Contributor 朱正军老师在 Flink Forward Asia 2024 生产实践（二）专场中的分享。主要分为以下四个部分：
 > 
 > 一、鹰角数据平台架构
 > 
-> 二、[[数据湖项目|数据湖]]选型
+> 二、数据湖选型
 > 
 > 三、湖仓一体建设
 > 
@@ -96,7 +96,7 @@ tags:
 
 ![](https://static001.geekbang.org/infoq/c8/c8a91aa05c4e846f87261077f3d3334f.webp?x-oss-process=image%2Fresize%2Cp_80%2Fformat%2Cpng)
 
-在湖仓平台架构的入湖实施中，选择了 Flink 作为实时传输引擎，通过 CDC（Change Data Capture）技术将数据写入 Paimon 表中。在分布式存储方面，平台采用了 OSS-HDFS。云上离线传输时使用 [[spark|Spark]] 作为引擎。对于全量数据入湖的支持，平台可能会采用离线的 Spark 方式进行处理。
+在湖仓平台架构的入湖实施中，选择了 Flink 作为实时传输引擎，通过 CDC（Change Data Capture）技术将数据写入 Paimon 表中。在分布式存储方面，平台采用了 OSS-HDFS。云上离线传输时使用 Spark 作为引擎。对于全量数据入湖的支持，平台可能会采用离线的 Spark 方式进行处理。
 
 而 Ranger 则是湖仓权限管理平台基础组建。由于 Paimon 以数据资产的形式提供给各个部门，因此每个 BU 的权限管理都依赖于 Ranger 作为底层引擎。
 
@@ -134,7 +134,7 @@ tags:
 
 接下来，将介绍湖仓平台中的 Ranger 集成部分。当获取到用户的 Session 信息后，例如获取用户的邮箱等作为区分不同用户的数据资产。那么，面对如十万张表这样的庞大用户资产，如何高效地存储这些策略（Policy）呢？
 
-实际上，通过底层自建的 Ranger 集成来实现这一目标。这个集成主要涉及到 Ranger 的容器化改造，包括镜像的 CI/CD 流程、审计日志落地到 Elasticsearch（ES），以及对 API 的改造，以适配 Trino 4xx 版本。需要特别注意的是， Ranger 对于 Trino 400 以上的新版本支持并不完善。因此，还需要对 API 以及 Trino Coordinator 与 Ranger [[07-Agent|Agent]] 的兼容性进行适配。
+实际上，通过底层自建的 Ranger 集成来实现这一目标。这个集成主要涉及到 Ranger 的容器化改造，包括镜像的 CI/CD 流程、审计日志落地到 Elasticsearch（ES），以及对 API 的改造，以适配 Trino 4xx 版本。需要特别注意的是， Ranger 对于 Trino 400 以上的新版本支持并不完善。因此，还需要对 API 以及 Trino Coordinator 与 Ranger Agent 的兼容性进行适配。
 
 通过这一系列的改造和兼容工作，可以基于 Ranger 和 Trino 构建权限管理系统，并存储相关的策略（Policy）。这就是湖仓平台中 Ranger 集成的核心内容。
 

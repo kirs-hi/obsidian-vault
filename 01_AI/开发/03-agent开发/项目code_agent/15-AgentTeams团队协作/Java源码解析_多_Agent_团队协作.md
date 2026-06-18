@@ -1,4 +1,4 @@
-理论篇讲了 [[07-Agent|Agent]] Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 Java 版 MewCode 的真实代码。4 个文件，约 500 行，实现了完整的团队管理、消息通信和工具暴露。后端支持 In-process 和 Tmux 两种模式，协调者模式通过工具白名单实现。
+理论篇讲了 Agent Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 Java 版 MewCode 的真实代码。4 个文件，约 500 行，实现了完整的团队管理、消息通信和工具暴露。后端支持 In-process 和 Tmux 两种模式，协调者模式通过工具白名单实现。
 
 ## 模块概览
 
@@ -360,7 +360,7 @@ public final class Coordinator {
 
 协调者的工具白名单用 `Set.of` 创建不可变集合。包含两类工具：协调工具（Agent、SendMessage、Team 管理、Task 管理）和只读工具（ReadFile、Glob、Grep、Bash）。写操作工具（EditFile、WriteFile）不在里面，Lead 只能通过 Agent/SendMessage 间接让队友去做修改。
 
-只保留了白名单本身，系统[[提示词]]由上层管理。这让协调者模块极其精简，37 行搞定。职责单一：只回答「这个工具是否允许协调者使用」这一个问题。
+只保留了白名单本身，系统提示词由上层管理。这让协调者模块极其精简，37 行搞定。职责单一：只回答「这个工具是否允许协调者使用」这一个问题。
 
 `isCoordinatorTool` 是一个纯查找方法，O(1) 时间复杂度。上层的工具注册逻辑在构建 Agent 的 ToolRegistry 时调用它，只注册白名单里的工具。
 

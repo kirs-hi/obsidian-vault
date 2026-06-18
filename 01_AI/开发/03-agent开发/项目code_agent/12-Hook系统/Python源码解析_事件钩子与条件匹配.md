@@ -1,4 +1,4 @@
-理论篇讲了 Hook 系统如何在 [[07-Agent|Agent]] 生命周期的关键节点插入用户自定义行为，这篇带你走读 Python 版 MewCode 的真实代码，看看事件匹配、条件过滤、动作执行这一整条链路是怎么实现的。
+理论篇讲了 Hook 系统如何在 Agent 生命周期的关键节点插入用户自定义行为，这篇带你走读 Python 版 MewCode 的真实代码，看看事件匹配、条件过滤、动作执行这一整条链路是怎么实现的。
 
 ## 模块概览
 
@@ -127,7 +127,7 @@ class ToolRejectedError(Exception):
         self.hook_id = hook_id
 ```
 
-这是 Hook 系统唯一向外「冒泡」的异常。当 pre-tool Hook 拒绝了一个工具调用时，[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 会收到这个错误，把拒绝原因作为工具执行结果返回给 LLM。
+这是 Hook 系统唯一向外「冒泡」的异常。当 pre-tool Hook 拒绝了一个工具调用时，Agent Loop 会收到这个错误，把拒绝原因作为工具执行结果返回给 LLM。
 
 ## 生命周期事件
 
@@ -230,7 +230,7 @@ def get_prompt_messages(self) -> list[str]:
     return messages
 ```
 
-取走就清空，是一次性消费的模式。这让 Hook 可以在特定时机向 LLM 注入[[提示词]]，比如在 `turn_start` 时提醒 LLM 某些约束。
+取走就清空，是一次性消费的模式。这让 Hook 可以在特定时机向 LLM 注入提示词，比如在 `turn_start` 时提醒 LLM 某些约束。
 
 ## 条件匹配
 
@@ -242,7 +242,7 @@ def get_prompt_messages(self) -> list[str]:
 _OPERATORS = ("==", "!=", "=~", "~=")
 ```
 
-`==` 和 `!=` 是精确匹配； `=~` 用[[14-正则表达式|正则表达式]]匹配； `~=` 用 glob 模式匹配（fnmatch）。每种运算符的实现都很直接：
+`==` 和 `!=` 是精确匹配； `=~` 用正则表达式匹配； `~=` 用 glob 模式匹配（fnmatch）。每种运算符的实现都很直接：
 
 ```plain
 def evaluate(self, ctx: HookContext) -> bool:
@@ -380,7 +380,7 @@ async def execute_agent(action: Action, ctx: HookContext):
     )
 ```
 
-agent 类型的执行器只是个占位，还没有实现。这预示了一个方向：Hook 未来可以直接触发 [[理论学习_SubAgent_子任务分发|SubAgent]] 执行。
+agent 类型的执行器只是个占位，还没有实现。这预示了一个方向：Hook 未来可以直接触发 SubAgent 执行。
 
 ## 配置加载
 

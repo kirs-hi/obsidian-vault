@@ -13,9 +13,9 @@ tags:
 
 ## 概念讲完了，这篇动手
 
-上一篇把 Ollama 的架构、API、环境变量、硬件调度这些概念全部拆开讲了一遍。这一篇只做一件事： **装 Ollama，拉模型，改 Ragent 配置，让整条 [[06-RAG|RAG]] 链路跑在本地。**
+上一篇把 Ollama 的架构、API、环境变量、硬件调度这些概念全部拆开讲了一遍。这一篇只做一件事： **装 Ollama，拉模型，改 Ragent 配置，让整条 RAG 链路跑在本地。**
 
-读完本篇之后的状态是：Ragent 的 Chat 和 [[01基础_08从文本到向量之理解Embedding|Embedding]] 都打到 `localhost:11434` ，断网也能问答，在活动监视器里能看到 Ollama 进程在吃显存。全程不写一行 Java 代码——Ragent 的 provider 可插拔架构帮你扛了，你只需要改两行 YAML。
+读完本篇之后的状态是：Ragent 的 Chat 和 Embedding 都打到 `localhost:11434` ，断网也能问答，在活动监视器里能看到 Ollama 进程在吃显存。全程不写一行 Java 代码——Ragent 的 provider 可插拔架构帮你扛了，你只需要改两行 YAML。
 
 ## 装 Ollama：三平台快速起步
 
@@ -120,13 +120,13 @@ ollama list
 
 - **下载量** ：5M Downloads，说明这个模型系列在 Ollama 社区的使用量很大，稳定性和兼容性有保障。
 
-- **能力标签** ： `vision` （图像理解）、 `tools` （工具调用 / [[01基础_12理解函数调用Function Call|Function Call]]）、 `thinking` （深度思考 / CoT）、 `cloud` （云端版本）。这些标签直接告诉你模型支持哪些能力，不用去翻论文。
+- **能力标签** ： `vision` （图像理解）、 `tools` （工具调用 / Function Call）、 `thinking` （深度思考 / CoT）、 `cloud` （云端版本）。这些标签直接告诉你模型支持哪些能力，不用去翻论文。
 
 - **规格标签** ： `0.8b` 、 `2b` 、 `4b` 、 `9b` 、 `27b` 、 `35b` 、 `122b` ——同一个模型系列提供了从不到 10 亿到 1220 亿参数的多种规格，按你的显存大小挑。
 
 - **调用方式** ：页面上直接给出了 CLI、cURL、Python、JavaScript 四种调用方式的命令。CLI 方式就是 `ollama run qwen3.5` ，一行命令直接跑。
 
-- **Applications** ：列出了兼容的应用，比如 [[Claude Code 命令与最佳实践|Claude Code]]、Codex、OpenCode、[[00_OpenClaw_MOC|OpenClaw]] 等，可以通过 `ollama launch` 命令直接启动这些应用并指定模型。
+- **Applications** ：列出了兼容的应用，比如 Claude Code、Codex、OpenCode、OpenClaw 等，可以通过 `ollama launch` 命令直接启动这些应用并指定模型。
 
 ### 2\. 模型规格列表
 

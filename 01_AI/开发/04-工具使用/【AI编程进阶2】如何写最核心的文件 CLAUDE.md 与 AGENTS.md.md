@@ -10,7 +10,7 @@ tags:
 banner: "https://article-images.zsxq.com/FsRqCvoGMs99H5cbvAoD0PW5cQ0F"
 banner_icon: 🔖
 ---
-Claude.md 是 [[Claude Code 命令与最佳实践|Claude Code]] 的识别的永久记忆文件
+Claude.md 是 Claude Code 的识别的永久记忆文件
 
 Agents.md 功能跟 Claude.md 是一样的，是标准的永久记忆文件，除了 Claude Code，其他编程工具都是会把
 
@@ -45,7 +45,7 @@ Claude Code 直接执行 / init 命令，其他编程工具，可以使用对话
 
 按下面的文档组织结构（非必需，可以更多）来修改 CLAUDE.md 文件
 
-**项目背景** ：这个项目是什么？“这是一个 [[Day4-Next.js核心|Next.js]] 的电子商务应用，集成了 Stripe。” 这能够让 Claude 明白。
+**项目背景** ：这个项目是什么？“这是一个 Next.js 的电子商务应用，集成了 Stripe。” 这能够让 Claude 明白。
 
 **命令** ：如何运行测试、构建、添加 lint 和部署。当你让 Claude 运行时，它会用这些命令。
 
@@ -61,11 +61,11 @@ Claude Code 直接执行 / init 命令，其他编程工具，可以使用对话
 
 ## 代码规范
 
-- [[Day2-JavaScript和TypeScript|TypeScript]] strict mode, no `any` types
+- TypeScript strict mode, no `any` types
 
 - Use named exports, not default exports
 
-- CSS: [[Day3-Tailwind和shadcn|Tailwind]] utility classes, no custom CSS files
+- CSS: Tailwind utility classes, no custom CSS files
 
 ## 常用命令
 

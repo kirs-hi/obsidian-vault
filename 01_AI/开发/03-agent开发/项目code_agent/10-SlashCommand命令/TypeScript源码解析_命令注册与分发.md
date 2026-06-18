@@ -23,7 +23,7 @@ export type CommandType =
   "local" | "local_ui" | "prompt" | "skill_fork";
 ```
 
-用联合类型定义四种命令执行路径。 `local` 是纯本地逻辑，handler 直接返回字符串结果。 `local_ui` 需要 UI 层介入，handler 返回一个信号字符串（比如 `"clear"` 、 `"compact"` ），由 TUI 层接管处理。 `prompt` 最特殊，handler 返回的是一段[[提示词]]，会被当作用户消息发给 LLM。 `skill_fork` 用于 Skill 系统的 fork 模式，派生子 [[07-Agent|Agent]] 来执行。
+用联合类型定义四种命令执行路径。 `local` 是纯本地逻辑，handler 直接返回字符串结果。 `local_ui` 需要 UI 层介入，handler 返回一个信号字符串（比如 `"clear"` 、 `"compact"` ），由 TUI 层接管处理。 `prompt` 最特殊，handler 返回的是一段提示词，会被当作用户消息发给 LLM。 `skill_fork` 用于 Skill 系统的 fork 模式，派生子 Agent 来执行。
 
 每种类型对应不同的返回值语义： `local` 的返回值直接展示， `local_ui` 的返回值是指令而非内容， `prompt` 的返回值是发给 LLM 的输入。
 
@@ -131,7 +131,7 @@ find(name: string): Command | undefined {
 
 -   `local_ui` ：handler 返回信号字符串（ `"clear"` 、 `"plan"` 、 `"compact"` 等），TUI 根据信号执行对应的 UI 操作。
 
--   `prompt` ：调 handler 拿提示词，当作用户消息发给 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]]。
+-   `prompt` ：调 handler 拿提示词，当作用户消息发给 Agent Loop。
 
 特殊情况也有处理：只输入 `/` 时列出可用命令，命令找不到时带 `/help` 引导，缺参数时显示 `argPrompt` 。
 
@@ -204,7 +204,7 @@ getScore(name: string): number {
 | `/code-review` | `/cr` | local | 管理 Code Review 团队 |
 | `/review` |  | prompt | 审查未提交的代码变更 |
 | `/rewind` |  | local_ui | 回退到之前的检查点 |
-| `/mcp` |  | local | 显示 [[理论学习_MCP_协议与开放工具生态|MCP]] 连接状态 |
+| `/mcp` |  | local | 显示 MCP 连接状态 |
 
 ## 典型命令实现走读
 

@@ -134,7 +134,7 @@ for (let i = 0; i < fruits.length; i++) {
 
 ### 2.4 数组的三大神器：map / filter / forEach
 
-这三个方法在后面写 React/[[Day4-Next.js核心|Next.js]] 时会**天天用到**，务必理解：
+这三个方法在后面写 React/Next.js 时会**天天用到**，务必理解：
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
@@ -469,4 +469,4 @@ const stu2: Student = { name: "小刚", age: 20, major: "计算机" }; // ✅
 
 ---
 
-> ✅ Day 2 完成！明天学 [[Day3-Tailwind和shadcn|Tailwind]] CSS 和 shadcn/ui，让页面变好看。
+> ✅ Day 2 完成！明天学 Tailwind CSS 和 shadcn/ui，让页面变好看。

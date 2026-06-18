@@ -2,7 +2,7 @@
 
 ## 本章需要做什么 ？
 
-上一章我们给 MewCode 装上了 [[理论学习_SubAgent_子任务分发|SubAgent]] 系统，主 [[07-Agent|Agent]] 可以把任务分派给子 Agent，子 Agent 在隔离的上下文中执行。消息隔离了，权限隔离了，文件缓存也隔离了。但有一样东西还没隔离：文件系统。
+上一章我们给 MewCode 装上了 SubAgent 系统，主 Agent 可以把任务分派给子 Agent，子 Agent 在隔离的上下文中执行。消息隔离了，权限隔离了，文件缓存也隔离了。但有一样东西还没隔离：文件系统。
 
 两个 Agent 同时改同一个文件，会互相覆盖。Git 分支管不了这个问题，因为分支只是时间维度的快照，同一时刻只有一个工作目录。我们需要的是空间维度的隔离，让同一时间存在多个独立工作区。
 
@@ -47,7 +47,7 @@ AI 会开始问你问题，进行需求澄清。
 
 ### 正式开发
 
-三份文档有了之后，就相当于施工图纸已经定好了，然后让 [[Claude Code 命令与最佳实践|Claude Code]] 根据这三份文档进行开发
+三份文档有了之后，就相当于施工图纸已经定好了，然后让 Claude Code 根据这三份文档进行开发
 
 ![](实战演练_动手实现_Worktree-1.jpeg)
 
@@ -99,7 +99,7 @@ isolation 参数设为 "worktree"，
 
 把下面三个文件保存到项目根目录，然后告诉你的 AI 编程助手：
 
-[[提示词]]如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
+提示词如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
 
 ### Go
 

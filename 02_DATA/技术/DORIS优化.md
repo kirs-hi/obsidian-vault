@@ -4,7 +4,7 @@ https://doris.apache.org/zh-CN/docs/dev/gettingStarted/what-is-apache-doris
 **一句话记住：FE 管调度，BE 管存算，Meta 管元数据，Broker 管导入导出。**
 ## 回答重点
 
-[[doris笔记|Doris]] 是一款现代化的大数据实时分析数据库，它的核心架构主要包括以下几个组件：
+Doris 是一款现代化的大数据实时分析数据库，它的核心架构主要包括以下几个组件：
 
 1）Frontend（FE）：负责用户接口和查询调度。
 2）Backend（BE）：负责数据存储和查询执行。 
@@ -139,7 +139,7 @@ https://doris.apache.org/zh-CN/docs/dev/gettingStarted/what-is-apache-doris
     *   **最佳实践**：推荐按天（YYYYMMDD）分区。
     *   **查询铁律**：**必须**显式过滤分区，避免全表扫描。需注意谓词类型匹配（如字符串 vs 数字）以防分区裁剪失效。
 *   **分桶（Bucket）**：
-    *   **选列原则**：高基数（如 User ID）、分布均匀、常用于查询过滤。避免使用低基数（如城市）或时间列导致[[数据倾斜实践|数据倾斜]]。
+    *   **选列原则**：高基数（如 User ID）、分布均匀、常用于查询过滤。避免使用低基数（如城市）或时间列导致数据倾斜。
     *   **数量规划**：单 Tablet 建议大小 **1GB - 10GB**。
         *   *点查为主*：减少分桶数以提升吞吐。
         *   *范围/扫描为主*：增加分桶数以利用多核并行计算。
@@ -201,7 +201,7 @@ Doris 适合中小数据量（GB 级）Join，超大数据量建议预处理。
     *   **YES** → **数据量 > 1亿行 (或 >10GB)？**
         *   **YES** → ✅ **必须选 SparkLoad**。
             *   *实战数据*：买菜场景下，1.3亿行聚合表，SparkLoad 耗时 **641秒**，StreamLoad 耗时 **1975秒**。
-            *   *原理*：SparkLoad 利用 [[spark|Spark]] 集群的 Shuffle 能力完成预聚合，减轻 BE 节点的 Compaction 压力。
+            *   *原理*：SparkLoad 利用 Spark 集群的 Shuffle 能力完成预聚合，减轻 BE 节点的 Compaction 压力。
         *   **NO** → ✅ **选 StreamLoad**（省去 Spark 资源申请开销）。
     *   **NO (是明细/主键/冗余模型)** → ✅ **首选 StreamLoad**。
         *   *实战数据*：买菜场景下，1.3亿行冗余表，StreamLoad 耗时 **1329秒**，SparkLoad 耗时 **14218秒**（反向优化）。
@@ -365,7 +365,7 @@ Doris 适合中小数据量（GB 级）Join，超大数据量建议预处理。
 
 #### **3. 功能特长**
 *   **StreamLoad**：
-    *   **实时性**：支持秒级延迟，适合 [[Flink SQL 完整语法教程|Flink]]/CDC 实时写入。
+    *   **实时性**：支持秒级延迟，适合 Flink/CDC 实时写入。
     *   **简单**：无需配置 Spark 环境，Client 一个 curl 命令即可触发。
     *   **并发**：并发能力强，适合小文件高频写入。
 

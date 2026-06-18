@@ -2,7 +2,7 @@
 
 先和大家讲一下这个项目的背景。这个项目是我转行大模型，自己做的第一个项目。当时还是小白，一边学Agent的课程，资料，了解什么是大模型，什么是RAG，什么是Agent，然后也看了一些书籍。慢慢开始摸索着做的（大概在25年的5月份左右）。做完这个项目，结合公司的项目（因为公司有一些类似于Hackathon)的项目，做了另外一个项目。两个项目其实难度和实现上差不太多的，我现在看来有点重复，当时可以第一个项目做Agent，第二个项目做RAG, 做两个重复的Agent，收益比较低。在11月份开始面试，也就是用这两个项目写在简历上。现在来看这个两项目其实也不是说多复杂，也会被面试官说简单，不过思路还是我说的那样，一边面试，一边听反馈，一边包装，就用了2个月，12月份，确实拿到了很多offer，包括薪资年包80多万的offer。
 
-今天把这个项目分享出来。首先呢，这个项目我肯定不会再去开发新的内容，功能。我会结合我的经验，告诉大家如何使用它，如何包装它，如何扩展它，如何写简历，以及提供一些面试真题（毕竟这个项目天然的优势就是我直接从对应的[[16-面试实战|面试实战]]内容就可以搜集到当时面试官围绕这个问题的面试真题）。 如果后面确实有用这个项目去面试，有不懂的面试问题，也可以反馈，我们像RAG项目一样，来根据粉丝朋友的反馈，提供更多的该项目的面试真题解析。
+今天把这个项目分享出来。首先呢，这个项目我肯定不会再去开发新的内容，功能。我会结合我的经验，告诉大家如何使用它，如何包装它，如何扩展它，如何写简历，以及提供一些面试真题（毕竟这个项目天然的优势就是我直接从对应的面试实战内容就可以搜集到当时面试官围绕这个问题的面试真题）。 如果后面确实有用这个项目去面试，有不懂的面试问题，也可以反馈，我们像RAG项目一样，来根据粉丝朋友的反馈，提供更多的该项目的面试真题解析。
 
 在这个章节除了介绍项目部分，其实还蕴含了一些很多我的思路，比如设计项目的思路，面试的经验，如何准备自己的项目等等。项目的README的部分，也写了一些关于项目的介绍，技术栈，架构之类的，大家可以看看。
 
@@ -24,7 +24,7 @@ https://www.bilibili.com/video/BV16FRbBEEwD/?spm\_id\_from=333.1387.homepage.vid
 
 分类机器人只管分类，如果是和按摩房无关的内容就拒绝回答，如果是咨询相关的内容，就把任务给咨询机器人。
 
-预约机器人会问清楚用户的需求，进行[[01基础_16多轮对话记忆设计|多轮对话]]，收集到信息后，去进行数据库查询，找合适的技师。
+预约机器人会问清楚用户的需求，进行多轮对话，收集到信息后，去进行数据库查询，找合适的技师。
 
 
 
@@ -60,17 +60,17 @@ https://www.bilibili.com/video/BV16FRbBEEwD/?spm\_id\_from=333.1387.homepage.vid
 
 2\. 同理，**[可以包装一个算法项目](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcnPK0WMUeo1bwoms3VxDzD8b)。**&#x6BD4;如某个地方简单任务用了自己后训练过的模型，提现算法的能力（这块等我们后面算法项目出来了可以再想具体场景）
 
-3\. **[[理论学习_跨会话记忆与会话持久化|记忆系统]]的设计。**&#x8FD9;个项目没有记忆系统。长短期记忆如何实现？上下文对话满了如何压缩？这些策略需要设计。再不济你就抄袭我们解析的开源项目（[cc](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcn3RZRAEnE9ynlVIkY0ZFnhg),[hermes](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcn2PcVGXZb2ElG08HZleQmDf),[openclaw](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcnvoMLTNnvWGkgbbSHmUj4ke))，把内容丢给ai, 让AI给你设计和写代码。但是你不能不设计！
+3\. **记忆系统的设计。**&#x8FD9;个项目没有记忆系统。长短期记忆如何实现？上下文对话满了如何压缩？这些策略需要设计。再不济你就抄袭我们解析的开源项目（[cc](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcn3RZRAEnE9ynlVIkY0ZFnhg),[hermes](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcn2PcVGXZb2ElG08HZleQmDf),[openclaw](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcnvoMLTNnvWGkgbbSHmUj4ke))，把内容丢给ai, 让AI给你设计和写代码。但是你不能不设计！
 
 4\. **和后端内容联动。**&#x8FD9;是一个本地的项目，能不能融入一些后端，部署，打包，微服务的东西，面试爱考。
 
-5\. **更复杂的架构：**&#x73B0;在项目是一个静态的Agent。但是我们解析的开源项目，他是动态生成[[理论学习_SubAgent_子任务分发|子Agent]]的。设计更复杂的架构，比如react范式，让主Agent用工具调用的方式fork出子Agent。（这个也是参考笔记里所有开源项目）
+5\. **更复杂的架构：**&#x73B0;在项目是一个静态的Agent。但是我们解析的开源项目，他是动态生成子Agent的。设计更复杂的架构，比如react范式，让主Agent用工具调用的方式fork出子Agent。（这个也是参考笔记里所有开源项目）
 
 6\. **SKILL：** 现在的Agent需要有SKILL，就像我当时设计项目往MCP上靠。能不能融入一些[SKILL技术](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcntg2Yw26jRwp9WCCzl5ZDib)。
 
 7\. **Harness:&#x20;**&#x80FD;否包装一下你的写这个项目的过程，告诉面试官你是用harness技巧写出来的。了解Harness的详细特性，融入到项目中。[参考资料](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcn3zjGgzU0LW3gdN4WU6ybTH)
 
-8\. **[[07-Agent|Agent]] 性能评估：** 建议一定要做。也是在我真正面试的时候，我才发现你如何评估Agent的性能的时候，是一个必考题。但是在我设计项目的时候（当时还没有面试，没有这个概念）。我的做法就是包装，我结合了参考资料《Agentic Desgin Pattern》里的评估模块，和美团龙猫的论文，编了一个自己的方法，如何做的评估，每次就不断改进，慢慢面试也就过去了。如果有时间，还是建议大家做。具体的理论方法在[ **Agent性能评估**](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcnweBIT3u9XHQaxV56JFnGng)**。**
+8\. **Agent 性能评估：** 建议一定要做。也是在我真正面试的时候，我才发现你如何评估Agent的性能的时候，是一个必考题。但是在我设计项目的时候（当时还没有面试，没有这个概念）。我的做法就是包装，我结合了参考资料《Agentic Desgin Pattern》里的评估模块，和美团龙猫的论文，编了一个自己的方法，如何做的评估，每次就不断改进，慢慢面试也就过去了。如果有时间，还是建议大家做。具体的理论方法在[ **Agent性能评估**](https://my.feishu.cn/docx/KIDFdGZGHoycboxMUzjckjopnge#doxcnweBIT3u9XHQaxV56JFnGng)**。**
 
 9\. Langchain用到的是0.3的版本，可以换成1.0. 我个人其实觉得Langchain这块就是个工具，面试一般问的也不深入。不过基本上问你的项目，如果你用的Langchain，都会考一下Langchain的特性，用了啥版本。现在Langchain也有更新的版本了，如果面试大家觉得有必要，可以改成1.0。其实很容易，让AI给弄就完了。或者你不改，你就说你用的1.0, 了解下1.0特性，一般面试都够了。
 
@@ -78,7 +78,7 @@ https://www.bilibili.com/video/BV16FRbBEEwD/?spm\_id\_from=333.1387.homepage.vid
 
 配套了一些SKILL，和之前RAG系统高度类似。
 
-**resume-wirter [[skill]]**：写简历SKILL。我必须说我对写简历不算擅长。不过我保证这个SKILL写出来的简历比我当时用AI写的好。因为我告诉他了模板，突出的点，如何包装。当然希望大家能够生成后自己多修改。我必须提到的一个点是，其实背景越好的朋友，越不需要太写简历，我不是凡尔赛。而是很多时候，不管校招还是社招，凭借学历+大厂，我简历写的很烂，但是还是有面试机会，所以我对简历没怎么改。但是越是你自己比如投出去没反应，没效果，背景差，越是要好好写，根据反馈反复改，甚至是不同岗位用不同简历。
+**resume-wirter skill**：写简历SKILL。我必须说我对写简历不算擅长。不过我保证这个SKILL写出来的简历比我当时用AI写的好。因为我告诉他了模板，突出的点，如何包装。当然希望大家能够生成后自己多修改。我必须提到的一个点是，其实背景越好的朋友，越不需要太写简历，我不是凡尔赛。而是很多时候，不管校招还是社招，凭借学历+大厂，我简历写的很烂，但是还是有面试机会，所以我对简历没怎么改。但是越是你自己比如投出去没反应，没效果，背景差，越是要好好写，根据反馈反复改，甚至是不同岗位用不同简历。
 
 **Project-learner skill**： 让AI带着你了解这个项目。通过用这个SKILL和他对话和打卡。了解这个项目。
 
@@ -109,7 +109,7 @@ https://www.bilibili.com/video/BV16FRbBEEwD/?spm\_id\_from=333.1387.homepage.vid
 4. 你的项目是如何分块的？
    这里笔记里的回答明确写的是“在按摩房预约系统中，我根据不同场景使用不同分块策略”。
 
-5. 你的 [[06-RAG|RAG]] 系统中数据库是如何存储的？
+5. 你的 RAG 系统中数据库是如何存储的？
    这一题紧跟在“按摩房智能预约系统”后面，属于对这个项目 RAG 存储方案的追问。
 
 6. 你的 RAG 系统是怎么去评估系统质量的？

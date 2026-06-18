@@ -1,6 +1,6 @@
 # TypeScript源码解析：多 Agent 团队协作
 
-理论篇讲了 [[07-Agent|Agent]] Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 MewCode 的 `src/teams/` 目录，看「多个 Agent 组团协作」的通信、调度和执行是怎么实现的。
+理论篇讲了 Agent Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 MewCode 的 `src/teams/` 目录，看「多个 Agent 组团协作」的通信、调度和执行是怎么实现的。
 
 ## 模块概览
 
@@ -309,7 +309,7 @@ export function coordinatorToolFilter(
 }
 ```
 
-`coordinatorToolFilter` 返回一个谓词函数，动态判断是否限制工具。有团队存在时只放行白名单内的工具，所有团队都删除后自动恢复全部工具。[[理论学习_MCP_协议与开放工具生态|MCP]] 工具（ `mcp__` 前缀）始终放行，不受白名单限制。
+`coordinatorToolFilter` 返回一个谓词函数，动态判断是否限制工具。有团队存在时只放行白名单内的工具，所有团队都删除后自动恢复全部工具。MCP 工具（ `mcp__` 前缀）始终放行，不受白名单限制。
 
 ## 对话记录持久化（如有 Transcript）
 

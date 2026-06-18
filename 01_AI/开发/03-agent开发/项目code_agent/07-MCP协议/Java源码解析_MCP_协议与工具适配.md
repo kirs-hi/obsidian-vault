@@ -1,4 +1,4 @@
-理论篇讲了 [[理论学习_MCP_协议与开放工具生态|MCP]] 协议的设计理念和三阶段会话流程，这篇带你走读 Java 版 MewCode 的真实代码。一个 461 行的文件，用内部类把 MCP 客户端、传输层、工具适配器全部装在了一起。
+理论篇讲了 MCP 协议的设计理念和三阶段会话流程，这篇带你走读 Java 版 MewCode 的真实代码。一个 461 行的文件，用内部类把 MCP 客户端、传输层、工具适配器全部装在了一起。
 
 ## 模块概览
 
@@ -260,7 +260,7 @@ if (config.getHeaders() != null) {
 }
 ```
 
-`Accept` 头同时接受 JSON 和 [[01基础_20SSE协议与流式响应|SSE]]（Server-Sent Events），因为 MCP 的 Streamable HTTP 传输可能返回任意一种格式。 `Mcp-Session-Id` 是 MCP 协议定义的会话标识，首次请求不带，服务器响应后保存下来，后续请求都要带上。
+`Accept` 头同时接受 JSON 和 SSE（Server-Sent Events），因为 MCP 的 Streamable HTTP 传输可能返回任意一种格式。 `Mcp-Session-Id` 是 MCP 协议定义的会话标识，首次请求不带，服务器响应后保存下来，后续请求都要带上。
 
 响应解析要区分两种格式：
 
@@ -364,7 +364,7 @@ public ToolResult execute(Map<String, Object> args) {
 }
 ```
 
-调用失败返回错误结果而不是抛异常，[[07-Agent|Agent]] 会看到错误信息。注意传给 `callTool` 的是 `toolDef.name()` （原始工具名），不是 `name()` （带前缀的名字）。
+调用失败返回错误结果而不是抛异常，Agent 会看到错误信息。注意传给 `callTool` 的是 `toolDef.name()` （原始工具名），不是 `name()` （带前缀的名字）。
 
 ### 内容提取
 

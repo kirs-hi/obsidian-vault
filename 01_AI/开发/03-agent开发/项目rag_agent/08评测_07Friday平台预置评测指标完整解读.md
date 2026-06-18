@@ -228,7 +228,7 @@ Context Precision = Σ(k=1..K) precision@k / (包含 GT 的块数)
 
 **解读**：衡量系统的"过度保守"——该答的不答。如果指标高，需要调整 prompt 或模型参数。
 
-**对比 Ragent**：对应 Ragent 的"误拒率"——`requires_rag=true` 但系统没有给出 [[06-RAG|RAG]] 答案的比例。本质上是同一个概念。
+**对比 Ragent**：对应 Ragent 的"误拒率"——`requires_rag=true` 但系统没有给出 RAG 答案的比例。本质上是同一个概念。
 
 ---
 

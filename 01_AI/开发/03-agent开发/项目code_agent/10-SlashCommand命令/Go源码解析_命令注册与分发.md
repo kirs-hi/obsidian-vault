@@ -25,7 +25,7 @@ const (
 )
 ```
 
-三种类型决定了命令的执行方式。 `Local` 是纯本地逻辑，Handler 直接返回字符串，比如 `/help` 、 `/status` 。 `LocalUI` 需要 UI 层介入，比如 `/clear` 要清屏、 `/compact` 要触发压缩，Handler 为空，由 TUI 事件循环接管。 `Prompt` 最特殊，Handler 返回的不是结果而是[[提示词]]，会被当作用户消息发给 LLM 让 [[07-Agent|Agent]] 去执行。
+三种类型决定了命令的执行方式。 `Local` 是纯本地逻辑，Handler 直接返回字符串，比如 `/help` 、 `/status` 。 `LocalUI` 需要 UI 层介入，比如 `/clear` 要清屏、 `/compact` 要触发压缩，Handler 为空，由 TUI 事件循环接管。 `Prompt` 最特殊，Handler 返回的不是结果而是提示词，会被当作用户消息发给 LLM 让 Agent 去执行。
 
 ### Command 与 Context
 
@@ -41,7 +41,7 @@ type Command struct {
 }
 ```
 
-Handler 签名是 `func(ctx *Context) string` ，所有命令共用。Context 通过函数字段做依赖注入： `MemoryList` 来自[[理论学习_跨会话记忆与会话持久化|记忆系统]]， `TokenCount` 来自对话管理器， `PermissionMode` 来自权限系统。命令不需要知道数据从哪来，只管调函数拿结果。
+Handler 签名是 `func(ctx *Context) string` ，所有命令共用。Context 通过函数字段做依赖注入： `MemoryList` 来自记忆系统， `TokenCount` 来自对话管理器， `PermissionMode` 来自权限系统。命令不需要知道数据从哪来，只管调函数拿结果。
 
 ### Registry：注册中心
 
@@ -73,7 +73,7 @@ func Parse(input string) (name string, args string) {
 
 ### 第二步和第三步：查找 + 分发
 
-Parse 拿到命令名后传给 `Registry.Find()` ，先查主名称再查别名，都没有就返回 nil。找到命令后，TUI 层根据 `Type` 决定怎么跑： `TypeLocal` 直接调 Handler 拿结果展示； `TypeLocalUI` 不走 Handler，由 TUI 自己处理（比如 `/clear` 清屏、 `/plan` 切模式）； `TypePrompt` 调 Handler 拿到提示词，当用户消息塞进对话交给 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]]。
+Parse 拿到命令名后传给 `Registry.Find()` ，先查主名称再查别名，都没有就返回 nil。找到命令后，TUI 层根据 `Type` 决定怎么跑： `TypeLocal` 直接调 Handler 拿结果展示； `TypeLocalUI` 不走 Handler，由 TUI 自己处理（比如 `/clear` 清屏、 `/plan` 切模式）； `TypePrompt` 调 Handler 拿到提示词，当用户消息塞进对话交给 Agent Loop。
 
 分发在 TUI 层完成，commands 模块只管定义和查找，不依赖 UI 实现。
 
@@ -118,7 +118,7 @@ func LoadUserCommands(workDir string) []*Command {
 }
 ```
 
-三个路径按优先级排列： `~/.mewcode/commands/` （用户全局）、 `$workDir/.mewcode/commands/` （项目级）、 `$workDir/.claude/commands/` （兼容 [[Claude Code 命令与最佳实践|Claude Code]]）。后者覆盖前者，用 map 去重加 slice 保序。
+三个路径按优先级排列： `~/.mewcode/commands/` （用户全局）、 `$workDir/.mewcode/commands/` （项目级）、 `$workDir/.claude/commands/` （兼容 Claude Code）。后者覆盖前者，用 map 去重加 slice 保序。
 
 ### Markdown 解析
 

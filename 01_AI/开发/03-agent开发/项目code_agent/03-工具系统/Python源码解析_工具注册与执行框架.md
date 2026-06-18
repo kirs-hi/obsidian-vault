@@ -1,4 +1,4 @@
-理论篇讲了 [[01基础_12理解函数调用Function Call|Function Calling]] 的协议、工具接口设计、六个核心工具，以及流式 tool\_use 的集成。这一篇走读工具系统的代码，看「注册、描述、执行」这条主线怎么落地，以及流式 tool\_use 怎么拼进客户端。
+理论篇讲了 Function Calling 的协议、工具接口设计、六个核心工具，以及流式 tool\_use 的集成。这一篇走读工具系统的代码，看「注册、描述、执行」这条主线怎么落地，以及流式 tool\_use 怎么拼进客户端。
 
 ## 模块概览
 
@@ -63,7 +63,7 @@ class Tool(ABC):
 
 工具的抽象用 ABC 抽象基类，所有工具继承它，基类带默认值，子类只覆盖要改的。
 
-这些元字段不是摆设，每一个都有人消费： `category` 经 `is_read_only` 给权限系统判断要不要拦截， `is_concurrency_safe` 给执行引擎决定能不能并发， `should_defer` 给注册中心判断要不要默认隐藏这个工具（第七章 [[理论学习_MCP_协议与开放工具生态|MCP]] 再展开）。元信息集中在基类上声明，不同子系统各取所需，这是后面权限、调度自动运转的基础。
+这些元字段不是摆设，每一个都有人消费： `category` 经 `is_read_only` 给权限系统判断要不要拦截， `is_concurrency_safe` 给执行引擎决定能不能并发， `should_defer` 给注册中心判断要不要默认隐藏这个工具（第七章 MCP 再展开）。元信息集中在基类上声明，不同子系统各取所需，这是后面权限、调度自动运转的基础。
 
 最关键的设计在 `params_model` 。挂一个 Pydantic 模型上去，Schema 就能自动生成：
 
@@ -196,7 +196,7 @@ except ValidationError as e:
 
 校验失败不抛异常中断循环，而是包装成 `is_error=True` 的 ToolResult 还给模型，让它调整参数重试。该拒绝的早拒绝，且失败要变成反馈而不是崩溃。
 
-模型一次可能返回多个工具调用，执行引擎按 `is_concurrency_safe` 分批。只读的 ReadFile、Glob、Grep 标了 `True` ，能并到同一批用 `asyncio.gather` 并发跑；WriteFile、EditFile、Bash 是默认的 `False` ，各自串行。所以读可以并行，写一定排队，两个写操作不会同时动手，这也是前面 FileCache 那段说争用很少的原因。并发分批的调度细节在第四章 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]]。
+模型一次可能返回多个工具调用，执行引擎按 `is_concurrency_safe` 分批。只读的 ReadFile、Glob、Grep 标了 `True` ，能并到同一批用 `asyncio.gather` 并发跑；WriteFile、EditFile、Bash 是默认的 `False` ，各自串行。所以读可以并行，写一定排队，两个写操作不会同时动手，这也是前面 FileCache 那段说争用很少的原因。并发分批的调度细节在第四章 Agent Loop。
 
 ## 内置工具
 
@@ -309,7 +309,7 @@ for line_num, line in enumerate(text.splitlines(), 1):
 
 ## 流式 tool\_use：把 JSON 碎片拼起来
 
-工具参数在[[01基础_20SSE协议与流式响应|流式响应]]里是一段段 JSON 碎片到的，要拼起来再解析，这是这部分最需要小心的地方。 `AnthropicClient.stream` 里的事件序列是： `content_block_start` 开头给 id 和 name，一串 `content_block_delta` 给 JSON 碎片， `content_block_stop` 收尾。
+工具参数在流式响应里是一段段 JSON 碎片到的，要拼起来再解析，这是这部分最需要小心的地方。 `AnthropicClient.stream` 里的事件序列是： `content_block_start` 开头给 id 和 name，一串 `content_block_delta` 给 JSON 碎片， `content_block_stop` 收尾。
 
 处理逻辑就是一个字符串缓冲区加三个分支：
 
@@ -346,7 +346,7 @@ async for event in stream:
 
 收到 tool\_use 的 start 就记下 id、name、清空缓冲；每个 `input_json_delta` 把 `partial_json` 追加进缓冲；stop 时一次性 `json.loads` 。 `except json.JSONDecodeError: args = {}` 是关键的优雅降级：碎片拼不成合法 JSON 也不崩溃，退化成空参数让流程继续。
 
-整个过程对外只发 `ToolCallStart` 、 `ToolCallDelta` 、 `ToolCallComplete` 三种流事件（定义在 base.py），上层 [[07-Agent|Agent]] 消费这些事件，不用关心底层协议。OpenAI 兼容协议的分片不带 content\_block 结构，而是按 `tool_calls` 的 index 累积 arguments 字符串（在 `OpenAICompatClient` 里），但拼完同样是一次 `json.loads` ，思路一致。
+整个过程对外只发 `ToolCallStart` 、 `ToolCallDelta` 、 `ToolCallComplete` 三种流事件（定义在 base.py），上层 Agent 消费这些事件，不用关心底层协议。OpenAI 兼容协议的分片不带 content\_block 结构，而是按 `tool_calls` 的 index 累积 arguments 字符串（在 `OpenAICompatClient` 里），但拼完同样是一次 `json.loads` ，思路一致。
 
 ## 消息管道：tool\_use 与 tool\_result 的配对
 

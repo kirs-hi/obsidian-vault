@@ -134,7 +134,7 @@ markmap:
 
 SQL 模板、HTML 骨架、洞察 prompt、字段映射表等。这层当前做得已经不错了。
 
-写方案时还有一个关键原则：**约束要"代码化"，不要"[[提示词]]化"**。当前的🔒1"严禁 mtdata query"、🔒2"严禁 LIMIT"，都是写在自然语言里让 LLM 自律的。但 `procurement_utils.py` 里的 `run_query_with_mtdata_bi()` 其实已经做了 LIMIT 检测和自动注入行权限。那方案文档里就不需要再花大量篇幅"教"AI 怎么做，只需要写"调用 `run_query_with_mtdata_bi(sql)` 执行取数"，把规则执行的责任交给代码。方案文档的角色是"调度编排"，不是"手把手教 LLM 写代码"。
+写方案时还有一个关键原则：**约束要"代码化"，不要"提示词化"**。当前的🔒1"严禁 mtdata query"、🔒2"严禁 LIMIT"，都是写在自然语言里让 LLM 自律的。但 `procurement_utils.py` 里的 `run_query_with_mtdata_bi()` 其实已经做了 LIMIT 检测和自动注入行权限。那方案文档里就不需要再花大量篇幅"教"AI 怎么做，只需要写"调用 `run_query_with_mtdata_bi(sql)` 执行取数"，把规则执行的责任交给代码。方案文档的角色是"调度编排"，不是"手把手教 LLM 写代码"。
 
 ---
 

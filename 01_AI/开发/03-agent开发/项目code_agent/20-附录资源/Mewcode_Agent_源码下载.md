@@ -1,4 +1,4 @@
-**这是本页面的 离线文档**：[Mewcode [[07-Agent|Agent]] 源码下载.md](https://www.yuque.com/attachments/yuque/0/2026/md/69074747/1780797626461-36ab2051-05a1-47b4-9ed1-18927fe1f2d7.md) 下载到本地 可以复制其中**代码片段**。
+**这是本页面的 离线文档**：[Mewcode Agent 源码下载.md](https://www.yuque.com/attachments/yuque/0/2026/md/69074747/1780797626461-36ab2051-05a1-47b4-9ed1-18927fe1f2d7.md) 下载到本地 可以复制其中**代码片段**。
 
 ---
 
@@ -35,7 +35,7 @@ mcp_servers:
 -   `base_url`：你的 API 地址
 -   `api_key`：你的 API Key
 -   `model`：模型名称
--   `mcp_servers`：[[理论学习_MCP_协议与开放工具生态|MCP]] Server 列表，每项需要 `name`、`command` 和 `args`
+-   `mcp_servers`：MCP Server 列表，每项需要 `name`、`command` 和 `args`
 
 ## 各语言启动方式
 

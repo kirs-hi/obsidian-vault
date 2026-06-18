@@ -80,7 +80,7 @@ Agents.md                         # 索引层
 
 ### 第一步：为每个子项目生成事实层
 
-这里我们用 [[【GSD】AI编程最佳工作流 GSD 详细指南|GSD]] 来生成子项目的 Codebase Map。
+这里我们用 GSD 来生成子项目的 Codebase Map。
 
 GSD 项目：[https://github.com/gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done)
 

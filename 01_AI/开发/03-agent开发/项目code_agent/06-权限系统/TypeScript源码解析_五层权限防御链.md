@@ -25,7 +25,7 @@ export interface Decision {
 }
 ```
 
-`DecisionEffect` 是一个联合类型，[[Day2-JavaScript和TypeScript|TypeScript]] 编译器会在类型检查时确保只能赋值为这三个字符串之一。 `Decision` 接口包含两个字段： `effect` 表示判定结果， `reason` 记录原因。
+`DecisionEffect` 是一个联合类型，TypeScript 编译器会在类型检查时确保只能赋值为这三个字符串之一。 `Decision` 接口包含两个字段： `effect` 表示判定结果， `reason` 记录原因。
 
 interface 是纯类型约束，运行时完全消失。不需要 new，直接用对象字面量 `{ effect: "allow", reason: "..." }` 就能创建。对象字面量本身就足够简洁，不需要额外的工厂方法。
 
@@ -289,7 +289,7 @@ function globMatch(pattern: string, content: string): boolean {
 }
 ```
 
-把 glob 模式转换成[[14-正则表达式|正则表达式]]来匹配。 `*` 转成 `[^/]*` （匹配任意非路径分隔符字符）， `?` 转成 `[^/]` （匹配单个非分隔符字符）。先转义正则特殊字符，避免 pattern 里的 `.` 、 `(` 等字符被当作正则语法。
+把 glob 模式转换成正则表达式来匹配。 `*` 转成 `[^/]*` （匹配任意非路径分隔符字符）， `?` 转成 `[^/]` （匹配单个非分隔符字符）。先转义正则特殊字符，避免 pattern 里的 `.` 、 `(` 等字符被当作正则语法。
 
 #### 三层规则文件
 
@@ -356,7 +356,7 @@ allowAlways(toolName: string, args: Record<string, unknown>): void {
 }
 ```
 
-自动从参数中提取内容，截断到 60 字符加通配符，构造规则并追加。这样 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 里只需要调用 `checker.allowAlways(toolName, args)` 一行代码就行，不用自己构造 Rule 对象。
+自动从参数中提取内容，截断到 60 字符加通配符，构造规则并追加。这样 Agent Loop 里只需要调用 `checker.allowAlways(toolName, args)` 一行代码就行，不用自己构造 Rule 对象。
 
 ### Layer 5：模式矩阵兜底
 
@@ -367,7 +367,7 @@ return {
 };
 ```
 
-最后一层直接调用 `modeDecide` 查表。返回值可能是 `allow` 、 `deny` 或 `ask` 。如果是 `ask` ，[[07-Agent|Agent]] Loop 会触发 HITL 确认。
+最后一层直接调用 `modeDecide` 查表。返回值可能是 `allow` 、 `deny` 或 `ask` 。如果是 `ask` ，Agent Loop 会触发 HITL 确认。
 
 注意这里直接把 `modeDecide` 的结果作为 Decision 的 effect 返回，没有对 `ask` 做单独处理。这意味着 Plan 模式下写操作返回的是 `deny` 而不是 `ask` ，不会触发 HITL 确认，直接拒绝。
 

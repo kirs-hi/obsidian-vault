@@ -24,9 +24,9 @@ const (
 )
 ```
 
-9 个事件覆盖了 [[07-Agent|Agent]] 生命周期的所有关键节点。其中 `pre_tool_use` 是最特殊的一个，后面会看到它是唯一能「阻断」执行流的事件。
+9 个事件覆盖了 Agent 生命周期的所有关键节点。其中 `pre_tool_use` 是最特殊的一个，后面会看到它是唯一能「阻断」执行流的事件。
 
-动作类型有四种： `command` （跑 shell 命令）、 `prompt` （注入[[提示词]]）、 `http` （发 HTTP 请求）、 `agent` （启动子 Agent）。
+动作类型有四种： `command` （跑 shell 命令）、 `prompt` （注入提示词）、 `http` （发 HTTP 请求）、 `agent` （启动子 Agent）。
 
 ### Hook 结构体
 
@@ -109,7 +109,7 @@ func (e *Engine) RunPreToolHooks(ctx HookContext) (bool, string) {
 }
 ```
 
-这个方法只处理 `pre_tool_use` 事件，返回值是 `(rejected, message)` 。关键区别在于：一旦某个 Hook 配置了 `Reject: true` ，或者执行失败且 `OnError` 设为 `reject` ，整个工具调用就被拦截了。[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 那边收到 `rejected=true` 就不会真正执行工具，而是把拒绝原因作为工具结果返回给 LLM。
+这个方法只处理 `pre_tool_use` 事件，返回值是 `(rejected, message)` 。关键区别在于：一旦某个 Hook 配置了 `Reject: true` ，或者执行失败且 `OnError` 设为 `reject` ，整个工具调用就被拦截了。Agent Loop 那边收到 `rejected=true` 就不会真正执行工具，而是把拒绝原因作为工具结果返回给 LLM。
 
 还有一个细节：这里没有 `Async` 分支。pre-tool Hook 必须同步执行完才能知道要不要拦截，异步在这里没有意义。另外，reject 的判断有两条路径：一条是 Hook 配置里直接写了 `Reject: true` ，这是「我就是要拦截」；另一条是动作执行失败了且 `OnError` 设为 `reject` ，这是「出错就当拦截处理」。两条路径最终效果一样，但语义不同。
 

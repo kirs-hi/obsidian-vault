@@ -4,7 +4,7 @@
 
 上一章我们给 MewCode 装上了权限系统， 五层权限拦截 让工具调用变得安全可控。但你有没有发现一个问题：MewCode 能用的工具，全部是你亲手写的。ReadFile、WriteFile、Bash、Grep、Glob，每一个都编译进二进制，想加新工具就得改代码、重新发版。
 
-这一章要让 MewCode 从「封闭工具集」变成「开放工具生态」。做完之后，用户在配置文件里声明一个 [[理论学习_MCP_协议与开放工具生态|MCP]] Server，MewCode 就能自动接入它提供的工具，不用改一行代码。GitHub Issue 查询、数据库操作、Slack 消息，社区写好了 MCP Server，直接接进来就能用。
+这一章要让 MewCode 从「封闭工具集」变成「开放工具生态」。做完之后，用户在配置文件里声明一个 MCP Server，MewCode 就能自动接入它提供的工具，不用改一行代码。GitHub Issue 查询、数据库操作、Slack 消息，社区写好了 MCP Server，直接接进来就能用。
 
 具体要新增这些东西：
 
@@ -15,7 +15,7 @@
 -   **MCP Manager** ：连接缓存、配置合并、生命周期管理
 -   **环境变量****隔离** ：子进程只拿到 PATH + 显式声明的变量，不泄露敏感信息
 
-这章 **不做** ：[[01基础_20SSE协议与流式响应|SSE]] 流式推送、Resources/Prompts 消费、Sampling/Elicitation 等 Client 侧高级能力。
+这章 **不做** ：SSE 流式推送、Resources/Prompts 消费、Sampling/Elicitation 等 Client 侧高级能力。
 
 ---
 
@@ -42,7 +42,7 @@
 
 ### 正式开发
 
-三份文档有了之后，就相当于施工图纸已经定好了，然后让 [[Claude Code 命令与最佳实践|Claude Code]] 根据这三份文档进行开发
+三份文档有了之后，就相当于施工图纸已经定好了，然后让 Claude Code 根据这三份文档进行开发
 
 ![](实战演练_动手接入MCP服务-1.jpeg)
 
@@ -82,7 +82,7 @@ args: ["-y", "@upstash/context7-mcp"]
 
 要说内部Function Calling和MCP的一个大差别就是MCP更像是外部生态的一个工具注册中心，对于互联网上的系统而言，是打破生态孤岛的一个重要手段，将一个个生态链接起来，形成更加庞大强大的大生态。
 
-验收没问题，那么本章的主要任务就完成了。下一章，我们给 MewCode 加上[[理论学习_上下文压缩与_Token_管理|上下文管理]]能力。
+验收没问题，那么本章的主要任务就完成了。下一章，我们给 MewCode 加上上下文管理能力。
 
 ---
 
@@ -92,7 +92,7 @@ args: ["-y", "@upstash/context7-mcp"]
 
 把下面三个文件保存到项目根目录，然后告诉你的 AI 编程助手：
 
-[[提示词]]如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
+提示词如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
 
 ### Go
 

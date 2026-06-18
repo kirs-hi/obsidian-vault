@@ -1,4 +1,4 @@
-理论篇讲了 [[理论学习_SubAgent_子任务分发|SubAgent]] 的设计理念，这篇走读 Java 版的实现。六个文件约 1012 行，用 record、virtual thread、BlockingQueue 这些 Java 21 的特性来实现完整的 SubAgent 系统。
+理论篇讲了 SubAgent 的设计理念，这篇走读 Java 版的实现。六个文件约 1012 行，用 record、virtual thread、BlockingQueue 这些 Java 21 的特性来实现完整的 SubAgent 系统。
 
 ## 模块概览
 
@@ -6,7 +6,7 @@ Java 版 SubAgent 系统的代码集中在 `com.mewcode.subagent` 包下：
 
 | 文件 | 行数 | 职责 |
 | --- | --- | --- |
-| `SubAgentSpec.java` | 83 | [[07-Agent|Agent]] 定义。record 类型 + 三个内置 Agent 常量 |
+| `SubAgentSpec.java` | 83 | Agent 定义。record 类型 + 三个内置 Agent 常量 |
 | `AgentLoader.java` | 169 | 定义加载。内置 + 用户级 + 项目级三级扫描 |
 | `ToolFilter.java` | 99 | 工具过滤。全局黑名单 + 异步白名单 + 定义级限制 |
 | `SubAgentTaskManager.java` | 170 | 后台任务管理。virtual thread 执行 + 通知队列 |
@@ -31,7 +31,7 @@ public record SubAgentSpec(
 ) {
 ```
 
-七个核心属性：名称、描述、工具白名单、工具黑名单、系统[[提示词]]、最大轮次和模型。 `tools` 是白名单字段，和 `disallowedTools` 配合使用：黑名单先移除，白名单再做交集过滤。
+七个核心属性：名称、描述、工具白名单、工具黑名单、系统提示词、最大轮次和模型。 `tools` 是白名单字段，和 `disallowedTools` 配合使用：黑名单先移除，白名单再做交集过滤。
 
 三个内置 Agent 直接用 `static final` 常量定义：
 
@@ -49,7 +49,7 @@ public static final SubAgentSpec EXPLORE = new SubAgentSpec(
     List.of(), List.of("EditFile", "WriteFile"), null, 30, "haiku");
 ```
 
-PLAN 和 EXPLORE 都通过 `disallowedTools` 禁止了写[[08-文件操作|文件操作]]。PLAN 有专门的系统提示词覆盖，约束 LLM 只做分析不做修改。EXPLORE 指定了 `"haiku"` 模型，因为搜索代码不需要最强的模型，用更快更便宜的 Haiku 就够了。maxTurns 的差异也值得注意：通用 Agent 200 轮，PLAN 只有 15 轮（规划不需要太多迭代），EXPLORE 30 轮。
+PLAN 和 EXPLORE 都通过 `disallowedTools` 禁止了写文件操作。PLAN 有专门的系统提示词覆盖，约束 LLM 只做分析不做修改。EXPLORE 指定了 `"haiku"` 模型，因为搜索代码不需要最强的模型，用更快更便宜的 Haiku 就够了。maxTurns 的差异也值得注意：通用 Agent 200 轮，PLAN 只有 15 轮（规划不需要太多迭代），EXPLORE 30 轮。
 
 PLAN 的系统提示词非常具体：
 
@@ -211,7 +211,7 @@ public static ToolRegistry filterForAgent(
 }
 ```
 
-过滤分六层：[[理论学习_MCP_协议与开放工具生态|MCP]] 直通 → 全局黑名单 → 自定义 Agent 黑名单 → 异步白名单 → 定义级黑名单 → 定义级白名单。
+过滤分六层：MCP 直通 → 全局黑名单 → 自定义 Agent 黑名单 → 异步白名单 → 定义级黑名单 → 定义级白名单。
 
 全局黑名单：
 
