@@ -4,10 +4,10 @@
 
 | 文件 | 行数 | 职责 |
 | --- | --- | --- |
-| `mewcode/context/manager.py` | ~850 | 两层上下文压缩全在这：Layer 1 三趟裁剪 + Layer 2 摘要旧消息、保留近期原文 + 恢复块渲染 |
+| `mewcode/context/manager.py` | ~850 | 两层[[理论学习_上下文压缩与_Token_管理|上下文压缩]]全在这：Layer 1 三趟裁剪 + Layer 2 摘要旧消息、保留近期原文 + 恢复块渲染 |
 | `mewcode/serialization.py` | ~100 | `build_anthropic_messages` ：消息序列化和连续 user 消息合并 |
 | `mewcode/memory/session.py` | ~300 | 会话持久化：compact_boundary 记录的读写和 resume 重建 |
-| `mewcode/agent.py` | ~1000 | Agent 主循环：调用 `apply_tool_result_budget` + `auto_compact` ，线程化 `transcript_path` |
+| `mewcode/agent.py` | ~1000 | [[07-Agent|Agent]] 主循环：调用 `apply_tool_result_budget` + `auto_compact` ，线程化 `transcript_path` |
 
 两层逻辑全在 `context/manager.py` 一个文件里，约 850 行。
 

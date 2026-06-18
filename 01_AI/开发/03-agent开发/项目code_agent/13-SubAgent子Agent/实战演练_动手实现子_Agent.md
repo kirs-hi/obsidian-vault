@@ -2,7 +2,7 @@
 
 ## 本章需要做什么 ？
 
-上一章我们给 MewCode 装上了 Hook 生命周期钩子系统，Agent 在关键节点上有了可编程的扩展能力。但不管你挂了多少 Hook，干活的还是同一个 Agent。所有任务都塞进同一个对话上下文，上下文越来越长，噪声越来越多，Token 越烧越快。
+上一章我们给 MewCode 装上了 Hook 生命周期钩子系统，[[07-Agent|Agent]] 在关键节点上有了可编程的扩展能力。但不管你挂了多少 Hook，干活的还是同一个 Agent。所有任务都塞进同一个对话上下文，上下文越来越长，噪声越来越多，Token 越烧越快。
 
 这一章要解决的就是这个问题：让 MewCode 从单 Agent 进化到能分发任务的多 Agent 架构。做完之后，主 Agent 可以把子任务委派给独立的子 Agent，每个子 Agent 有自己的上下文、工具集和权限边界，干完活把结果交回来就行。
 
@@ -48,7 +48,7 @@
 
 ### 正式开发
 
-三份文档有了之后，就相当于施工图纸已经定好了，然后让 Claude Code 根据这三份文档进行开发
+三份文档有了之后，就相当于施工图纸已经定好了，然后让 [[Claude Code 命令与最佳实践|Claude Code]] 根据这三份文档进行开发
 
 ![](实战演练_动手实现子_Agent-1.jpeg)
 
@@ -60,7 +60,7 @@
 
 来验收一下结果
 
-我们现在先看内置的子Agent，包括有Explore（探索专家）、Plan（架构师）、general-purpose（通用）
+我们现在先看内置的[[理论学习_SubAgent_子任务分发|子Agent]]，包括有Explore（探索专家）、Plan（架构师）、general-purpose（通用）
 
 ![](实战演练_动手实现子_Agent-3.jpeg)
 
@@ -165,7 +165,7 @@ nice，可以正常工作
 
 把下面三个文件保存到项目根目录，然后告诉你的 AI 编程助手：
 
-提示词如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
+[[提示词]]如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
 
 ### Go
 

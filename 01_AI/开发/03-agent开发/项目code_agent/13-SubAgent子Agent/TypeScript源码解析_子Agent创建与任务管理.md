@@ -1,6 +1,6 @@
 # TypeScript源码解析：子 Agent 创建与任务管理
 
-这篇走读 MewCode 的 SubAgent 代码，看看「把 Agent 包装成工具」在 TypeScript 里是怎么落地的。代码集中在 `src/agents/` 目录，是四种语言实现中最精简的一版。
+这篇走读 MewCode 的 [[理论学习_SubAgent_子任务分发|SubAgent]] 代码，看看「把 [[07-Agent|Agent]] 包装成工具」在 [[Day2-JavaScript和TypeScript|TypeScript]] 里是怎么落地的。代码集中在 `src/agents/` 目录，是四种语言实现中最精简的一版。
 
 ## 模块概览
 
@@ -233,7 +233,7 @@ for (const tool of parentRegistry.listTools()) {
 }
 ```
 
-只有两层：黑名单过滤 + 白名单交集。没有 MCP 工具直通、全局禁用、自定义 Agent 限制、异步白名单这些层。
+只有两层：黑名单过滤 + 白名单交集。没有 [[理论学习_MCP_协议与开放工具生态|MCP]] 工具直通、全局禁用、自定义 Agent 限制、异步白名单这些层。
 
 只有两层过滤意味着安全边界更薄。没有全局禁用层意味着子 Agent 可能能调到 Agent 工具（如果定义里没禁），没有异步白名单意味着后台 Agent 的工具集没有额外限制。
 

@@ -17,7 +17,7 @@ http://www.bilibili.com/video/BV12u5M6uECd/
 
 ## 如何让AI编程持续运行？
 
-正常的对话中，模型会根据提示词、任务难度、上下文、工具调用以及模型自己判断，主动退出结束当前对话
+正常的对话中，模型会根据[[提示词]]、任务难度、上下文、工具调用以及模型自己判断，主动退出结束当前对话
 
 ![](https://article-images.zsxq.com/FgTYsmp4FSU0tJcTNsaeA2zbCH2J)
 
@@ -33,7 +33,7 @@ http://www.bilibili.com/video/BV12u5M6uECd/
 
 ![](https://article-images.zsxq.com/Fp1tJOS_M46d45d4LxkYuZjVLOqH)
 
-Hooks核心：通过hooks不让 Claude Code 停止
+Hooks核心：通过hooks不让 [[Claude Code 命令与最佳实践|Claude Code]] 停止
 
 [https://github.com/anthropics/claude-plugins-official/tree/main/plugins/ralph-loop](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/ralph-loop)
 
@@ -41,7 +41,7 @@ Hooks核心：通过hooks不让 Claude Code 停止
 
 ## 3、控制AI编程工具（harness模式）
 
-将AI编程工具（Codex, Claude Code) 包裹在自定义的工作流中，用户不再使用原工具的命令启动
+将[[2026-03-02-AI编程工具|AI编程工具]]（Codex, Claude Code) 包裹在自定义的工作流中，用户不再使用原工具的命令启动
 
 [https://github.com/Yeachan-Heo/oh-my-codex/tree/main](https://github.com/Yeachan-Heo/oh-my-codex/tree/main)
 
@@ -135,7 +135,7 @@ AI 每一轮都能根据结果继续修。
 
 3）大量代码迁移 / 转换类任务
 
-JavaScript 迁移 TypeScript
+JavaScript 迁移 [[Day2-JavaScript和TypeScript|TypeScript]]
 
 Python 转 Java
 
@@ -189,7 +189,7 @@ Vue2 迁移 Vue3
 
 对接不稳定的外部服务
 
-依赖某个没验证过的 MCP / API
+依赖某个没验证过的 [[理论学习_MCP_协议与开放工具生态|MCP]] / API
 
 这种要先验证外部能力，再进入循环。
 

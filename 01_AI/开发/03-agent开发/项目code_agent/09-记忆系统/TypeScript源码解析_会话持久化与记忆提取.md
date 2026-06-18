@@ -1,6 +1,6 @@
 # TypeScript源码解析：会话持久化与记忆提取
 
-走读 MewCode 的记忆系统代码，看三类长期记忆（项目指令、会话持久化、自动记忆）是怎么在文件系统上实现的。
+走读 MewCode 的[[理论学习_跨会话记忆与会话持久化|记忆系统]]代码，看三类长期记忆（项目指令、会话持久化、自动记忆）是怎么在文件系统上实现的。
 
 ## 模块概览
 
@@ -231,7 +231,7 @@ async extract(conversationSummary: string): Promise<string[]> {
 
 的提取 prompt 定义了一种结构化文本格式：每条记忆用 `MEMORY_NAME` / `MEMORY_TYPE` / `MEMORY_DESC` / `MEMORY_BODY` 四个字段声明，多条记忆之间用 `---` 分隔。没有值得保存的就输出 `NONE` 。
 
-这种格式比子 Agent 模式简单（不需要工具调用），同时比 `### type` 分段格式更结构化。每条记忆有独立的 name、type、description、body，可以直接映射到 .md 文件的 frontmatter。
+这种格式比子 [[07-Agent|Agent]] 模式简单（不需要工具调用），同时比 `### type` 分段格式更结构化。每条记忆有独立的 name、type、description、body，可以直接映射到 .md 文件的 frontmatter。
 
 ### 提取结果的解析与持久化
 

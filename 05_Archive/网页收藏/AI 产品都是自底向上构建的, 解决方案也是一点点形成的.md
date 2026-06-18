@@ -204,7 +204,7 @@ AI：好的，让我帮你拆解一下这个需求...
 
 **工具推荐：**
 
-*   Claude Code / Cursor：边聊边写代码
+*   [[Claude Code 命令与最佳实践|Claude Code]] / Cursor：边聊边写代码
     
 
 *   Python + LangChain：快速搭建 AI 工作流

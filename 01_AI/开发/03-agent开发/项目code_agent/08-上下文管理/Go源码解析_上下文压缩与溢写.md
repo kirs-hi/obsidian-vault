@@ -13,7 +13,7 @@
 | `internal/session/session.go` | ~170 | 会话持久化：保存 compact_boundary 记录，resume 时定位恢复点 |
 | `internal/llm/anthropic.go` | ~390 | `buildAnthropicMessages` ：连续 user 消息合并，维持 API 交替规则 |
 
-两层代码分属不同的 package。Layer 1 在 `toolresult` ，Layer 2 在 `compact` ，由 Agent 主循环分别调用，互不依赖。
+两层代码分属不同的 package。Layer 1 在 `toolresult` ，Layer 2 在 `compact` ，由 [[07-Agent|Agent]] 主循环分别调用，互不依赖。
 
 ## 核心类型
 

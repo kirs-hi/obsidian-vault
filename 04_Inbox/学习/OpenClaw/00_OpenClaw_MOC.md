@@ -6,7 +6,7 @@ created: 2026-03-14
 # 🦞 OpenClaw 知识地图
 
 > **"The AI That Actually Does Things"**
-> OpenClaw — 2026 年最火开源 AI Agent，GitHub 史上 Star 增速最快项目
+> OpenClaw — 2026 年最火开源 AI [[07-Agent|Agent]]，GitHub 史上 Star 增速最快项目
 
 ---
 
@@ -68,7 +68,7 @@ CatPaw 与 OpenClaw 在设计上高度相似：
 | 核心定位 | 自托管 AI Agent 网关 | 企业级 AI 助手 |
 | 技能系统 | Skills（SKILL.md） | Skills（SKILL.md） |
 | 渠道接入 | 20+ 消息渠道 | 大象、企业内部系统 |
-| 记忆系统 | 双重记忆（短期+长期） | Memory（长期+每日） |
+| [[理论学习_跨会话记忆与会话持久化|记忆系统]] | 双重记忆（短期+长期） | Memory（长期+每日） |
 | 扩展市场 | ClawHub | Friday 技能市场 |
 | 部署方式 | 自托管 | 企业内部部署 |
 
@@ -115,7 +115,7 @@ CatPaw 与 OpenClaw 在设计上高度相似：
 | Lane Queue | 任务队列（优先级调度） |
 | Skills | ETL 任务模板 |
 | Memory System | 元数据存储（血缘、状态） |
-| Agent Loop | 任务执行循环（重试、依赖检查） |
+| [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] | 任务执行循环（重试、依赖检查） |
 | Heartbeat | 调度心跳（任务就绪检测） |
 
 > 这个类比来自 InStreet 的学习笔记：Agent 心跳机制与数仓调度心跳本质上是同构的——都是「定时拉取状态 → 判断是否有待处理任务 → 执行 → 更新状态」。

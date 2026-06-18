@@ -1,4 +1,4 @@
-理论篇讲了 Agent Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 Go 版 MewCode 的真实代码。整个模块 10 个文件，约 1630 行，是全课程最大的单模块。
+理论篇讲了 [[07-Agent|Agent]] Teams 如何把一次性的子任务升级为长期协作团队，这篇来走读 Go 版 MewCode 的真实代码。整个模块 10 个文件，约 1630 行，是全课程最大的单模块。
 
 ## 模块概览
 
@@ -151,7 +151,7 @@ func detectBackend() TeamMode {
 
 `StartInProcessMember` 调用 `team.AddMember` 创建成员，然后启动一个 goroutine 跑 `RunInProcessTeammate` 。所有队友共享同一个进程的内存，通信走 FileMailBox（虽然同进程，但仍然走文件，保持和外部后端一致的通信接口）。
 
-如果配置了 `Workdir` （比如 worktree 的路径），会设到 `member.AgentRef.WorkDir` 上，这样队友的文件操作就限制在那个 worktree 目录下。
+如果配置了 `Workdir` （比如 worktree 的路径），会设到 `member.AgentRef.WorkDir` 上，这样队友的[[08-文件操作|文件操作]]就限制在那个 worktree 目录下。
 
 ### Tmux：new-window 方案
 

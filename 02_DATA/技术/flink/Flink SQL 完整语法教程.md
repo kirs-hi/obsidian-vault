@@ -320,7 +320,7 @@ JOIN my_hive.dw.dim_user u
 | GenericInMemoryCatalog | 默认内存型，任务停止即丢失 |
 | HiveCatalog | 对接 Hive Metastore，持久化元数据 |
 | JdbcCatalog | 对接 MySQL/PostgreSQL 的库表元数据 |
-| IcebergCatalog | 对接 Iceberg 数据湖 |
+| IcebergCatalog | 对接 Iceberg [[数据湖项目|数据湖]] |
 
 ---
 
@@ -970,7 +970,7 @@ SET 'table.exec.mini-batch.size' = '5000';            -- 最大攒批条数
 
 ### 11.2 两阶段聚合（Local-Global）
 
-**原理：** 类似 MapReduce 的 Combiner，先在本地做预聚合，再全局聚合。解决数据倾斜（某些 key 数据量远大于其他 key）。
+**原理：** 类似 MapReduce 的 Combiner，先在本地做预聚合，再全局聚合。解决[[数据倾斜实践|数据倾斜]]（某些 key 数据量远大于其他 key）。
 
 ```sql
 SET 'table.optimizer.agg-phase-strategy' = 'TWO_PHASE';

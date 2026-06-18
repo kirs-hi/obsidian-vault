@@ -1,4 +1,4 @@
-理论篇讲了 SubAgent 的设计理念，包括定义式创建和 Fork 式创建、工具过滤的四层模型、前台和后台两种执行模式。这篇走读 Python 版 MewCode 的完整实现，涉及六个模块 1300+ 行代码，看看「从一个 Agent 里派生出另一个 Agent」到底要处理多少细节。
+理论篇讲了 [[理论学习_SubAgent_子任务分发|SubAgent]] 的设计理念，包括定义式创建和 Fork 式创建、工具过滤的四层模型、前台和后台两种执行模式。这篇走读 Python 版 MewCode 的完整实现，涉及六个模块 1300+ 行代码，看看「从一个 [[07-Agent|Agent]] 里派生出另一个 Agent」到底要处理多少细节。
 
 ## 模块概览
 
@@ -241,7 +241,7 @@ def parse_frontmatter(raw: str) -> tuple[dict, str]:
     return meta, body
 ```
 
-frontmatter 里放结构化的元数据（name、description、tools、model 等），body 部分就是 system prompt。这样一个文件同时承载了配置和提示词。
+frontmatter 里放结构化的元数据（name、description、tools、model 等），body 部分就是 system prompt。这样一个文件同时承载了配置和[[提示词]]。
 
 校验逻辑检查模型名、权限模式、maxTurns 的合法性：
 
@@ -262,7 +262,7 @@ def _validate_agent_meta(meta: dict, source: str = ""):
 
 ## 工具过滤：五层模型
 
-工具过滤是 SubAgent 安全性的核心。 `tool_filter.py` 实现了五层递进的过滤规则，MCP 工具在过滤之前先被分离出来，最后直接加回结果中。
+工具过滤是 SubAgent 安全性的核心。 `tool_filter.py` 实现了五层递进的过滤规则，[[理论学习_MCP_协议与开放工具生态|MCP]] 工具在过滤之前先被分离出来，最后直接加回结果中。
 
 ### Layer 0：MCP 工具直通
 
@@ -499,7 +499,7 @@ except Exception as e:
     return ToolResult(output=f"Sub-agent failed: {e}", is_error=True)
 ```
 
-前台执行会阻塞父 Agent 直到 SubAgent 跑完。 `run_to_completion` 内部就是一个完整的 Agent Loop。
+前台执行会阻塞父 Agent 直到 SubAgent 跑完。 `run_to_completion` 内部就是一个完整的 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]]。
 
 ## TaskManager：后台任务的生命周期
 

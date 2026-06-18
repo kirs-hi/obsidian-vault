@@ -1,4 +1,4 @@
-理论篇讲了 Function Calling 的协议和工具接口设计，这篇带你走读 Java 版 MewCode 的工具系统代码，看看「注册 → 描述 → 执行」这条主线在 Java 里是怎么落地的。
+理论篇讲了 [[01基础_12理解函数调用Function Call|Function Calling]] 的协议和工具接口设计，这篇带你走读 Java 版 MewCode 的工具系统代码，看看「注册 → 描述 → 执行」这条主线在 Java 里是怎么落地的。
 
 ## 模块概览
 
@@ -114,7 +114,7 @@ public void register(Tool tool) {
 }
 ```
 
-`LinkedHashMap.put()` 保证后注册的工具排在后面。如果同名工具重复注册，新的会覆盖旧的，这在 MCP 外部工具覆盖内置工具时有用。
+`LinkedHashMap.put()` 保证后注册的工具排在后面。如果同名工具重复注册，新的会覆盖旧的，这在 [[理论学习_MCP_协议与开放工具生态|MCP]] 外部工具覆盖内置工具时有用。
 
 ### 第二步：生成 Schema
 
@@ -162,7 +162,7 @@ Java 的 `Map.of()` 和 `List.of()` 创建不可变集合。这些 Schema 对象
 
 ### 第三步：执行
 
-Agent Loop 通过 `registry.get(name)` 查找工具，然后调用 `execute(args)` 。Java 版的 `execute()` 是同步方法，直接返回 `ToolResult` 。如果 Agent Loop 需要并行执行多个工具，在调用层用虚拟线程池即可（第4章会详细讲）。
+[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 通过 `registry.get(name)` 查找工具，然后调用 `execute(args)` 。Java 版的 `execute()` 是同步方法，直接返回 `ToolResult` 。如果 [[07-Agent|Agent]] Loop 需要并行执行多个工具，在调用层用虚拟线程池即可（第4章会详细讲）。
 
 ## 内置工具速览
 

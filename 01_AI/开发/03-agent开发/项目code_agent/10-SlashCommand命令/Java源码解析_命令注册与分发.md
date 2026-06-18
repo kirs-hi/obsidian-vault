@@ -34,7 +34,7 @@ public record Command(
 
 Java 版的 `Command` 有一个关键设计：没有 `handler` 字段。handler 存在 `CommandRegistry` 的 `handlers` Map 里，和命令定义是分开的。这种分离让 Command record 保持纯粹的数据定义，handler 的注册和查找由 Registry 统一管理。
 
-`CommandType` 作为内部枚举定义在 `Command` 里面。三种类型各有不同的处理方式： `LOCAL` 是纯本地逻辑，handler 返回文本直接展示； `LOCAL_UI` 涉及 TUI 状态变化，由 TUI 层直接处理； `PROMPT` 生成文本发给 LLM，触发 Agent 执行。
+`CommandType` 作为内部枚举定义在 `Command` 里面。三种类型各有不同的处理方式： `LOCAL` 是纯本地逻辑，handler 返回文本直接展示； `LOCAL_UI` 涉及 TUI 状态变化，由 TUI 层直接处理； `PROMPT` 生成文本发给 LLM，触发 [[07-Agent|Agent]] 执行。
 
 ### 命令匹配
 

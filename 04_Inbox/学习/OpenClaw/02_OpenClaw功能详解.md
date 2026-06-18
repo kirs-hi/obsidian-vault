@@ -8,7 +8,7 @@ source: https://docs.openclaw.ai
 
 ## 整体架构概览
 
-OpenClaw 的核心是一个**单一 Gateway 进程**，它是所有会话、路由和渠道连接的唯一真相来源。
+[[00_OpenClaw_MOC|OpenClaw]] 的核心是一个**单一 Gateway 进程**，它是所有会话、路由和渠道连接的唯一真相来源。
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -40,7 +40,7 @@ Gateway 是 OpenClaw 的**控制平面**，负责：
 
 - 接收来自各渠道的消息
 - 维护每个发送者的会话状态
-- 将消息路由到对应的 Agent
+- 将消息路由到对应的 [[07-Agent|Agent]]
 - 管理 WebSocket 连接
 - 执行安全策略（白名单、Token 验证）
 
@@ -239,13 +239,13 @@ openclaw skills info daily-report
 
 ### MCP 集成
 
-OpenClaw 支持 **MCP（Model Context Protocol）**，可以接入任何 MCP 兼容的工具服务器，大幅扩展能力边界。
+OpenClaw 支持 **[[理论学习_MCP_协议与开放工具生态|MCP]]（Model Context Protocol）**，可以接入任何 MCP 兼容的工具服务器，大幅扩展能力边界。
 
 ---
 
 ## 五、记忆系统（Memory）
 
-OpenClaw 实现了**双重记忆系统**，解决 LLM 上下文窗口有限的问题。
+OpenClaw 实现了**双重[[理论学习_跨会话记忆与会话持久化|记忆系统]]**，解决 LLM 上下文窗口有限的问题。
 
 ### 短期记忆（Context Memory）
 

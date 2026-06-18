@@ -10,7 +10,7 @@ source: https://github.com/openclaw/openclaw
 
 ## 一句话定义
 
-OpenClaw 是一个**自托管的 AI Agent 网关**，运行在你自己的设备上，将 WhatsApp、Telegram、Discord、iMessage 等你已经在用的聊天软件，变成随时可调用 AI 助手的入口。它不只是聊天机器人——它能**真正替你做事**。
+OpenClaw 是一个**自托管的 AI [[07-Agent|Agent]] 网关**，运行在你自己的设备上，将 WhatsApp、Telegram、Discord、iMessage 等你已经在用的聊天软件，变成随时可调用 AI 助手的入口。它不只是聊天机器人——它能**真正替你做事**。
 
 ---
 
@@ -22,7 +22,7 @@ OpenClaw 是一个**自托管的 AI Agent 网关**，运行在你自己的设备
 | 官方文档 | https://docs.openclaw.ai |
 | 官网 | https://openclaws.io |
 | 许可证 | MIT |
-| 主语言 | TypeScript 87.4%、Swift 8.3%、Kotlin 1.8%、Shell 1.0% |
+| 主语言 | [[Day2-JavaScript和TypeScript|TypeScript]] 87.4%、Swift 8.3%、Kotlin 1.8%、Shell 1.0% |
 | 当前版本 | 2026.3.12（截至 2026-03-14） |
 | GitHub Stars | 250,000+（史上增速最快开源项目之一） |
 | Contributors | 1,190+ |

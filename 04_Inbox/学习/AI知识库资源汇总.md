@@ -17,7 +17,7 @@ tags:
 
 | 目标         | 推荐                                                       | 理由                                     |
 | ---------- | -------------------------------------------------------- | -------------------------------------- |
-| 快速构建 AI 产品 | [Dify](https://github.com/langgenius/dify)               | 50k+ Stars，RAG + Agent + 工作流可视化编排，开箱即用 |
+| 快速构建 AI 产品 | [Dify](https://github.com/langgenius/dify)               | 50k+ Stars，[[06-RAG|RAG]] + [[07-Agent|Agent]] + 工作流可视化编排，开箱即用 |
 | 系统学习 AI 编程 | [easy-vibe](https://github.com/datawhalechina/easy-vibe) | 分初/中/高三级，高级覆盖全栈+Agent+跨端，适合有编程基础的人     |
 |            | https://www.vibevibe.cn/zh/                              |                                        |
 
@@ -27,7 +27,7 @@ tags:
 
 - **[vibe-vibe (Datawhale)](https://github.com/datawhalechina/vibe-vibe)** — 零基础 AI 辅助编程系统化教程，从「我有一个想法」到「我做出了一个产品」。在线：[vibevibe.cn](https://www.vibevibe.cn)
 - **[easy-vibe (Datawhale)](https://github.com/datawhalechina/easy-vibe)** — Vibe Coding 101，项目制学习，分初/中/高三级，覆盖游戏、工具、产品原型到跨端 App 和 Agent 开发
-- **[vibe-coding-cn (tukuaiai)](https://github.com/tukuaiai/vibe-coding-cn)** — Vibe Coding 中文指南，围绕知识管理、Prompt 提示词组织与自动化
+- **[vibe-coding-cn (tukuaiai)](https://github.com/tukuaiai/vibe-coding-cn)** — Vibe Coding 中文指南，围绕知识管理、Prompt [[提示词]]组织与自动化
 - **[vibe-coding (tianqihou)](https://github.com/tianqihou/vibe-coding)** — 聚焦「原生 AI 应用开发」，循序渐进的项目实战
 - **[ai-guide (鱼皮)](https://github.com/liyupi/ai-guide)** — AI 资源大全 + Vibe Coding 指南，汇总 AI 工具、测评、技巧、变现等
 
@@ -35,7 +35,7 @@ tags:
 
 - **[Hello-Agents (Datawhale)](https://datawhalechina.github.io/hello-agents/)** — 从单智能体到多智能体系统的设计与开发全流程
 - **[ai-agents-for-beginners (微软)](https://github.com/microsoft/ai-agents-for-beginners)** — 微软官方 11 章渐进式 AI Agent 教程
-- **[ai-agent (lijicode)](https://github.com/lijicode/ai-agent)** — Spring Boot 3 + Spring AI 构建 AI 应用，覆盖 RAG、Tool Calling、MCP、Agent
+- **[ai-agent (lijicode)](https://github.com/lijicode/ai-agent)** — Spring Boot 3 + Spring AI 构建 AI 应用，覆盖 RAG、Tool Calling、[[理论学习_MCP_协议与开放工具生态|MCP]]、Agent
 - **[v0-ai-ship-workshop](https://github.com/dominiksipowicz/v0-ai-ship-workshop)** — Vercel AI SDK v5 实战 Workshop
 
 ## 三、AI 全栈产品开发（从 0 到 1）

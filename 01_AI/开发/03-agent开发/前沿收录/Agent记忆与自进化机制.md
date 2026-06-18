@@ -4,7 +4,7 @@
 
 ### 1.1 六层记忆模型
 
-Hermes 的记忆系统分为 6 层，前 4 层和 OpenClaw 基本类似，后 2 层是 Hermes 特有的：
+Hermes 的[[理论学习_跨会话记忆与会话持久化|记忆系统]]分为 6 层，前 4 层和 [[00_OpenClaw_MOC|OpenClaw]] 基本类似，后 2 层是 Hermes 特有的：
 
 **第一层：Bootstrap Files**
 - 包含：AGENTS.md、SOUL.md、USER.md
@@ -24,7 +24,7 @@ Hermes 的记忆系统分为 6 层，前 4 层和 OpenClaw 基本类似，后 2 
 
 **第四层：Retrieval Index**
 - memory 文件持久化存储的内容
-- Agent 主动写入 memory/YYYY-MM-DD.md
+- [[07-Agent|Agent]] 主动写入 memory/YYYY-MM-DD.md
 - 支持按需检索召回
 - 类比：档案柜
 
@@ -60,7 +60,7 @@ Hermes 的记忆系统分为 6 层，前 4 层和 OpenClaw 基本类似，后 2 
 
 **Hermes 自进化 Compaction**
 - 在压缩之上多走一步——不仅 flush 到 memory，还会先检索自进化信息
-- 判断"这次我有没有新 skill 要写"（见 11.4.4）
+- 判断"这次我有没有新 [[skill]] 要写"（见 11.4.4）
 
 ---
 

@@ -1,8 +1,8 @@
-理论篇讲了 Skill 是「可复用的 SOP」，这篇带你走读 Java 版 MewCode 的实际代码，看看一个 Markdown 文件经过哪些环节变成 Agent 可消费的能力。
+理论篇讲了 Skill 是「可复用的 SOP」，这篇带你走读 Java 版 MewCode 的实际代码，看看一个 Markdown 文件经过哪些环节变成 [[07-Agent|Agent]] 可消费的能力。
 
 ## 模块概览
 
-Java 版把 Skill 系统集中在 `SkillCatalog.java` 一个文件里，总共 206 行。一个文件里定义了数据类型、目录扫描、文件解析、上下文生成，串起了从「用户写一个 Markdown」到「Skill 内容注入 Agent 提示词」的完整链路。
+Java 版把 Skill 系统集中在 `SkillCatalog.java` 一个文件里，总共 206 行。一个文件里定义了数据类型、目录扫描、文件解析、上下文生成，串起了从「用户写一个 Markdown」到「Skill 内容注入 Agent [[提示词]]」的完整链路。
 
 为什么只需要一个文件？因为 Java 版专注做好一件事：Skill 的发现和加载。执行模式（inline / fork）的路由交给了 Agent 层，工具白名单的过滤也在上层处理。 `SkillCatalog` 就是一个纯粹的「目录服务」，负责回答「有哪些 Skill 可用」和「给我某个 Skill 的完整内容」。
 

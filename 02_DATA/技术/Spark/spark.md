@@ -8,7 +8,7 @@
 > 两张大表默认走 Sort Merge Join，因为它对内存依赖低。  
 > 非等值连接只能走嵌套循环。
 > 
-> 实际项目中我会通过 explain 查看物理计划，重点关注是否发生数据倾斜、多对多膨胀，以及是否需要调整广播阈值或做倾斜优化。
+> 实际项目中我会通过 explain 查看物理计划，重点关注是否发生[[数据倾斜实践|数据倾斜]]、多对多膨胀，以及是否需要调整广播阈值或做倾斜优化。
 
 Spark Join 底层其实就是把传统的 Hash Join 或 Sort Merge Join 做成分布式版本。  
 先通过 Shuffle 把相同 key 的数据分到同一个分区，然后在 Executor 本地执行具体算法，比如构建哈希表或排序归并。  
@@ -400,7 +400,7 @@ AQE 是近几年面试重点。
 - 🔥 Shuffle 为什么会 OOM？
 - 🔥 Shuffle 和 GC 的关系？
 - 🔥 为什么 Sort Shuffle 更稳定？
-- 🔥 Spark 和 Flink 的 Shuffle 有什么不同？
+- 🔥 Spark 和 [[Flink SQL 完整语法教程|Flink]] 的 Shuffle 有什么不同？
 
 # Spark 内存模型
 面试高频问题集中在“统一内存机制原理 + 参数调优思路 + OOM 排查经验”三大块，生产落地关键在合理分配 Executor 内存与避免数据倾斜。**

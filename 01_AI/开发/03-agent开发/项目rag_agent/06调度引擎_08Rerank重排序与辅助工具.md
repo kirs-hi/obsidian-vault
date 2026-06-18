@@ -11,19 +11,19 @@ tags:
 ---
 [来自： 拿个offer-开源&项目实战](https://wx.zsxq.com/group/51121244585524)
 
-前七篇讲完了 Chat 子系统（六篇）和 Embedding 子系统（一篇），覆盖了 infra-ai 模块 9 个包中的 6 个： `config` （配置）、 `enums` （枚举）、 `model` （路由核心）、 `http` （HTTP 基础设施）、 `chat` （对话）、 `embedding` （向量化）。
+前七篇讲完了 Chat 子系统（六篇）和 [[01基础_08从文本到向量之理解Embedding|Embedding]] 子系统（一篇），覆盖了 infra-ai 模块 9 个包中的 6 个： `config` （配置）、 `enums` （枚举）、 `model` （路由核心）、 `http` （HTTP 基础设施）、 `chat` （对话）、 `embedding` （向量化）。
 
 这一篇讲剩下的 3 个包： `rerank` （重排序子系统）、 `token` （Token 估算）、 `util` （工具类），把整个 infra-ai 模块收尾。
 
 Rerank 是三种能力中的最后一个——和 Chat、Embedding 遵循同样的三层接口设计，复用同一套路由和熔断机制。但 Rerank 有两个独特之处：一是百炼的 Rerank 实现里有一套去重 + 回填的防御性逻辑，处理混合检索场景的边缘情况；二是 `NoopRerankClient` 用空对象模式实现了优雅降级——没有 Rerank 模型时系统不报错，而是回退到简单截断。
 
-Token 估算和响应清洗是两个小工具，代码量不大，但在 RAG 流程中经常用到。一并在本篇讲完。
+Token 估算和响应清洗是两个小工具，代码量不大，但在 [[06-RAG|RAG]] 流程中经常用到。一并在本篇讲完。
 
 ## Rerank 重排序子系统
 
 ### 1\. Rerank 在 RAG 中的角色
 
-回顾一下 RAG 的检索阶段。用户提问“AirPods Pro 2 的保修期是多久？”，系统先通过向量检索（Bi-Encoder）从 100 万个 Chunk 中快速召回 Top-20 候选。这 20 个候选覆盖面广（保证了召回率），但排序不一定准——向量相似度是粗略的语义匹配，和 query 的真正相关度之间有差距。
+回顾一下 RAG 的检索阶段。用户提问“AirPods Pro 2 的保修期是多久？”，系统先通过[[01基础_10向量检索策略与召回优化|向量检索]]（Bi-Encoder）从 100 万个 [[01基础_06数据分块Chunk策略与实践|Chunk]] 中快速召回 Top-20 候选。这 20 个候选覆盖面广（保证了召回率），但排序不一定准——向量相似度是粗略的语义匹配，和 query 的真正相关度之间有差距。
 
 Rerank 的作用是对这 20 个候选做精排。它用 Cross-Encoder 模型逐对评估 query 和每个候选的相关度，给出精确的分数，返回最相关的 Top-5 喂给大模型生成回答。
 
@@ -59,7 +59,7 @@ public class RetrievedChunk {
 }
 ```
 
-三个字段： `id` 是向量数据库中的主键， `text` 是 Chunk 的文本内容， `score` 是相关度分数。向量检索阶段， `score` 是向量相似度分数；Rerank 之后， `score` 会被更新为 Rerank 模型给出的 `relevance_score` 。
+三个字段： `id` 是[[01基础_09向量数据库的原理与选型|向量数据库]]中的主键， `text` 是 Chunk 的文本内容， `score` 是相关度分数。向量检索阶段， `score` 是向量相似度分数；Rerank 之后， `score` 会被更新为 Rerank 模型给出的 `relevance_score` 。
 
 `RetrievedChunk` 放在 framework 模块而不是 infra-ai 模块——因为检索层、Rerank 层、生成层都用到它，是跨模块共享的约定。
 
@@ -842,7 +842,7 @@ public final class LLMResponseCleaner {
 
 ### 2\. 使用场景
 
-在 RAG 系统中，有些环节会让大模型输出结构化数据。比如意图识别——Prompt 里要求模型判断用户的意图，以 JSON 格式输出：
+在 RAG 系统中，有些环节会让大模型输出结构化数据。比如[[01基础_18意图识别与多路由调度策略|意图识别]]——Prompt 里要求模型判断用户的意图，以 JSON 格式输出：
 
 > 请根据用户的消息判断意图类型，以 JSON 格式输出，包含 intent 和 confidence 字段。
 
@@ -902,7 +902,7 @@ public final class LLMResponseCleaner {
 
 **第四篇《Chat 同步调用与模板方法》** ——协议封装。 `AbstractOpenAIStyleChatClient` 模板方法模式， `doChat` 同步调用九步骤，三个钩子方法（ `requiresApiKey` 、 `customizeRequestBody` 、 `isReasoningEnabledForStream` ），HTTP 错误处理体系（ `ModelClientErrorType` 分类 + `ModelClientException` 结构化异常）。
 
-**第五篇《SSE 流式解析与异步执行》** ——流式底层。 `doStreamChat` 模板方法， `OpenAIStyleSseParser` SSE 行解析（ `data:` 前缀、 `[DONE]` 标记、 `delta.content` / `delta.reasoning_content` ）， `StreamAsyncExecutor` 异步提交到专用线程池， `StreamCancellationHandle` 双重取消机制（ `AtomicBoolean` 信号 + `Call.cancel()` 中断 I/O）。
+**第五篇《[[01基础_20SSE协议与流式响应|SSE]] 流式解析与异步执行》** ——流式底层。 `doStreamChat` 模板方法， `OpenAIStyleSseParser` SSE 行解析（ `data:` 前缀、 `[DONE]` 标记、 `delta.content` / `delta.reasoning_content` ）， `StreamAsyncExecutor` 异步提交到专用线程池， `StreamCancellationHandle` 双重取消机制（ `AtomicBoolean` 信号 + `Call.cancel()` 中断 I/O）。
 
 **第六篇《流式路由的首包探测机制》** ——流式路由。 `RoutingLLMService.streamChat()` 的 probe-and-commit 模式： `ProbeBufferingCallback` 探测缓冲装饰器（ `synchronized` 保护两阶段切换）， `FirstPacketAwaiter` 首包等待器（ `CountDownLatch` 跨线程同步），四种探测结果（SUCCESS / ERROR / TIMEOUT / NO\_CONTENT），在异步回调场景下实现对前端透明的故障转移。
 

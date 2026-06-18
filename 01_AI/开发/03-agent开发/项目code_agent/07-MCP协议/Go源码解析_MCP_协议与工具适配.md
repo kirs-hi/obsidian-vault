@@ -1,4 +1,4 @@
-理论篇讲了 MCP 协议的设计理念和三阶段会话流程，这篇带你走读 Go 版 MewCode 的真实代码，看看一个 Coding Agent 怎么用不到 280 行代码接入整个 MCP 生态。
+理论篇讲了 [[理论学习_MCP_协议与开放工具生态|MCP]] 协议的设计理念和三阶段会话流程，这篇带你走读 Go 版 MewCode 的真实代码，看看一个 [[理论学习_什么是_Coding_Agent_|Coding Agent]] 怎么用不到 280 行代码接入整个 MCP 生态。
 
 ## 模块概览
 
@@ -22,7 +22,7 @@ type ServerConfig struct {
 
 七个字段覆盖了两种传输方式的所有配置。 `Command` + `Args` + `Env` 服务于 stdio 传输， `URL` + `Transport` + `Headers` 服务于 HTTP 传输。 `Name` 是服务器的唯一标识，后面会用在工具名拼接里。
 
-判断用哪种传输很直接： `IsStdio()` 看 `Command` 是否为空。 `transportKind()` 把空字符串和 `"http"` 都归一化到 Streamable HTTP（最新规范），只有显式写 `"sse"` 才走老版 SSE 传输。
+判断用哪种传输很直接： `IsStdio()` 看 `Command` 是否为空。 `transportKind()` 把空字符串和 `"http"` 都归一化到 Streamable HTTP（最新规范），只有显式写 `"sse"` 才走老版 [[01基础_20SSE协议与流式响应|SSE]] 传输。
 
 ### Client：单个 MCP 连接
 
@@ -57,7 +57,7 @@ type MCPToolWrapper struct {
 }
 ```
 
-这是整个模块最关键的类型。它把 MCP 协议返回的工具定义适配成 MewCode 的 `tools.Tool` 接口，Agent Loop 完全不知道自己调的工具来自外部 MCP 服务器。
+这是整个模块最关键的类型。它把 MCP 协议返回的工具定义适配成 MewCode 的 `tools.Tool` 接口，[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 完全不知道自己调的工具来自外部 MCP 服务器。
 
 ## 主流程走读
 
@@ -154,7 +154,7 @@ func (r *Registry) GetAllSchemas(protocol string) []map[string]any {
 }
 ```
 
-`GetDeferredToolNames()` 返回那些尚未被发现的延迟工具名称列表，Agent Loop 把这些名字注入 system-reminder，让 LLM 知道有哪些「隐藏」工具可以按需加载。
+`GetDeferredToolNames()` 返回那些尚未被发现的延迟工具名称列表，[[07-Agent|Agent]] Loop 把这些名字注入 system-reminder，让 LLM 知道有哪些「隐藏」工具可以按需加载。
 
 LLM 需要某个延迟工具时，通过 ToolSearch 搜索。ToolSearch 支持两种查询模式：
 

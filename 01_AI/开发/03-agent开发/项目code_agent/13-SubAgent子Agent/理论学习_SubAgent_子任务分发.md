@@ -1,6 +1,6 @@
-**架构定位** ：本章扩展引擎层，实现子 Agent 机制。把 Agent 包装成工具，让引擎层和工具层递归组合。
+**架构定位** ：本章扩展引擎层，实现子 [[07-Agent|Agent]] 机制。把 Agent 包装成工具，让引擎层和工具层递归组合。
 
-**跨章导引** ：如果你已经看过 第 11 章 Skill 的 fork 模式，会发现它跟本章的 SubAgent 在底层是一回事——都新建独立 Conversation、独立 Agent Loop、独立工具过滤集。本章会展开讲完整的 SubAgent 机制，包括 Skill fork 复用的底层基础设施。
+**跨章导引** ：如果你已经看过 第 11 章 Skill 的 fork 模式，会发现它跟本章的 SubAgent 在底层是一回事——都新建独立 Conversation、独立 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]]、独立工具过滤集。本章会展开讲完整的 SubAgent 机制，包括 Skill fork 复用的底层基础设施。
 
 ---
 
@@ -89,7 +89,7 @@ function execute(context, params):
 
 主 Agent 完全不需要知道调用子 Agent 和调用普通工具有什么区别。在它看来，Agent 和 ReadFile 都是工具，调用方式一模一样。子 Agent 在独立的上下文中完成任务，返回结果给主 Agent。主 Agent 的上下文不会被子任务的中间过程污染。
 
-顺便说一句横向定位。Coding Agent 之外的多 Agent 框架（CrewAI、AutoGen）大多走的是平等协作或群聊路线，多个 Agent 之间互发消息商量怎么做。MewCode 的 SubAgent 不一样——它是主从分发：主 Agent 是唯一调度者，子 Agent 收到任务、做完、把结果回报。两种范式各有适用场景，coding 场景里主从分发更稳定，因为主 Agent 一直掌握全局状态，不容易陷入多 Agent 互相等待的循环。
+顺便说一句横向定位。[[理论学习_什么是_Coding_Agent_|Coding Agent]] 之外的多 Agent 框架（CrewAI、AutoGen）大多走的是平等协作或群聊路线，多个 Agent 之间互发消息商量怎么做。MewCode 的 SubAgent 不一样——它是主从分发：主 Agent 是唯一调度者，子 Agent 收到任务、做完、把结果回报。两种范式各有适用场景，coding 场景里主从分发更稳定，因为主 Agent 一直掌握全局状态，不容易陷入多 Agent 互相等待的循环。
 
 ![](理论学习_SubAgent_子任务分发-4.jpeg)
 

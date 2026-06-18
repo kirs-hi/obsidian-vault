@@ -10,7 +10,7 @@ tags:
 banner: "https://cloudcache.tencent-cloud.com/open_proj/proj_qcloud_v2/gateway/shareicons/cloud.png"
 banner_icon: 🔖
 ---
-在上一篇 [《从零开始学 Flink：实时数仓与维表时态 Join 实战》](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FVns0dem00IhwuMcYoKEUuQ&objectId=2635265&objectType=1&contentType=undefined) 中，我们通过引入 Hive Catalog，解决了 Flink SQL 元数据管理的痛点。
+在上一篇 [《从零开始学 Flink：[[实时数仓]]与维表时态 Join 实战》](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FVns0dem00IhwuMcYoKEUuQ&objectId=2635265&objectType=1&contentType=undefined) 中，我们通过引入 Hive Catalog，解决了 [[Flink SQL 完整语法教程|Flink SQL]] 元数据管理的痛点。
 
 今天，我们将目光聚焦于实时数仓建设中最核心、也最容易 “踩坑” 的环节——**多流关联（Join）**。
 

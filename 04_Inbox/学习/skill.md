@@ -69,7 +69,7 @@ ECharts 5.4.3 和 marked.js 通过 Python 直接内嵌到 HTML 文件中，零 C
 
 **3. 强制约束（🔒1-10）的执行保障不够硬**
 
-10条强制约束用 emoji + 表格写在文件顶部，本质上是"提示词级别"的约束。在 2003 行的巨大 prompt 中，LLM 能否在每次生成 SQL 时都记住"严禁 LIMIT"（🔒2）、"严禁 mtdata query"（🔒1）？从工程角度，这些约束应该尽量"代码化"——比如 `run_query_with_mtdata_bi()` 已经做了 LIMIT 检测，那 SKILL.md 里就不需要再写一遍让 AI 自律了。每条约束都应有对应的代码防线，而不是仅靠 prompt。
+10条强制约束用 emoji + 表格写在文件顶部，本质上是"[[提示词]]级别"的约束。在 2003 行的巨大 prompt 中，LLM 能否在每次生成 SQL 时都记住"严禁 LIMIT"（🔒2）、"严禁 mtdata query"（🔒1）？从工程角度，这些约束应该尽量"代码化"——比如 `run_query_with_mtdata_bi()` 已经做了 LIMIT 检测，那 SKILL.md 里就不需要再写一遍让 AI 自律了。每条约束都应有对应的代码防线，而不是仅靠 prompt。
 
 **4. CatClaw/CatPaw 双端兼容增加了大量条件分支**
 

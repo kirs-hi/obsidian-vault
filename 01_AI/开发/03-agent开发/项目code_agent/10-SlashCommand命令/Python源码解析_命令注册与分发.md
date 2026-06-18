@@ -12,7 +12,7 @@
 | `handlers/__init__.py` | 32 | 聚合所有内置命令，批量注册 |
 | `handlers/*.py` | 15 个文件 | 每个文件实现一个命令 |
 
-总共不到 700 行。命令系统的复杂度不在单个文件，而在它连接了 Agent、UI、会话管理、记忆、权限等几乎所有模块。
+总共不到 700 行。命令系统的复杂度不在单个文件，而在它连接了 [[07-Agent|Agent]]、UI、会话管理、记忆、权限等几乎所有模块。
 
 ## 核心类型
 
@@ -197,7 +197,7 @@ class CompletionPopup(Vertical):
 | --- | --- | --- | --- |
 | `/help` | `/h` , `/?` | LOCAL | 显示帮助信息，支持 `/help <cmd>` 查看单个命令 |
 | `/status` | `/s` | LOCAL | 显示模式、Token、工具数、记忆数、版本 |
-| `/compact` | `/c` | LOCAL | 手动触发上下文压缩 |
+| `/compact` | `/c` | LOCAL | 手动触发[[理论学习_上下文压缩与_Token_管理|上下文压缩]] |
 | `/clear` |  | LOCAL_ UI | 清除对话，创建新会话 |
 | `/plan` | `/p` | LOCAL_ UI | 切换到 Plan 只读模式 |
 | `/do` |  | LOCAL_ UI | 切换回执行模式 |

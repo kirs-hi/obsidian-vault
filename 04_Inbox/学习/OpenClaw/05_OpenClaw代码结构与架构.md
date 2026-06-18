@@ -45,7 +45,7 @@ openclaw/openclaw/
 
 | 层次 | 技术 |
 |------|------|
-| 主语言 | TypeScript（87.4%） |
+| 主语言 | [[Day2-JavaScript和TypeScript|TypeScript]]（87.4%） |
 | iOS App | Swift（8.3%） |
 | Android App | Kotlin（1.8%） |
 | 脚本 | Shell（1.0%） |
@@ -67,7 +67,7 @@ Gateway 是整个系统的**神经中枢**，基于 Node.js 实现。
 **核心职责：**
 - WebSocket 服务器（监听 18789 端口）
 - 会话状态管理（每个发送者独立会话）
-- 消息路由（根据渠道和规则分发到 Agent）
+- 消息路由（根据渠道和规则分发到 [[07-Agent|Agent]]）
 - 安全控制（Token 验证、白名单过滤）
 - 渠道连接管理（维护各渠道的长连接）
 
@@ -125,7 +125,7 @@ const PI_TOOLS = {
 };
 ```
 
-**Agent Loop 实现：**
+**[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 实现：**
 ```typescript
 async function agentLoop(message: string, session: Session) {
   const context = await buildContext(session);
@@ -152,7 +152,7 @@ async function agentLoop(message: string, session: Session) {
 
 ### 4. Lane Queue（并发控制）
 
-Lane Queue 是 OpenClaw 的并发控制机制，防止同一用户的多个请求相互干扰：
+Lane Queue 是 [[00_OpenClaw_MOC|OpenClaw]] 的并发控制机制，防止同一用户的多个请求相互干扰：
 
 ```
 用户 A 的消息 → Lane A → [任务1, 任务2, 任务3] → 顺序执行

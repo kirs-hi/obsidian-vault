@@ -1,6 +1,6 @@
 ### **“控制 partition 数量”就是控制 Spark 在某个阶段会启动多少个 task 来并行处理数据。**
 
-在 Spark 里：
+在 [[spark|Spark]] 里：
 
 > 一个 partition = 一个 task  
 > 一个 reducer = 一个 partition = 一个 task  
@@ -574,7 +574,7 @@ spark.sql.shuffle.partitions = 2000
 
 解决的问题：
 
-> 由于动态分区或极端数据倾斜，仍然产生了很多小文件。
+> 由于动态分区或极端[[数据倾斜实践|数据倾斜]]，仍然产生了很多小文件。
 
 它会：
 

@@ -15,7 +15,7 @@ tags:
 
 **➡️ 想要学习如何开发插件？请查看我们的 [插件开发指南](/SwiftBiu/SwiftBiuX-Template/blob/main/DEVELOPMENT_GUIDE.md)** ([中文版](/SwiftBiu/SwiftBiuX-Template/blob/main/DEVELOPMENT_GUIDE_zh.md))
 
-🤖 **觉得从头开发太繁琐？** 本仓库内置了全套 [AI Agent Skill 体系](/SwiftBiu/SwiftBiuX-Template/blob/main/AI_SKILL.md)，直接通过 Cursor/Gemini 等大模型引入，即可一句话让 AI 全自动生成完美适配的满血插件代码！
+🤖 **觉得从头开发太繁琐？** 本仓库内置了全套 [AI [[07-Agent|Agent]] Skill 体系](/SwiftBiu/SwiftBiuX-Template/blob/main/AI_SKILL.md)，直接通过 Cursor/Gemini 等大模型引入，即可一句话让 AI 全自动生成完美适配的满血插件代码！
 
 ## 🧩 图例说明 (Legend)
 
@@ -161,7 +161,7 @@ Base64 编码与解码。
 
 **正则提取器**
 
-使用正则表达式批量提取文本中的关键信息（如邮箱、URL）。
+使用[[14-正则表达式|正则表达式]]批量提取文本中的关键信息（如邮箱、URL）。
 
 [Download](https://github.com/SwiftBiu/SwiftBiuX-Template/releases/latest/download/RegexExtractor.swiftbiux)
 

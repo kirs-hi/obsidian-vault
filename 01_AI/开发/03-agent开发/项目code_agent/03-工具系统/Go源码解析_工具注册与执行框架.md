@@ -1,4 +1,4 @@
-理论篇讲了 Function Calling 的协议、工具接口设计和六个内置工具，这篇带你走读 Go 版 MewCode 的工具系统代码，看看「注册 → 描述 → 执行」这条主线是怎么实现的。
+理论篇讲了 [[01基础_12理解函数调用Function Call|Function Calling]] 的协议、工具接口设计和六个内置工具，这篇带你走读 Go 版 MewCode 的工具系统代码，看看「注册 → 描述 → 执行」这条主线是怎么实现的。
 
 ## 模块概览
 
@@ -37,7 +37,7 @@ type Tool interface {
 
 五个方法，各管一件事。 `Name()` 和 `Description()` 告诉 LLM 这个工具是什么、怎么用。 `Schema()` 定义参数格式让 LLM 知道该传什么。 `Category()` 标记工具的读写属性，给权限系统用。 `Execute()` 是真正干活的地方。
 
-这个接口的好处是：不管内置工具还是 MCP 外部工具，对 Agent Loop 来说长得一样。第7章的 MCP 工具包装器也是实现这个接口，注册进来后 Agent 完全无感。
+这个接口的好处是：不管内置工具还是 [[理论学习_MCP_协议与开放工具生态|MCP]] 外部工具，对 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 来说长得一样。第7章的 MCP 工具包装器也是实现这个接口，注册进来后 [[07-Agent|Agent]] 完全无感。
 
 ### ToolResult 和 ToolCategory
 

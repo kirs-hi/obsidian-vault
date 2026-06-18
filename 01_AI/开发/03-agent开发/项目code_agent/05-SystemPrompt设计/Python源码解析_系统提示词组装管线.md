@@ -1,4 +1,4 @@
-理论篇讲了 System Prompt 的设计理念和分层结构，这篇带你走读 Python 版 MewCode 的真实代码，看看一个 300 行的文件是怎么把十几段提示词组装成一份完整 System Prompt 的。
+理论篇讲了 [[理论学习_System_Prompt_如何设计_|System Prompt]] 的设计理念和分层结构，这篇带你走读 Python 版 MewCode 的真实代码，看看一个 300 行的文件是怎么把十几段[[提示词]]组装成一份完整 System Prompt 的。
 
 ## 模块概览
 
@@ -259,7 +259,7 @@ def build_environment_context(
     return "\n".join(parts)
 ```
 
-这个函数和 `environment_section` 不一样。 `environment_section` 生成的是 System Prompt 里的固定段落，而 `build_environment_context` 生成的是动态注入到对话中的环境上下文，包含更多运行时信息，比如当前激活的技能、可用的 Agent 目录。
+这个函数和 `environment_section` 不一样。 `environment_section` 生成的是 System Prompt 里的固定段落，而 `build_environment_context` 生成的是动态注入到对话中的环境上下文，包含更多运行时信息，比如当前激活的技能、可用的 [[07-Agent|Agent]] 目录。
 
 注意 `active_skills` 的类型是 `dict[str, str] | None` ，键是技能名，值是技能的 SOP 文本。遍历时用 `items()` 解构为 `name, sop` ，然后拼成 Markdown 格式的技能描述。
 

@@ -1,4 +1,4 @@
-理论篇讲了 SubAgent 的两种创建模式和执行路径，这篇带你走读 Go 版 MewCode 的 `internal/agents/` 目录，看看「把 Agent 当工具使」到底是怎么实现的。
+理论篇讲了 [[理论学习_SubAgent_子任务分发|SubAgent]] 的两种创建模式和执行路径，这篇带你走读 Go 版 MewCode 的 `internal/agents/` 目录，看看「把 [[07-Agent|Agent]] 当工具使」到底是怎么实现的。
 
 ## 模块概览
 
@@ -115,7 +115,7 @@ if disallowed[name] { continue }
 if hasWhitelist && !allowed[name] { continue }
 ```
 
-Layer 1 让 MCP 工具跳过所有过滤，因为 MCP 工具通常有自己的权限控制。Layer 2 的 `AllAgentDisallowedTools` 包含 7 个工具： `TaskOutput` 、 `ExitPlanMode` 、 `EnterPlanMode` 、 `Agent` 、 `AskUserQuestion` 、 `TaskStop` 、 `Workflow` 。禁 `Agent` 防止无限递归，禁 `AskUserQuestion` 因为子 Agent 没有用户 UI。Layer 4 的 `AsyncAgentAllowedTools` 白名单包含 16 个工具：ReadFile、WebSearch、TodoWrite、Grep、WebFetch、Glob、Bash、EditFile、WriteFile、NotebookEdit、Skill、LoadSkill、SyntheticOutput、ToolSearch、EnterWorktree、ExitWorktree。如果子 Agent 是 InProcessTeammate（ch15 团队模式），还额外允许 Agent 工具和协调工具。Layer 6 是定义级白名单交集，只有当定义里声明了 `tools` 字段时才生效。
+Layer 1 让 [[理论学习_MCP_协议与开放工具生态|MCP]] 工具跳过所有过滤，因为 MCP 工具通常有自己的权限控制。Layer 2 的 `AllAgentDisallowedTools` 包含 7 个工具： `TaskOutput` 、 `ExitPlanMode` 、 `EnterPlanMode` 、 `Agent` 、 `AskUserQuestion` 、 `TaskStop` 、 `Workflow` 。禁 `Agent` 防止无限递归，禁 `AskUserQuestion` 因为子 Agent 没有用户 UI。Layer 4 的 `AsyncAgentAllowedTools` 白名单包含 16 个工具：ReadFile、WebSearch、TodoWrite、Grep、WebFetch、Glob、Bash、EditFile、WriteFile、NotebookEdit、Skill、LoadSkill、SyntheticOutput、ToolSearch、EnterWorktree、ExitWorktree。如果子 Agent 是 InProcessTeammate（ch15 团队模式），还额外允许 Agent 工具和协调工具。Layer 6 是定义级白名单交集，只有当定义里声明了 `tools` 字段时才生效。
 
 ## 执行路径
 

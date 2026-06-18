@@ -1,8 +1,8 @@
-理论篇讲了 Agent Loop 的设计理念和 ReAct 范式，这篇带你走读 Java 版 MewCode 的真实代码，看看这些概念在 virtual thread + BlockingQueue 的架构下是怎么落地的。
+理论篇讲了 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 的设计理念和 ReAct 范式，这篇带你走读 Java 版 MewCode 的真实代码，看看这些概念在 virtual thread + BlockingQueue 的架构下是怎么落地的。
 
 ## 模块概览
 
-Java 版的 Agent Loop 代码分布在三个文件里：
+Java 版的 [[07-Agent|Agent]] Loop 代码分布在三个文件里：
 
 | 文件 | 职责 |
 | --- | --- |
@@ -433,7 +433,7 @@ if (hookEngine != null) {
 
 ## Plan Mode
 
-Plan Mode 通过 `PermissionChecker` 实现。当 checker 的模式设为 Plan 时，所有写操作都会被权限系统拒绝。这是双层保障的思路：提示词层面告诉 LLM「你在规划模式，不要做修改」，权限层面兜底「即使 LLM 不听话也会被拦住」。系统提示词的注入在 `PermissionChecker` 和系统提示词构建层处理，Agent Loop 本身不需要关心 Plan Mode 的细节。
+Plan Mode 通过 `PermissionChecker` 实现。当 checker 的模式设为 Plan 时，所有写操作都会被权限系统拒绝。这是双层保障的思路：[[提示词]]层面告诉 LLM「你在规划模式，不要做修改」，权限层面兜底「即使 LLM 不听话也会被拦住」。系统提示词的注入在 `PermissionChecker` 和系统提示词构建层处理，Agent Loop 本身不需要关心 Plan Mode 的细节。
 
 ## 小结
 

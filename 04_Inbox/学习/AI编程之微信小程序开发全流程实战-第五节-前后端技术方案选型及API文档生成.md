@@ -26,7 +26,7 @@ Web 管理后台的前端框架候选方案包括 Vue3 + Element Plus、React18 
 
 有一个重要原则：前后端使用相同开发语言（JavaScript），降低学习成本，让学习者集中精力先掌握一门语言。
 
-关于 TypeScript 与 JavaScript 的关系：TypeScript 是面向对象的 JavaScript 语法包装，最终编译回 JS 才能在浏览器运行，它完全包含 JS 语法。
+关于 [[Day2-JavaScript和TypeScript|TypeScript]] 与 JavaScript 的关系：TypeScript 是面向对象的 JavaScript 语法包装，最终编译回 JS 才能在浏览器运行，它完全包含 JS 语法。
 
 ### 4. 后端技术选型
 

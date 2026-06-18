@@ -46,7 +46,7 @@ banner_icon: 🔖
 
 ## 三、工程结构推荐：GSD 1.0
 
-这里工程结构的整理，我给大家推荐的是 **GSD 1.0** 的项目结构：
+这里工程结构的整理，我给大家推荐的是 **[[【GSD】AI编程最佳工作流 GSD 详细指南|GSD]] 1.0** 的项目结构：
 
 *   **源码**：[https://github.com/gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done)
     
@@ -54,7 +54,7 @@ banner_icon: 🔖
 *   **安装**：`npx get-shit-done-cc@latest`
     
 
-安装之后，就可以放在你自己喜欢的 IDE 下面。它其实是一组 skills 或者说 commands，本质上就是一组提示词。
+安装之后，就可以放在你自己喜欢的 IDE 下面。它其实是一组 skills 或者说 commands，本质上就是一组[[提示词]]。
 
 ### 关键提示词：`/gsd-map-codebase`
 

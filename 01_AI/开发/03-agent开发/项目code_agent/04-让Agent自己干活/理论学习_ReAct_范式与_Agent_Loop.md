@@ -1,4 +1,4 @@
-**架构定位** ：本章实现的是 ② 引擎层的 Agent 循环（ReAct Loop）。这是整个架构的心脏，所有其他层都围绕它运转。
+**架构定位** ：本章实现的是 ② 引擎层的 [[07-Agent|Agent]] 循环（ReAct Loop）。这是整个架构的心脏，所有其他层都围绕它运转。
 
 ---
 
@@ -75,7 +75,7 @@ Observe: exit code: 0
 | ReAct | 推理与行动交替 | 两全其美：想清楚再做 | 每轮都要一次 LLM 调用，成本较高 |
 | Plan-then-Execute | 先出完整计划，再逐步执行 | 全局规划好 | 计划可能过时，不如边走边看灵活 |
 
-对 Coding Agent 来说，ReAct 是最自然的选择。写代码这件事本来就是边想边做的：你不可能在动手前把所有细节都想好，很多决策要看到中间结果才能做。
+对 [[理论学习_什么是_Coding_Agent_|Coding Agent]] 来说，ReAct 是最自然的选择。写代码这件事本来就是边想边做的：你不可能在动手前把所有细节都想好，很多决策要看到中间结果才能做。
 
 ![](理论学习_ReAct_范式与_Agent_Loop-6.jpeg)
 
@@ -130,7 +130,7 @@ MewCode 需要四种停止条件，缺一不可。
 | --- | --- | --- |
 | Go | context.Context | `select { case <-ctx.Done(): return }` |
 | Python | asyncio.CancelledError | `task.cancel()` + try/except |
-| TypeScript | AbortController | `signal.addEventListener('abort', ...)` |
+| [[Day2-JavaScript和TypeScript|TypeScript]] | AbortController | `signal.addEventListener('abort', ...)` |
 | Rust | tokio CancellationToken | `tokio::select! { _ = token.cancelled() => ... }` |
 
 关键原则是一样的：每一轮循环开始前检查取消信号，如果被取消了就干净退出，释放所有资源。
@@ -236,7 +236,7 @@ function partitionToolCalls(toolUses, registry) -> Batch[]:
 
 ## System Prompt 与环境信息
 
-Agent Loop 每轮都需要把 System Prompt 传给 Claude。这里先配一个最简版，第 5 章会专门展开完整设计。
+Agent Loop 每轮都需要把 [[理论学习_System_Prompt_如何设计_|System Prompt]] 传给 Claude。这里先配一个最简版，第 5 章会专门展开完整设计。
 
 System Prompt 包含角色设定、环境信息和模式指令：
 

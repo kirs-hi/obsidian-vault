@@ -1,4 +1,4 @@
-理论篇讲了 Skill 是「可复用的 SOP」，这篇带你走读 Go 版 MewCode 的实际代码，看看一个 Markdown 文件是怎么变成 Agent 可执行的能力的。
+理论篇讲了 Skill 是「可复用的 SOP」，这篇带你走读 Go 版 MewCode 的实际代码，看看一个 Markdown 文件是怎么变成 [[07-Agent|Agent]] 可执行的能力的。
 
 ## 模块概览
 

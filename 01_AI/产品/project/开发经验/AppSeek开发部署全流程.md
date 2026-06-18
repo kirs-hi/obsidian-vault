@@ -10,9 +10,9 @@ AppSeek 是一个面向独立开发者的 App Store 数据分析网站，帮助 
 
 ## 技术栈
 
-- **框架**: Next.js 16 (App Router) + React 19
-- **样式**: Tailwind CSS v4
-- **数据库**: Supabase
+- **框架**: [[Day4-Next.js核心|Next.js]] 16 (App Router) + React 19
+- **样式**: [[Day3-Tailwind和shadcn|Tailwind]] CSS v4
+- **数据库**: [[Day5-Supabase和实战项目|Supabase]]
 - **图表**: Chart.js + react-chartjs-2（雷达图、折线图）
 - **翻译**: MyMemory Translation API（免费，无需 key）
 - **数据源**: iTunes Search / Lookup / Reviews RSS API

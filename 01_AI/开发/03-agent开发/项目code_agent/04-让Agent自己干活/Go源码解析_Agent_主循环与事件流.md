@@ -1,8 +1,8 @@
-理论篇讲了 Agent Loop 的设计理念和 ReAct 范式，这篇带你走读 Go 版 MewCode 的真实代码，看看这些概念是怎么落地成可运行的程序的。
+理论篇讲了 [[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 的设计理念和 ReAct 范式，这篇带你走读 Go 版 MewCode 的真实代码，看看这些概念是怎么落地成可运行的程序的。
 
 ## 模块概览
 
-Agent Loop 的代码集中在 `internal/agent/` 目录下，一共三个文件：
+[[07-Agent|Agent]] Loop 的代码集中在 `internal/agent/` 目录下，一共三个文件：
 
 | 文件 | 职责 |
 | --- | --- |
@@ -34,7 +34,7 @@ type Agent struct {
 }
 ```
 
-字段很多，但真正驱动循环的只有前三个： `Client` 负责和 LLM 通信， `Registry` 提供工具， `Protocol` 决定工具描述的格式。其余都是后续章节逐步挂上去的能力。 `Checker` 来自第6章权限系统， `Hooks` 来自第12章， `OnLoopComplete` 来自第9章记忆系统。
+字段很多，但真正驱动循环的只有前三个： `Client` 负责和 LLM 通信， `Registry` 提供工具， `Protocol` 决定工具描述的格式。其余都是后续章节逐步挂上去的能力。 `Checker` 来自第6章权限系统， `Hooks` 来自第12章， `OnLoopComplete` 来自第9章[[理论学习_跨会话记忆与会话持久化|记忆系统]]。
 
 Agent 的构造函数很简单，把必要的三件套传进去就行：
 
@@ -288,7 +288,7 @@ resp := <-respCh // 阻塞，直到用户点允许或拒绝
 
 ## Plan Mode
 
-Plan Mode 的实现出奇简单。它不改变循环结构，只在每轮迭代开头注入一段提示词：
+Plan Mode 的实现出奇简单。它不改变循环结构，只在每轮迭代开头注入一段[[提示词]]：
 
 ```plain
 if a.Checker != nil && a.Checker.Mode == permissions.ModePlan {

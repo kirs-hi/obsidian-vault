@@ -8,7 +8,7 @@ source: https://openclaws.io
 
 ## 一、社区规模
 
-OpenClaw 在极短时间内建立了庞大的开发者社区：
+[[00_OpenClaw_MOC|OpenClaw]] 在极短时间内建立了庞大的开发者社区：
 
 | 指标 | 数据（2026-03） |
 |------|----------------|
@@ -74,7 +74,7 @@ OpenClaw 在极短时间内建立了庞大的开发者社区：
 | `openclaw` | 核心 CLI 和 Gateway |
 | `moltbot` | 旧版包名（已废弃，重定向到 openclaw） |
 | `openclaw-cache` | 缓存层组件 |
-| Pi Agent | 内置 Agent Runtime |
+| Pi [[07-Agent|Agent]] | 内置 Agent Runtime |
 | Web Control UI | 浏览器控制面板 |
 | iOS App | iPhone/iPad 节点 |
 | Android App | Android 节点 |
@@ -195,7 +195,7 @@ GitHub 上有 Sponsor 入口，支持项目持续发展。
 ### 潜在商业化方向
 
 - **ClawHub 付费技能**：高级 Skills 收费
-- **托管服务**：OpenClaw Cloud（类似 Vercel 托管 Next.js）
+- **托管服务**：OpenClaw Cloud（类似 Vercel 托管 [[Day4-Next.js核心|Next.js]]）
 - **企业版**：团队协作、权限管理、审计日志
 - **API 服务**：提供统一的 AI Agent API
 

@@ -12,7 +12,7 @@
 
 所以我觉得，是时候重新给大家写一篇更加全面的 Codex 教程了。
 
-带大家全面的了解一下这个我现在觉得最牛逼的 Agent 产品之一。
+带大家全面的了解一下这个我现在觉得最牛逼的 [[07-Agent|Agent]] 产品之一。
 
 我也准备用两个比较有手就行的例子，用一个网页和一个 App，来串起这一整篇教程。
 
@@ -52,7 +52,7 @@ Codex 的额度是跟你的 ChatGPT 会员相关的，我自己一般是 100 美
 
 ![](https://mmbiz.qpic.cn/sz_mmbiz_png/2jjfQoZLoqVz5twZAOH7IbcKfJzK4TKpel83meib2lSSibeuicjfahiauXicY1bTtCeuiabTW33JUy1NeDiaGibo4icrl6z2iaSv71qKtLia6I7QFKUjp4/640?wx_fmt=png&from=appmsg#imgIndex=5)
 
-接下来，最骚的来了，你可以从 Claude Code 和 Cowork 直接导入所有的内容。
+接下来，最骚的来了，你可以从 [[Claude Code 命令与最佳实践|Claude Code]] 和 Cowork 直接导入所有的内容。
 
 ![](https://mmbiz.qpic.cn/sz_mmbiz_png/2jjfQoZLoqWeiamlMMNZPS9sP8yC3g0uU0840N0yoavUMQzXc80ibQ4H7TwvOHE3vcibGicpKFPzwNgmZfZby0gpnkoISXNVblqjjEU2ibr1W4XM/640?wx_fmt=png&from=appmsg#imgIndex=6)
 
@@ -225,7 +225,7 @@ Codex 的好处是，都做了可视化 UI 界面。
 
 ![](https://mmbiz.qpic.cn/mmbiz_jpg/2jjfQoZLoqVzps3G4icdmGkHaGRnic5vAhIIsVkicIAT1SzHqIGsUfLPu99Ggtibeg1ibsBs5icCBkmoxVfLzfGCiaxddn9SyqMibBsqEIdGGia8UJcg/640?wx_fmt=jpeg&from=appmsg#imgIndex=30)
 
-如果要下载除了官方之外的 skill 或者插件，直接把链接甩给他就可以。
+如果要下载除了官方之外的 [[skill]] 或者插件，直接把链接甩给他就可以。
 
 ![](https://mmbiz.qpic.cn/mmbiz_png/2jjfQoZLoqXTAG8GJlGjyp9TvAibVJcunoA9q6BsC3vHuWKgb9WgVd33OqD5Q2rF5cNOib4mxAFXW6lBIXuFqkOXHtGyeeTGqUkeZYUibnUgj4/640?wx_fmt=png&from=appmsg#imgIndex=31)
 

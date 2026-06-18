@@ -31,7 +31,7 @@ export interface SkillMeta {
 }
 ```
 
-interface 天然表达可选性： `allowedTools?` 表示这个字段可以不存在。 `mode` 用联合类型 `"inline" | "fork"` 约束合法值，编译期就能检查类型错误。 `forkContext` 控制 fork 模式下子 Agent 继承多少父对话上下文，有三个合法值。
+interface 天然表达可选性： `allowedTools?` 表示这个字段可以不存在。 `mode` 用联合类型 `"inline" | "fork"` 约束合法值，编译期就能检查类型错误。 `forkContext` 控制 fork 模式下子 [[07-Agent|Agent]] 继承多少父对话上下文，有三个合法值。
 
 `allowedTools` 有双重作用：控制 Skill 能调用哪些工具（管副作用），同时控制能看到哪些工具信息（管可见性）。 `mode` 未指定时默认走 `"inline"` 。
 
@@ -64,7 +64,7 @@ export class SkillCatalog {
 }
 ```
 
-用 `Map<string, CatalogEntry>` 存储。 `Map` 在 JavaScript 里保持插入顺序， `list()` 返回的结果和加载顺序一致，注入系统提示词时列表顺序稳定。
+用 `Map<string, CatalogEntry>` 存储。 `Map` 在 JavaScript 里保持插入顺序， `list()` 返回的结果和加载顺序一致，注入系统[[提示词]]时列表顺序稳定。
 
 同名 Skill 用 `Map.set()` 直接覆盖，后注册的覆盖先注册的，实现优先级。 `get` 返回 `Skill | undefined` 而不是抛异常，类型系统会强制调用方处理 undefined 的情况。
 

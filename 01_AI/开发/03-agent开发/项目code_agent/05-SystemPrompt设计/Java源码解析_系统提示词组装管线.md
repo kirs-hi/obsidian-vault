@@ -1,4 +1,4 @@
-理论篇讲了 System Prompt 的设计理念和分层结构，这篇带你走读 Java 版 MewCode 的真实代码，看看同样的设计在 Java 里是怎么落地的。
+理论篇讲了 [[理论学习_System_Prompt_如何设计_|System Prompt]] 的设计理念和分层结构，这篇带你走读 Java 版 MewCode 的真实代码，看看同样的设计在 Java 里是怎么落地的。
 
 ## 模块概览
 
@@ -24,7 +24,7 @@ public record Section(
 ) {}
 ```
 
-Java 16 引入的 `record` 类型，自动生成构造函数、 `equals()` 、 `hashCode()` 和 `toString()` ，而且所有字段默认 `final` ，不可变。不可变意味着 Section 创建后就不能被篡改，这对提示词构建来说是一个很好的安全保证。
+Java 16 引入的 `record` 类型，自动生成构造函数、 `equals()` 、 `hashCode()` 和 `toString()` ，而且所有字段默认 `final` ，不可变。不可变意味着 Section 创建后就不能被篡改，这对[[提示词]]构建来说是一个很好的安全保证。
 
 三个字段各有明确的语义： `name` 标识段落身份、 `priority` 决定排序权重、 `content` 承载文本内容。
 

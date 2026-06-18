@@ -23,7 +23,7 @@ Anthropic 悄悄发布了一个官方插件，叫 **claude** - **code** - **setu
 
 → skills（技能）
 
-→ MCP servers
+→ [[理论学习_MCP_协议与开放工具生态|MCP]] servers
 
 → subagents（子代理）
 

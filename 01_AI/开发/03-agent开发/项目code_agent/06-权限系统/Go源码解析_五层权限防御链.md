@@ -41,7 +41,7 @@ var modeMatrix = map[PermissionMode]map[tools.ToolCategory]DecisionEffect{
 
 ## 主流程走读：Checker.Check()
 
-`Checker` 是权限系统的门面，Agent Loop 里每次执行工具前都会调用它的 `Check()` 方法。跟着代码从头走到尾，能看到完整的五层防御链。
+`Checker` 是权限系统的门面，[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 里每次执行工具前都会调用它的 `Check()` 方法。跟着代码从头走到尾，能看到完整的五层防御链。
 
 ```plain
 type Checker struct {
@@ -127,7 +127,7 @@ type RuleEngine struct {
 
 ### 第5层：模式矩阵 + HITL
 
-走到这里说明前面四层都没给出判定。最后查模式矩阵， `Allow` 或 `Deny` 直接返回。如果是 `Ask` （ `ModeDefault` 下写操作和命令就是这个结果），就让 Agent Loop 弹窗问用户。
+走到这里说明前面四层都没给出判定。最后查模式矩阵， `Allow` 或 `Deny` 直接返回。如果是 `Ask` （ `ModeDefault` 下写操作和命令就是这个结果），就让 [[07-Agent|Agent]] Loop 弹窗问用户。
 
 ```plain
 return Decision{Effect: Ask, Reason: "User confirmation required"}

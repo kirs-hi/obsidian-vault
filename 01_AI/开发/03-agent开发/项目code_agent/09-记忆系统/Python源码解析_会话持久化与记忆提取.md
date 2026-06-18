@@ -1,4 +1,4 @@
-理论篇讲了记忆系统的三层架构（自定义指令、会话持久化、自动记忆），这篇带你走读 Python 版 MewCode 的真实代码，看看一个 AI 编程助手是怎么做到「记住你」的。
+理论篇讲了[[理论学习_跨会话记忆与会话持久化|记忆系统]]的三层架构（自定义指令、会话持久化、自动记忆），这篇带你走读 Python 版 MewCode 的真实代码，看看一个 AI 编程助手是怎么做到「记住你」的。
 
 ## 模块概览
 
@@ -27,7 +27,7 @@ class RecordType(str, Enum):
     COMPRESSION = "compression"
 ```
 
-五种类型里有一个很容易忽略的： `COMPRESSION` 。当上下文压缩后，压缩结果会作为一条 `COMPRESSION` 记录写入 JSONL 文件。恢复会话时，这条记录会被转成 `[摘要]` 前缀的消息注入对话，让 LLM 知道之前发生了什么。
+五种类型里有一个很容易忽略的： `COMPRESSION` 。当[[理论学习_上下文压缩与_Token_管理|上下文压缩]]后，压缩结果会作为一条 `COMPRESSION` 记录写入 JSONL 文件。恢复会话时，这条记录会被转成 `[摘要]` 前缀的消息注入对话，让 LLM 知道之前发生了什么。
 
 ### SessionRecord：一条记录的完整结构
 
@@ -288,7 +288,7 @@ class FileStateCache:
 
 EditFile / WriteFile 成功后会自动更新缓存，连续编辑不需要反复读取。
 
-配合工具描述里的 "You MUST read the file with ReadFile before editing"，模型正常情况下会主动先读后改。万一没读就调了 EditFile，错误消息回到模型后它会自动补一个 ReadFile 再重试，用户根本看不到这个错误。三层防护：描述层预防、代码层拦截、Agent 循环自动恢复。
+配合工具描述里的 "You MUST read the file with ReadFile before editing"，模型正常情况下会主动先读后改。万一没读就调了 EditFile，错误消息回到模型后它会自动补一个 ReadFile 再重试，用户根本看不到这个错误。三层防护：描述层预防、代码层拦截、[[07-Agent|Agent]] 循环自动恢复。
 
 ### 过期清理
 

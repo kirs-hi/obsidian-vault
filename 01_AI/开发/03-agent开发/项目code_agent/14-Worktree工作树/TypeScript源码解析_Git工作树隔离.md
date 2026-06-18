@@ -1,6 +1,6 @@
 # TypeScript源码解析：Git 工作树隔离
 
-理论篇讲了并行 Agent 为什么需要文件系统隔离，以及 Git Worktree 如何提供独立的工作区。这篇带你走读 MewCode 的 Worktree 模块代码，看「给每个子 Agent 一份独立文件空间」是怎么落地的。
+理论篇讲了并行 [[07-Agent|Agent]] 为什么需要文件系统隔离，以及 Git Worktree 如何提供独立的工作区。这篇带你走读 MewCode 的 Worktree 模块代码，看「给每个子 Agent 一份独立文件空间」是怎么落地的。
 
 ## 模块概览
 
@@ -28,7 +28,7 @@ export interface WorktreeResult {
 }
 ```
 
-四个字段各有用途。 `path` 是后续文件操作的根目录， `branch` 格式固定为 `worktree-{slug}` 用于清理时定位分支， `headCommit` 是变更检测的基线， `gitRoot` 指向主仓库供清理操作使用。
+四个字段各有用途。 `path` 是后续[[08-文件操作|文件操作]]的根目录， `branch` 格式固定为 `worktree-{slug}` 用于清理时定位分支， `headCommit` 是变更检测的基线， `gitRoot` 指向主仓库供清理操作使用。
 
 没有独立的 `WorktreeSession` 和 `WorktreeManager` 类型。进入/退出的状态管理直接由工具层完成，创建结果通过参数在工具之间传递，不做持久化。资源和使用行为没有分离成两个概念，而是合为一体，这是最精简的方案。
 
@@ -122,7 +122,7 @@ function copyMewcodeSettings(repoRoot: string, wtPath: string): void {
 }
 ```
 
-`.mewcode/` 目录包含配置文件和 skill 定义。Worktree 共享代码但不共享这些本地配置（它们通常被 gitignore），所以需要显式复制一份。
+`.mewcode/` 目录包含配置文件和 [[skill]] 定义。Worktree 共享代码但不共享这些本地配置（它们通常被 gitignore），所以需要显式复制一份。
 
 ### B. 配置 Git Hooks
 

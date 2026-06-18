@@ -1,7 +1,7 @@
 
 ## 一、简历模版
 
-这份简历项目描述基于《优选有关 Doris 治理实践》文档定制，侧重于 **OLAP 引擎的稳定性治理、查询性能优化与成本控制**，适合大数据平台开发、OLAP 运维或数据仓库工程师岗位。
+这份简历项目描述基于《优选有关 [[doris笔记|Doris]] 治理实践》文档定制，侧重于 **OLAP 引擎的稳定性治理、查询性能优化与成本控制**，适合大数据平台开发、OLAP 运维或数据仓库工程师岗位。
 
 ---
 
@@ -13,7 +13,7 @@
 
 **项目角色**：OLAP 平台工程师 / 大数据开发工程师
 
-**技术栈**：Apache Doris、Flink、Prometheus、MySQL
+**技术栈**：Apache Doris、[[Flink SQL 完整语法教程|Flink]]、Prometheus、MySQL
 
 **项目背景**：
 
@@ -120,7 +120,7 @@
 
 ## 三、面试问题
 
-面试官的提问通常围绕**底层原理、治理策略**和**架构决策**三个层面展开，以下是高频面试题库及回答要点（按杀伤力从低到高排序）。
+面试官的提问通常围绕**底层原理、治理策略**和**架构决策**三个层面展开，以下是高频[[面试题]]库及回答要点（按杀伤力从低到高排序）。
 
 ---
 
@@ -143,7 +143,7 @@
   - **定位瓶颈**：
     - 如果是 **OlapScanNode** 耗时长：看 `RowsReturned` vs `RowsRead`（索引过滤效果），看 `BlockFetchTime`（IO 耗时）和 `DecompressorTimer`（解压耗时）。
     - 如果是 **ExchangeNode** 耗时长：看 `DataArrivalWaitTime`（说明上游慢）或 `Shuffle Bytes`（网络传输数据量太大）。
-    - 如果是 **AggregationNode** 耗时长：看 `HashTable` 构建时间和内存使用，是否存在数据倾斜。
+    - 如果是 **AggregationNode** 耗时长：看 `HashTable` 构建时间和内存使用，是否存在[[数据倾斜实践|数据倾斜]]。
 
 **Q3：Doris 的 ShortKey（前缀索引）和 Bitmap 索引有什么区别？为什么你说 Bitmap 可能会有副作用？**
 

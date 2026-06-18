@@ -1,4 +1,4 @@
-理论篇讲了 MCP 协议的设计理念和三阶段会话流程，这篇带你走读 Python 版 MewCode 的真实代码，看看同样的协议桥接在异步 Python 里是怎么落地的。
+理论篇讲了 [[理论学习_MCP_协议与开放工具生态|MCP]] 协议的设计理念和三阶段会话流程，这篇带你走读 Python 版 MewCode 的真实代码，看看同样的协议桥接在异步 Python 里是怎么落地的。
 
 ## 模块概览
 
@@ -170,7 +170,7 @@ async def call_tool(
 
 ## 工具适配器
 
-`MCPToolWrapper` 要解决的核心问题是：Agent Loop 使用统一的 Tool 接口调用工具，而 MCP 返回的工具定义格式和 MewCode 内部格式不一样。适配器要做两件事：把 MCP 的 schema 转成 MewCode 的 schema，把 MCP 的调用结果转成 MewCode 的 ToolResult。
+`MCPToolWrapper` 要解决的核心问题是：[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 使用统一的 Tool 接口调用工具，而 MCP 返回的工具定义格式和 MewCode 内部格式不一样。适配器要做两件事：把 MCP 的 schema 转成 MewCode 的 schema，把 MCP 的调用结果转成 MewCode 的 ToolResult。
 
 ### 参数模型生成
 
@@ -224,7 +224,7 @@ async def execute(self, params: BaseModel) -> ToolResult:
                 is_error=True)
 ```
 
-第一层，检查连接是否存活。如果连接断了就尝试重连。重连失败返回错误结果，不抛异常。Agent 会看到工具执行失败的信息，可以决定怎么处理。
+第一层，检查连接是否存活。如果连接断了就尝试重连。重连失败返回错误结果，不抛异常。[[07-Agent|Agent]] 会看到工具执行失败的信息，可以决定怎么处理。
 
 ```plain
 try:

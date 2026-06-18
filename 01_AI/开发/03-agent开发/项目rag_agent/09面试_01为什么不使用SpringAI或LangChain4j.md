@@ -36,7 +36,7 @@ Ragent 项目启动于 **2025 年 6 月** 。这个时间点很关键——Sprin
 
 ## Spring AI 1.0 给了什么
 
-站在 2025 年中这个时间点看，Spring AI 1.0 已经提供了相当完整的 RAG 基础设施：
+站在 2025 年中这个时间点看，Spring AI 1.0 已经提供了相当完整的 [[06-RAG|RAG]] 基础设施：
 
 - **ChatClient** ：统一的模型调用接口，1.0 GA 时官方宣称可对接 20 个 AI Model 集成
 
@@ -46,7 +46,7 @@ Ragent 项目启动于 **2025 年 6 月** 。这个时间点很关键——Sprin
 
 - **ETL Pipeline** ：文档提取 → 转换 → 加载的管道
 
-- **VectorStore 抽象** ：支持 Milvus、PGVector、Redis 等 14+ 向量数据库
+- **VectorStore 抽象** ：支持 Milvus、PGVector、Redis 等 14+ [[01基础_09向量数据库的原理与选型|向量数据库]]
 
 - **ChatMemory** ：对话记忆管理
 
@@ -104,7 +104,7 @@ ChatMemory chatMemory = MessageWindowChatMemory.builder()
 
 ## 工具调用：从设计到实现都有坑
 
-Ragent 的一个核心场景是：用户的一个问题，可能既需要查知识库，又需要调用外部工具（MCP）。比如"帮我查一下 OA 系统的请假规则，顺便看看我还剩几天年假"——前半句查知识库，后半句调 API。
+Ragent 的一个核心场景是：用户的一个问题，可能既需要查知识库，又需要调用外部工具（[[理论学习_MCP_协议与开放工具生态|MCP]]）。比如"帮我查一下 OA 系统的请假规则，顺便看看我还剩几天年假"——前半句查知识库，后半句调 API。
 
 ### 1\. RAG + 工具调用的设计冲突
 
@@ -141,13 +141,13 @@ Spring AI 一个很吸引人的卖点是广泛的适配——14+ 向量数据库
 
 引用 B 站知名 UP 主麻薯波比一句话“一根筋变成两头堵”——不升级用不了新功能，升级了可能到处冲突。
 
-公开 Issue 中至少能看到这几类典型问题：Embedding 维度限制被硬编码成 2048，不兼容 4096 维的模型（ [#608](https://github.com/spring-projects/spring-ai/issues/608) ）； `collectionName` 配置明明设置成功了，运行时却始终使用默认的 `vector_store` （ [#2501](https://github.com/spring-projects/spring-ai/issues/2501) ）；相似度搜索时抛出 `distance` 字段找不到的异常（ [#1256](https://github.com/spring-projects/spring-ai/issues/1256) ）。这些都不是边缘 Case，而是基本使用场景下的问题。
+公开 Issue 中至少能看到这几类典型问题：[[01基础_08从文本到向量之理解Embedding|Embedding]] 维度限制被硬编码成 2048，不兼容 4096 维的模型（ [#608](https://github.com/spring-projects/spring-ai/issues/608) ）； `collectionName` 配置明明设置成功了，运行时却始终使用默认的 `vector_store` （ [#2501](https://github.com/spring-projects/spring-ai/issues/2501) ）；相似度搜索时抛出 `distance` 字段找不到的异常（ [#1256](https://github.com/spring-projects/spring-ai/issues/1256) ）。这些都不是边缘 Case，而是基本使用场景下的问题。
 
 > Spring AI 官方团队自己也意识到了维护压力。2025 年 10 月，他们专门发了一篇 [博客](https://spring.io/blog/2025/10/07/spring-ai-community-announcement/) 宣布成立 Spring AI Community 社区组织，把一些集成（如 Moonshot、QianFan 等国内模型）从核心仓库移出去，原因是"the core team cannot easily maintain or nurture within the main repository"。集成得越多，维护成本就越高，出问题的概率就越大——这不是 Spring AI 的错，是个自然规律。除非投入大量人力做持续适配，否则广度和质量很难兼得。
 
 ### 2\. 模型适配：协议碎片化
 
-大模型的发展速度比向量库还快。从最早的纯文本对话，到现在的多模态、Function Call、Structured Output、Reasoning，能力在不断扩展。如果所有模型都遵守同一个协议（比如 OpenAI 的 Chat Completions API），适配起来还好。但 Anthropic 搞了自己的一套协议——finish reason 用 `end_turn` 而不是 `stop` ，工具调用的格式也不一样，结构化输出需要单独扩展 API。感兴趣的同学可以对比看看两家的 API 文档，差异一目了然：
+大模型的发展速度比向量库还快。从最早的纯文本对话，到现在的多模态、[[01基础_12理解函数调用Function Call|Function Call]]、Structured Output、Reasoning，能力在不断扩展。如果所有模型都遵守同一个协议（比如 OpenAI 的 Chat Completions API），适配起来还好。但 Anthropic 搞了自己的一套协议——finish reason 用 `end_turn` 而不是 `stop` ，工具调用的格式也不一样，结构化输出需要单独扩展 API。感兴趣的同学可以对比看看两家的 API 文档，差异一目了然：
 
 - [OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat/object)
 
@@ -163,7 +163,7 @@ Ragent 的做法是为项目中用到的模型单独适配 API，不经过中间
 
 这个点可能有些同学不信，但确实如此。
 
-我之前是打算给大家写一个 Spring AI 版本的 RAG，不像 Ragent 这么复杂，但至少能让大家有个对比参考。我用 Claude 4.6 Opus 深度思考模式来写——目前最强的编码模型了——结果效果很不理想。稍微复杂一点的场景，比如意图识别、一个请求里同时包含知识库问答和 MCP 工具调用、多个子问题分别路由，AI 写出来的代码总是在拆东墙补西墙。
+我之前是打算给大家写一个 Spring AI 版本的 RAG，不像 Ragent 这么复杂，但至少能让大家有个对比参考。我用 Claude 4.6 Opus 深度思考模式来写——目前最强的编码模型了——结果效果很不理想。稍微复杂一点的场景，比如[[01基础_18意图识别与多路由调度策略|意图识别]]、一个请求里同时包含知识库问答和 MCP 工具调用、多个子问题分别路由，AI 写出来的代码总是在拆东墙补西墙。
 
 原因很简单：Spring AI 的 API 变化太快，不同版本之间的写法差异很大。AI 的训练数据里混杂着 M1 到 1.1.2 各个版本的代码示例和教程，它不知道哪个版本的 API 是当前有效的。官方文档本身也有问题——Filter 表达式的构造方法写错了（后来 Issue 里修的）、ZhipuAI 的文档有误、Milvus 的字段文档链接过期……当框架的官方文档和社区教程都跟不上 API 变化的速度时，AI 自然也写不好。
 
@@ -221,7 +221,7 @@ Spring AI 在变好，这个不否认。但截至目前（2.0 仍是 Preview 版
 
 不管是 Spring AI 还是 LangChain4j，RAG 只是它们提供的能力之一。随着 AI 应用的演进，更复杂的能力正在成为刚需：
 
-- **Agent / Agentic Workflow** ：让模型具备多步推理、自主规划和执行的能力，而不只是单轮问答
+- **[[07-Agent|Agent]] / Agentic Workflow** ：让模型具备多步推理、自主规划和执行的能力，而不只是单轮问答
 
 - **Multi-Agent 编排** ：多个 Agent 协作完成复杂任务，比如一个负责信息收集、一个负责分析决策
 

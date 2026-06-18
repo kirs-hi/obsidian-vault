@@ -2,7 +2,7 @@
 
 ## 本章需要做什么 ？
 
-上一章我们给 MewCode 装上了 Slash Command 内置命令框架，用户可以通过 `/help` 、 `/clear` 、 `/compact` 这些命令快速操作， `/review` 则走 `prompt` 类型把预设 prompt 转发给 Agent 处理。
+上一章我们给 MewCode 装上了 Slash Command 内置命令框架，用户可以通过 `/help` 、 `/clear` 、 `/compact` 这些命令快速操作， `/review` 则走 `prompt` 类型把预设 prompt 转发给 [[07-Agent|Agent]] 处理。
 
 这一章要给 MewCode 实现 Skill 技能包系统。做完之后，可复用的 AI 操作变成独立的 Markdown 文件，随时可编辑，不需要编译。
 
@@ -13,12 +13,12 @@
 -   **Skill 定义与解析** ：YAML frontmatter 存元信息，Markdown body 存 prompt，解析器负责分离和校验
 -   **Skill 加载器** ：三级搜索路径（项目级 > 用户级 > 内置级）、同名覆盖、热加载、自动注册为 Slash Command
 -   **Skill 执行器** ：inline / fork 两种执行模式、 `$ARGUMENTS` 参数替换、 `allowedTools` 工具白名单过滤、fail-fast 依赖检查
--   **LoadSkill 内置工具** ：Agent 意图识别后按需加载完整 SOP 和专属工具，通过 ActivateSkill 钉到环境上下文
+-   **LoadSkill 内置工具** ：Agent [[01基础_18意图识别与多路由调度策略|意图识别]]后按需加载完整 SOP 和专属工具，通过 ActivateSkill 钉到环境上下文
 -   **两阶段加载** ：启动时只注入摘要到 messages，LoadSkill 调用后激活完整内容
 -   **Agent 侧改动** ：activeSkills 列表、环境上下文每轮重建、系统工具豁免 allowedTools 过滤（支持 Skill 嵌套）
 -   **三个内置 Skill** ：commit（inline）、review（fork）、test（inline）
 -   **目录型 Skill 支持** ：SKILL.md + tool.json + references/ 自包含能力包
--   **/skill 管理命令** ：list / info / reload
+-   **/[[skill]] 管理命令** ：list / info / reload
 
 这章 **不做** ：Skill 市场和分发、Skill 版本管理。
 
@@ -55,7 +55,7 @@
 
 ### 正式开发
 
-三份文档有了之后，施工图纸定好了，让 Claude Code 根据这三份文档开发
+三份文档有了之后，施工图纸定好了，让 [[Claude Code 命令与最佳实践|Claude Code]] 根据这三份文档开发
 
 ![](实战演练_动手实现_Skill_系统-1.jpeg)
 
@@ -135,7 +135,7 @@
 
 把下面三个文件保存到项目根目录，然后告诉你的 AI 编程助手（在 `[你的语言]` 处填入你使用的编程语言）：
 
-提示词如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
+[[提示词]]如果需要复制，移步到这里：[提示词复制](https://www.yuque.com/tianming-uvfnu/gmmfad/itzxbg44a5upp43u)
 
 ### Go
 

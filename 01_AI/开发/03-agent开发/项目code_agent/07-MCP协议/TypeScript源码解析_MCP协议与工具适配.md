@@ -1,6 +1,6 @@
 # TypeScript源码解析：MCP 协议与工具适配
 
-理论篇讲了 MCP 协议如何把工具从「内置」变成「开放生态」，这篇带你走读 MewCode 的实际代码，看看「配置 → 连接 → 发现 → 调用」这条主线怎么用三个文件、两百行出头实现。
+理论篇讲了 [[理论学习_MCP_协议与开放工具生态|MCP]] 协议如何把工具从「内置」变成「开放生态」，这篇带你走读 MewCode 的实际代码，看看「配置 → 连接 → 发现 → 调用」这条主线怎么用三个文件、两百行出头实现。
 
 ## 模块概览
 
@@ -34,7 +34,7 @@ export interface MCPServerConfig {
 }
 ```
 
-`command` 和 `url` 二选一。填了 `command` 走 stdio，填了 `url` 走 HTTP 或 SSE。 `transport` 字段区分 HTTP 变体，只有写 `"sse"` 才走老版 SSE 传输，默认走 Streamable HTTP。
+`command` 和 `url` 二选一。填了 `command` 走 stdio，填了 `url` 走 HTTP 或 [[01基础_20SSE协议与流式响应|SSE]]。 `transport` 字段区分 HTTP 变体，只有写 `"sse"` 才走老版 SSE 传输，默认走 Streamable HTTP。
 
 ### MCPTool：工具描述
 
@@ -46,7 +46,7 @@ export interface MCPTool {
 }
 ```
 
-从 MCP Server 拿到的工具元信息。 `inputSchema` 是 JSON Schema 格式，描述工具接受什么参数。Agent 在给 LLM 发送工具列表时，会把 `inputSchema` 透传过去。
+从 MCP Server 拿到的工具元信息。 `inputSchema` 是 JSON Schema 格式，描述工具接受什么参数。[[07-Agent|Agent]] 在给 LLM 发送工具列表时，会把 `inputSchema` 透传过去。
 
 ### MCPClient：单个 MCP 连接
 
@@ -276,7 +276,7 @@ for (const tool of this.tools.values()) {
 }
 ```
 
-`getDeferredToolNames()` 返回未发现的延迟工具名称列表，Agent Loop 把这些名字注入 system-reminder。
+`getDeferredToolNames()` 返回未发现的延迟工具名称列表，[[理论学习_ReAct_范式与_Agent_Loop|Agent Loop]] 把这些名字注入 system-reminder。
 
 LLM 需要某个延迟工具时，调用 ToolSearchTool。它支持两种查询模式：
 
