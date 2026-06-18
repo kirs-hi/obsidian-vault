@@ -962,3 +962,12 @@ SSE 是一个持续的 HTTP 连接。连接建立后，所有的 `send()` 数据
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（21/87）
+
+⬅️ 上一篇：[[01基础_20SSE协议与流式响应]] | ➡️ 下一篇：[[02基础补充_01MCP协议规范JSON-RPC 2.0标准说明]]
+
+<!-- series-nav-end -->

@@ -968,3 +968,12 @@ JSON-RPC 2.0 本质上是一套 **远程调用的消息格式规范** 。
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（22/87）
+
+⬅️ 上一篇：[[01基础_21SpringBoot-SSE服务端实战]] | ➡️ 下一篇：[[02基础补充_02为什么MCP不使用HTTP或gRPC]]
+
+<!-- series-nav-end -->

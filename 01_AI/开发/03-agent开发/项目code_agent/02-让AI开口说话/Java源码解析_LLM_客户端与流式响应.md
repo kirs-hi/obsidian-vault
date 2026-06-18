@@ -391,3 +391,12 @@ public static boolean supportsAdaptiveThinking(String model) {
 | 同角色消息合并 | `mergeConsecutiveSameRole()` 在发送前处理 | 满足 Anthropic 严格交替约束，对上层透明 |
 | SDK 异常映射 | `classifyError()` 用 instanceof 匹配 SDK 异常类 | 比解析 HTTP 状态码更准确，新异常类型加了就能 catch |
 | 模型别名 + 能力探测 | `ModelResolver` 集中管理短名和能力标记 | 用户配置简洁，能力判断有单一出口 |
+
+<!-- series-nav-start -->
+
+---
+**📚 让AI开口说话**（3/6）
+
+⬅️ 上一篇：[[Go源码解析_LLM_客户端与流式响应]] | ➡️ 下一篇：[[Python源码解析_LLM_客户端与流式响应]]
+
+<!-- series-nav-end -->

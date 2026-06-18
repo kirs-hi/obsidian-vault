@@ -398,3 +398,12 @@ ToolRegistry 里还有一套延迟加载机制。工具类声明 `should_defer =
 | 协议适配 | `get_all_schemas(protocol)` 与 `serialize(protocol)` 抹平 Anthropic 与 OpenAI 的格式差异 |
 
 读这一章的源码，最该带走的是：元信息（category、is\_concurrency\_safe 这些）怎么被权限和调度消费，这是后面几章自动化的基础；以及 Schema 生成和协议适配怎么把工具定义和具体 API 格式解耦。
+
+<!-- series-nav-start -->
+
+---
+**📚 工具系统**（4/5）
+
+⬅️ 上一篇：[[Java源码解析_工具注册与执行框架]] | ➡️ 下一篇：[[实战演练_动手实现工具系统]]
+
+<!-- series-nav-end -->

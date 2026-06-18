@@ -604,3 +604,12 @@ SubAgent 是一次性的，交代任务，等结果，用完就扔。Agent Team 
 往后退一步看，这一章其实给出了一个非常具体的设计选择： **协调机制是工具，不是基础设施** 。AutoGen、CrewAI 那条路是给多 Agent 协作搭一个调度器，谁说话、谁等待、谁汇总都由框架决定；MewCode 走的是反方向，把 TaskCreate、SendMessage、TaskUpdate 这些协调能力做成工具放进队员的工具集，让 LLM 自己拿主意。它没有引入消息队列，也没有引入 RPC，只是用文件邮箱和共享任务列表把队员粘起来。代价是行为不像状态机那么可预测，收益是想新增协作方式只需要加一个工具，调度器不存在，也就不需要改。这是一种把 Agent 当成有判断力的协作者、而不是流水线上某个工位的设计思路。
 
 回顾一下从 SubAgent 到 Agent Team 的演进路线：SubAgent 解决了上下文隔离，Worktree 解决了文件隔离，Agent Team 解决了多 Agent 协调。三层能力叠加，MewCode 的引擎层就具备了从单 Agent 到多 Agent 团队协作的完整光谱。下一章我们会跳出引擎层，回到产品层面，看看 MewCode 整体的形状到这里长成了什么样，还有哪些坑没填。
+
+<!-- series-nav-start -->
+
+---
+**📚 AgentTeams团队协作**（1/6）
+
+➡️ 下一篇：[[Go源码解析_多_Agent_团队协作]]
+
+<!-- series-nav-end -->

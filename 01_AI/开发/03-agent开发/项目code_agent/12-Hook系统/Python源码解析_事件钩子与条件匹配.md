@@ -432,3 +432,12 @@ if async_exec and event == "pre_tool_use":
 | 工具拦截 | `run_pre_tool_hooks` 独立路径，返回 `ToolRejectedError` |
 | 消息注入 | `_prompt_messages` 列表，一次性消费 |
 | 配置校验 | Loader 层 fail-fast， `reject` 和 `async` 互斥校验 |
+
+<!-- series-nav-start -->
+
+---
+**📚 Hook系统**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_事件钩子与条件匹配]] | ➡️ 下一篇：[[TypeScript源码解析_事件钩子与条件匹配]]
+
+<!-- series-nav-end -->

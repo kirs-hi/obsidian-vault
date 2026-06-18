@@ -222,3 +222,12 @@ agent 类型的执行器通过 `Engine.AgentRunner` 回调实现。Engine 本身
 | once 追踪 | `fired map[string]bool` + `sync.Mutex` 保护 |
 | 动作扩展 | `executeAction` 四路 switch，各自独立实现 |
 | 依赖隔离 | agent 类型通过 `AgentRunner` 回调注入，零外部 import |
+
+<!-- series-nav-start -->
+
+---
+**📚 Hook系统**（2/6）
+
+⬅️ 上一篇：[[理论学习_Hook_生命周期钩子]] | ➡️ 下一篇：[[Java源码解析_事件钩子与条件匹配]]
+
+<!-- series-nav-end -->

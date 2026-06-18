@@ -143,3 +143,11 @@ https://www.bilibili.com/video/BV16FRbBEEwD/?spm\_id\_from=333.1387.homepage.vid
 
 https://github.com/jerry-ai-dev/smart-appointment-ai-agent
 
+<!-- series-nav-start -->
+
+---
+**📚 他人经验**（5/19）
+
+⬅️ 上一篇：[[03-RAG项目实战]] | ➡️ 下一篇：[[05-LLM模型结构]]
+
+<!-- series-nav-end -->

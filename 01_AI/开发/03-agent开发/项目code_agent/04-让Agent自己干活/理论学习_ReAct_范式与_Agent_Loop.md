@@ -328,3 +328,12 @@ ReAct 范式说白了就是「想一步做一步」，Agent Loop 说白了就是
 几个关键设计值得记住。消息拼接要保证 assistant 的 text 和 tool\_use 不能拆开， `tool_result` 以 user 角色发送且 id 一一对应。四种停止条件缺一不可，尤其是迭代上限这个安全网。AgentEvent 事件流让 Agent 和 UI 完全解耦，这个模式在后续章节会反复出现。 Plan Mode 通过 prompt 约束引导模型只做探索，权限系统作为兜底确保写操作仍需用户确认。
 
 从这一章开始，MewCode 不再需要你一步步手动催它了。
+
+<!-- series-nav-start -->
+
+---
+**📚 让Agent自己干活**（1/6）
+
+➡️ 下一篇：[[Go源码解析_Agent_主循环与事件流]]
+
+<!-- series-nav-end -->

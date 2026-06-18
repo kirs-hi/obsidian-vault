@@ -400,3 +400,12 @@ Skill 命令的 handler 用 `make_handler` 工厂函数生成，根据 Skill 的
 | 运行时依赖 | 工厂函数 + 闭包注入 |
 | 动态扩展 | Skill 可注册为命令，reload 时清理重建 |
 | 自动补全 | 前缀匹配 + Textual OptionList 弹窗 |
+
+<!-- series-nav-start -->
+
+---
+**📚 SlashCommand命令**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_命令注册与分发]] | ➡️ 下一篇：[[TypeScript源码解析_命令注册与分发]]
+
+<!-- series-nav-end -->

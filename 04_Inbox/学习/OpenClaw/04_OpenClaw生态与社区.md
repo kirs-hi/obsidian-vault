@@ -227,3 +227,12 @@ OpenClaw 的爆火引发了对以下话题的广泛讨论：
 - [[02_OpenClaw功能详解]] — Channels、Skills、Memory 深度解析
 - [[03_OpenClaw部署指南]] — 安装、配置、Docker 部署
 - [[05_OpenClaw代码结构与架构]] — 仓库目录、技术架构图
+
+<!-- series-nav-start -->
+
+---
+**📚 OpenClaw**（5/7）
+
+⬅️ 上一篇：[[03_OpenClaw部署指南]] | ➡️ 下一篇：[[05_OpenClaw代码结构与架构]]
+
+<!-- series-nav-end -->

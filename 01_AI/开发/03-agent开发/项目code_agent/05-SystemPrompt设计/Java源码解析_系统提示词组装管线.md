@@ -415,3 +415,12 @@ public static String buildExitReminder(
 | Plan Mode 频率 | 整数除法 + 取模，每 25 轮发一次完整提醒 |
 | Plan Mode 状态 | 4 种提醒模板：完整、精简、重入、退出 |
 | 段落与组装分离 | `PromptSections` 提供工厂方法， `PromptBuilder` 只管组装 |
+
+<!-- series-nav-start -->
+
+---
+**📚 SystemPrompt设计**（3/6）
+
+⬅️ 上一篇：[[Go源码解析_系统提示词组装管线]] | ➡️ 下一篇：[[Python源码解析_系统提示词组装管线]]
+
+<!-- series-nav-end -->

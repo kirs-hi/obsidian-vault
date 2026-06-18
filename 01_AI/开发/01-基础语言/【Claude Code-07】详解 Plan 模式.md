@@ -81,3 +81,12 @@ Planning mode 是一个两阶段流程：
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51115228418814
+
+<!-- series-nav-start -->
+
+---
+**📚 Claude Code**（3/4）
+
+⬅️ 上一篇：[[【Claude Code-06】创建自定义命令]] | ➡️ 下一篇：[[【Claude Code-08】 Claude.md，Memory.md, Claude Code 的永久记忆]]
+
+<!-- series-nav-end -->

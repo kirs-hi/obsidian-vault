@@ -2275,3 +2275,11 @@ https://github.com/nousresearch/hermes-agent
 
 https://www.bilibili.com/video/BV1J9o4BnE2n/?vd\_source=144bec9c3f54e465073138bed788be1b
 
+<!-- series-nav-start -->
+
+---
+**📚 他人经验**（8/19）
+
+⬅️ 上一篇：[[06-RAG]] | ➡️ 下一篇：[[08-模型微调]]
+
+<!-- series-nav-end -->

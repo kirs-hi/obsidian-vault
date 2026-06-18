@@ -293,3 +293,12 @@ Anthropic API 要求 user/assistant 严格交替。压缩后摘要（user）和 
 | 对话重建 | 一条 user（摘要 + 恢复块）+ 保留的尾部原文，无 assistant ack |
 | 连续 user 合并 | `buildAnthropicMessages` 自动合并相邻纯文本 user 消息 |
 | 边界持久化 | session JSONL 追加 compact_boundary 记录，resume 跳过已压缩前缀 |
+
+<!-- series-nav-start -->
+
+---
+**📚 上下文管理**（2/6）
+
+⬅️ 上一篇：[[理论学习_上下文压缩与_Token_管理]] | ➡️ 下一篇：[[Java源码解析_上下文压缩与溢写]]
+
+<!-- series-nav-end -->

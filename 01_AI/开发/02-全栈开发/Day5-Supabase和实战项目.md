@@ -450,3 +450,12 @@ Day 5: Supabase    → 云数据库（建表、CRUD、用户认证）
 ---
 
 > ✅ Day 5 完成！恭喜你完成全部 5 天的学习计划！🎉
+
+<!-- series-nav-start -->
+
+---
+**📚 全栈开发**（6/6）
+
+⬅️ 上一篇：[[Day4-Next.js核心]]
+
+<!-- series-nav-end -->

@@ -462,3 +462,12 @@ export function createModelResolver(
 
 > 更新: 2026-06-08 12:43:02  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/ziri81wigel0by14](https://www.yuque.com/tianming-uvfnu/gmmfad/ziri81wigel0by14)
+
+<!-- series-nav-start -->
+
+---
+**📚 让AI开口说话**（5/6）
+
+⬅️ 上一篇：[[Python源码解析_LLM_客户端与流式响应]] | ➡️ 下一篇：[[实战演练_动手实现对话模块]]
+
+<!-- series-nav-end -->

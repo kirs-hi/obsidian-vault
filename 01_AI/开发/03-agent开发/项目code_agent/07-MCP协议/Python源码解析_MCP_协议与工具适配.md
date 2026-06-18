@@ -437,3 +437,12 @@ async def _cleanup_stack(self) -> None:
 | 延迟加载 | `should_defer = True` ， 评分搜索（10/5/3/1 分制）+ mark_discovered 激活 |
 | 连接保活 | `is_alive` 属性 + execute 时自动重连 |
 | 容错 | 单个服务器失败不阻断，错误收集统一返回 |
+
+<!-- series-nav-start -->
+
+---
+**📚 MCP协议**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_MCP_协议与工具适配]] | ➡️ 下一篇：[[TypeScript源码解析_MCP协议与工具适配]]
+
+<!-- series-nav-end -->

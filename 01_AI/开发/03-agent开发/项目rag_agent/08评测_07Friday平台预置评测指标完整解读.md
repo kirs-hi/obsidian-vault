@@ -485,3 +485,12 @@ Context Precision = Σ(k=1..K) precision@k / (包含 GT 的块数)
 5. **Friday 引入了模糊逻辑打分 + 多次取均值**：相比 RAGAS 的标准 LLM-as-judge，Friday 做了额外的工程加固——防方差、防单次误判。
 
 6. **Friday 不评意图和性能**：这可能是它跟 Ragent 评测体系最大的互补点——Friday 侧重内容质量，Ragent 自建指标侧重意图路由和性能延迟。
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（79/87）
+
+⬅️ 上一篇：[[08评测_06性能指标的口径选择]] | ➡️ 下一篇：[[09面试_01为什么不使用SpringAI或LangChain4j]]
+
+<!-- series-nav-end -->

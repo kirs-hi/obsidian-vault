@@ -973,3 +973,12 @@ public List<double[]> embedWithRetry(List<String> texts, int maxRetries) throws 
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（8/87）
+
+⬅️ 上一篇：[[01基础_07元数据的作用与管理]] | ➡️ 下一篇：[[01基础_09向量数据库的原理与选型]]
+
+<!-- series-nav-end -->

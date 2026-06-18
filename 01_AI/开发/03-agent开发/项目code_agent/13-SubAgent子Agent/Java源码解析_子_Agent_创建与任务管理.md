@@ -603,3 +603,12 @@ Agent 工具标记了 `shouldDefer` ，意味着它的 schema 不会默认出现
 | 事件消费 | 显式 while + poll 循环，60s 超时保护 |
 | Schema | 动态生成 enum 列表 |
 | 模型解析 | 外部注入 modelResolver 函数 |
+
+<!-- series-nav-start -->
+
+---
+**📚 SubAgent子Agent**（3/6）
+
+⬅️ 上一篇：[[Go源码解析_子_Agent_创建与任务管理]] | ➡️ 下一篇：[[Python源码解析_子_Agent_创建与任务管理]]
+
+<!-- series-nav-end -->

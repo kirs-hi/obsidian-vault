@@ -352,3 +352,12 @@ export function renderBody(
 
 > 更新: 2026-06-08 16:15:54  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/zngwuwug6t2nz5ut](https://www.yuque.com/tianming-uvfnu/gmmfad/zngwuwug6t2nz5ut)
+
+<!-- series-nav-start -->
+
+---
+**📚 SlashCommand命令**（5/6）
+
+⬅️ 上一篇：[[Python源码解析_命令注册与分发]] | ➡️ 下一篇：[[实战演练_动手实现命令系统]]
+
+<!-- series-nav-end -->

@@ -359,3 +359,12 @@ def build_plan_mode_reminder(
 | Hook 注入 | 不走 Builder，直接字符串拼接在末尾 |
 | Plan Mode 频率 | `//` 整数除法 + `%` 取模，每 5 轮发一次完整提醒 |
 | 协调者模式 | 函数体内延迟 import，避免循环依赖 |
+
+<!-- series-nav-start -->
+
+---
+**📚 SystemPrompt设计**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_系统提示词组装管线]] | ➡️ 下一篇：[[TypeScript源码解析_系统提示词组装管线]]
+
+<!-- series-nav-end -->

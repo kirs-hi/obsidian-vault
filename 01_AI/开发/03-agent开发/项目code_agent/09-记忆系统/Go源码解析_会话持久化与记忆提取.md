@@ -146,3 +146,12 @@ func FindRelevantMemories(ctx context.Context, query string,
 | 工具沙箱 | `PathSandbox(MemoryDir, UserMemoryDir)` 允许两个记忆目录任一 + `ModeBypass` 跳过用户确认 |
 | 记忆召回 | 双目录扫描合并 manifest 后送 SelectorFn 选 ≤5 条，回调解耦 LLM 依赖 |
 | 过期保护 | MemoryFreshnessText 附加验证提醒 |
+
+<!-- series-nav-start -->
+
+---
+**📚 记忆系统**（2/6）
+
+⬅️ 上一篇：[[理论学习_跨会话记忆与会话持久化]] | ➡️ 下一篇：[[Java源码解析_会话持久化与记忆提取]]
+
+<!-- series-nav-end -->

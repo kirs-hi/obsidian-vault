@@ -606,3 +606,12 @@ def get_coordinator_user_context(
 | 协调者模式 | 环境变量驱动 + 系统提示词注入 + 工具白名单 |
 | 团队清理 | 按后端分别处理：cancel task / kill pane / 清理 worktree |
 | 命名冲突 | `unique_team_name` 自动加数字后缀 |
+
+<!-- series-nav-start -->
+
+---
+**📚 AgentTeams团队协作**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_多_Agent_团队协作]] | ➡️ 下一篇：[[TypeScript源码解析_多Agent团队协作]]
+
+<!-- series-nav-end -->

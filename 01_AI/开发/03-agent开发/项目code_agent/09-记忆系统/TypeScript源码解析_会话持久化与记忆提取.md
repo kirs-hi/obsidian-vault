@@ -333,3 +333,12 @@ export function append(dir: string, text: string): void {
 
 > 更新: 2026-06-08 16:08:03  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/qln83m2hevtvav7p](https://www.yuque.com/tianming-uvfnu/gmmfad/qln83m2hevtvav7p)
+
+<!-- series-nav-start -->
+
+---
+**📚 记忆系统**（5/6）
+
+⬅️ 上一篇：[[Python源码解析_会话持久化与记忆提取]] | ➡️ 下一篇：[[实战演练_动手实现记忆系统]]
+
+<!-- series-nav-end -->

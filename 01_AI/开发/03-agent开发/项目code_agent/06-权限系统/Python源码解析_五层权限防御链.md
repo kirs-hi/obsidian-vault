@@ -548,3 +548,12 @@ def extract_content(
 | 安全命令 | `_SAFE_COMMANDS` frozenset 白名单 + 管道/重定向排除 |
 | 六层串行 | 早返回模式，一层命中立即返回，不继续往下 |
 | 依赖注入 | 构造函数接收四个组件，方便测试 |
+
+<!-- series-nav-start -->
+
+---
+**📚 权限系统**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_五层权限防御链]] | ➡️ 下一篇：[[TypeScript源码解析_五层权限防御链]]
+
+<!-- series-nav-end -->

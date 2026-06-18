@@ -264,3 +264,12 @@ Ragent 选择手搓 RAG，不是因为 Spring AI 不行。Spring AI 的设计方
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（80/87）
+
+⬅️ 上一篇：[[08评测_07Friday平台预置评测指标完整解读]] | ➡️ 下一篇：[[09面试_02为什么不使用Python实现RAG]]
+
+<!-- series-nav-end -->

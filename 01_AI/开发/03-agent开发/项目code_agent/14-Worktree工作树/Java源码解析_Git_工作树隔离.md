@@ -264,3 +264,12 @@ private static String runGit(String workDir, String... cmd) throws Exception {
 | 变更检测 | `detectChanges` 静态方法，返回 `git diff --stat` 原始输出 |
 | 强制删除 | 统一使用 `--force` ，不做变更保护 |
 | 超时保护 | `process.waitFor(60, SECONDS)` + `destroyForcibly` |
+
+<!-- series-nav-start -->
+
+---
+**📚 Worktree工作树**（3/6）
+
+⬅️ 上一篇：[[Go源码解析_Git_工作树隔离]] | ➡️ 下一篇：[[Python源码解析_Git_工作树隔离]]
+
+<!-- series-nav-end -->

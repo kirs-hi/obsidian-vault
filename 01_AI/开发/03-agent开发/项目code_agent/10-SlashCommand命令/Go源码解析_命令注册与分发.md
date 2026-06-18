@@ -171,3 +171,12 @@ func promptHandler(body string) Handler {
 | 文件命令 | Markdown + YAML frontmatter，三路径按优先级合并 |
 | 参数传递 | `$ARGUMENTS` 占位符替换，无占位符时自动追加 |
 | 容错策略 | 文件解析失败静默跳过，不影响其他命令 |
+
+<!-- series-nav-start -->
+
+---
+**📚 SlashCommand命令**（2/6）
+
+⬅️ 上一篇：[[理论学习_Slash_Command_命令框架]] | ➡️ 下一篇：[[Java源码解析_命令注册与分发]]
+
+<!-- series-nav-end -->

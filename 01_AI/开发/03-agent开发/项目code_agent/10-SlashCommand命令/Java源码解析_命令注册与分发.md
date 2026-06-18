@@ -290,3 +290,12 @@ Java 版采用「集中式」架构。所有命令在一个文件里定义和注
 | 搜索匹配 | `Locale.ROOT` 保证语言无关的大小写转换 |
 | 返回值 | 返回 String，调用方决定展示方式 |
 | 命令类型 | LOCAL / LOCAL_ UI / PROMPT 三种，各有不同处理路径 |
+
+<!-- series-nav-start -->
+
+---
+**📚 SlashCommand命令**（3/6）
+
+⬅️ 上一篇：[[Go源码解析_命令注册与分发]] | ➡️ 下一篇：[[Python源码解析_命令注册与分发]]
+
+<!-- series-nav-end -->

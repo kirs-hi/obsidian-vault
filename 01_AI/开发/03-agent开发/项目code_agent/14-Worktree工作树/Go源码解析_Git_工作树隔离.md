@@ -288,3 +288,12 @@ func CleanupStaleAgentWorktrees(ctx context.Context,
 | 过期清理 | 三层安全过滤（ephemeral 模式 + 年龄 + 变更检查），后台 goroutine ticker |
 | Git 状态读取 | 纯文件系统（ResolveGitDir/readGitHead/ResolveRef），ref 名和 SHA 做安全校验 |
 | 两个入口 | `CreateWorktreeForSession` （主 Agent，带会话状态）和 `CreateAgentWorktree` （子 Agent，轻量） |
+
+<!-- series-nav-start -->
+
+---
+**📚 Worktree工作树**（2/6）
+
+⬅️ 上一篇：[[理论学习_Git_Worktree_并行隔离]] | ➡️ 下一篇：[[Java源码解析_Git_工作树隔离]]
+
+<!-- series-nav-end -->

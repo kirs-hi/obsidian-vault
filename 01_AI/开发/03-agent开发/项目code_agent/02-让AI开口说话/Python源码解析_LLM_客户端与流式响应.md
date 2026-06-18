@@ -705,3 +705,12 @@ def replace_history(self, new_messages: list[Message]) -> None:
 ```
 
 这个方法是 context window 管理系统（`auto_compact`）的入口，详见第08章上下文压缩的解析。
+
+<!-- series-nav-start -->
+
+---
+**📚 让AI开口说话**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_LLM_客户端与流式响应]] | ➡️ 下一篇：[[TypeScript源码解析_LLM客户端与流式响应]]
+
+<!-- series-nav-end -->

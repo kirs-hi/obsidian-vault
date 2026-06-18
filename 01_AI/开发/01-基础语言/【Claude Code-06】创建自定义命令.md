@@ -114,3 +114,12 @@ $0，$1 代表第一个，第二个参数
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51115228418814
+
+<!-- series-nav-start -->
+
+---
+**📚 Claude Code**（2/4）
+
+⬅️ 上一篇：[[【Claude Code-05】Claude Code 常用命令]] | ➡️ 下一篇：[[【Claude Code-07】详解 Plan 模式]]
+
+<!-- series-nav-end -->

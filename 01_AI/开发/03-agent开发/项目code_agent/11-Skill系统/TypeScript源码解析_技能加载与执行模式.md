@@ -317,3 +317,12 @@ if (/^https?:\/\//.test(source)) {
 
 > 更新: 2026-06-08 16:22:49  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/ng2h0dzoybzh0hly](https://www.yuque.com/tianming-uvfnu/gmmfad/ng2h0dzoybzh0hly)
+
+<!-- series-nav-start -->
+
+---
+**📚 Skill系统**（5/6）
+
+⬅️ 上一篇：[[Python源码解析_技能加载与执行模式]] | ➡️ 下一篇：[[实战演练_动手实现_Skill_系统]]
+
+<!-- series-nav-end -->

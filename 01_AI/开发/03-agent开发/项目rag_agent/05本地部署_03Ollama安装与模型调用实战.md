@@ -631,3 +631,12 @@ Environment="OLLAMA_KEEP_ALIVE=30m"
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（46/87）
+
+⬅️ 上一篇：[[05本地部署_02Ollama核心概念与架构]] | ➡️ 下一篇：[[06调度引擎_01AI基础设施层宏观设计]]
+
+<!-- series-nav-end -->

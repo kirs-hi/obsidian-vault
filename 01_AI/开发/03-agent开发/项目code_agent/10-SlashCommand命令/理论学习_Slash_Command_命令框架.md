@@ -406,3 +406,12 @@ Token：45,230 / 200,000（23%）
 这条快车道的注册中心本身是纯本地的，但它能开放给外部。Claude Code 把 MCP 服务器通过 `prompts/list` 暴露的 prompt 自动包装成 `mcp__<server>__<prompt>` 形式的命令，跟内置命令共用同一套分发链路。MewCode 把这种「由外部贡献命令」的能力也放到下一章的 Skill 系统里统一处理。
 
 ![](理论学习_Slash_Command_命令框架-18.jpeg)
+
+<!-- series-nav-start -->
+
+---
+**📚 SlashCommand命令**（1/6）
+
+➡️ 下一篇：[[Go源码解析_命令注册与分发]]
+
+<!-- series-nav-end -->

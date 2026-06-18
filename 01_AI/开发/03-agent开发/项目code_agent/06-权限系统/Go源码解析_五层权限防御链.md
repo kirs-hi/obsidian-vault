@@ -159,3 +159,12 @@ return Decision{Effect: Ask, Reason: "User confirmation required"}
 | 规则引擎 | 三层 YAML 文件（本地 > 项目 > 用户）， `filepath.Match` glob 匹配，deny 跨层合并，同层后定义优先 |
 | 安全命令 | 49 条前缀白名单 + 管道/重定向检测 |
 | 防御链串联 | `Checker.Check()` 五层顺序执行，首个明确判定即返回 |
+
+<!-- series-nav-start -->
+
+---
+**📚 权限系统**（2/6）
+
+⬅️ 上一篇：[[理论学习_五层纵深权限防御]] | ➡️ 下一篇：[[Java源码解析_五层权限防御链]]
+
+<!-- series-nav-end -->

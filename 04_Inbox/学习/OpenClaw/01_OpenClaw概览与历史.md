@@ -121,3 +121,12 @@ OpenClaw：用户指令 → AI 理解 → AI 直接执行任务
 - [[04_OpenClaw生态与社区]] — ClawHub、社区、竞品对比
 - [[05_OpenClaw代码结构与架构]] — 仓库目录、技术架构图
 - [[00_OpenClaw_MOC]] — 知识地图索引
+
+<!-- series-nav-start -->
+
+---
+**📚 OpenClaw**（2/7）
+
+⬅️ 上一篇：[[00_OpenClaw_MOC]] | ➡️ 下一篇：[[02_OpenClaw功能详解]]
+
+<!-- series-nav-end -->

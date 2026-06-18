@@ -344,3 +344,12 @@ OpenClaw 支持在消息中发送和接收：
 - [[03_OpenClaw部署指南]] — 安装、配置、Docker 部署
 - [[04_OpenClaw生态与社区]] — ClawHub、社区、竞品对比
 - [[05_OpenClaw代码结构与架构]] — 仓库目录、技术架构图
+
+<!-- series-nav-start -->
+
+---
+**📚 OpenClaw**（3/7）
+
+⬅️ 上一篇：[[01_OpenClaw概览与历史]] | ➡️ 下一篇：[[03_OpenClaw部署指南]]
+
+<!-- series-nav-end -->

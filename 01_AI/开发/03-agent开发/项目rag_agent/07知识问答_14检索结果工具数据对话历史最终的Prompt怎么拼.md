@@ -555,3 +555,12 @@ Prompt 拼装完成， `ChatRequest` 也构建好了—— `messages` 数组、 
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
+
+<!-- series-nav-start -->
+
+---
+**📚 项目rag_agent**（68/87）
+
+⬅️ 上一篇：[[07知识问答_13用户只说了一句话工具需要的参数从哪来]] | ➡️ 下一篇：[[07知识问答_15答案一个字一个字蹦出来流式生成的完整链路]]
+
+<!-- series-nav-end -->

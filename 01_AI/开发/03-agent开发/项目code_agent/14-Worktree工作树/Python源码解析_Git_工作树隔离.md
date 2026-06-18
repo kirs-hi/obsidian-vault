@@ -431,3 +431,12 @@ def restore_session(self) -> WorktreeSession | None:
 | 安全退出 | 删除前检查 uncommitted + new commits，需显式 force |
 | 过期清理 | 五层过滤 + `asyncio.sleep` 定时循环 |
 | 缓存一致 | Enter/Exit 时清除 FileCache + 注册的回调 |
+
+<!-- series-nav-start -->
+
+---
+**📚 Worktree工作树**（4/6）
+
+⬅️ 上一篇：[[Java源码解析_Git_工作树隔离]] | ➡️ 下一篇：[[TypeScript源码解析_Git工作树隔离]]
+
+<!-- series-nav-end -->
