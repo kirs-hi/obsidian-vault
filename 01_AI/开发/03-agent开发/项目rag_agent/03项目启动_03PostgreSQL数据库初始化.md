@@ -145,12 +145,3 @@ datasource:
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
-
-<!-- series-nav-start -->
-
----
-**📚 项目rag_agent**（28/87）
-
-⬅️ 上一篇：[[03项目启动_02Docker本地中间件部署]] | ➡️ 下一篇：[[03项目启动_04项目启动指南]]
-
-<!-- series-nav-end -->

@@ -525,12 +525,3 @@ public void close() {
 | 名字安全 | `mcp__<server>__<tool>` ，正则替换非字母数字字符 |
 | 延迟加载 | `shouldDefer()` 固定返回 true + ToolSearchTool 精确/关键词搜索 + markDiscovered 激活 |
 | 容错 | 单个服务器失败不阻断，错误收集统一返回 |
-
-<!-- series-nav-start -->
-
----
-**📚 MCP协议**（3/6）
-
-⬅️ 上一篇：[[Go源码解析_MCP_协议与工具适配]] | ➡️ 下一篇：[[Python源码解析_MCP_协议与工具适配]]
-
-<!-- series-nav-end -->

@@ -222,12 +222,3 @@ func (m *Manager) ConnectAll(ctx context.Context) ConnectResult {
 | 延迟加载 | `ShouldDefer()` 固定返回 true + ToolSearch 精确/关键词两种查询 + MarkDiscovered 激活 |
 | 连接缓存 | Manager 用两个 map 管理配置和客户端 |
 | 容错 | 单个服务器失败不阻断，错误收集统一返回 |
-
-<!-- series-nav-start -->
-
----
-**📚 MCP协议**（2/6）
-
-⬅️ 上一篇：[[理论学习_MCP_协议与开放工具生态]] | ➡️ 下一篇：[[Java源码解析_MCP_协议与工具适配]]
-
-<!-- series-nav-end -->

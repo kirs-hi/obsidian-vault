@@ -470,12 +470,3 @@ const stu2: Student = { name: "小刚", age: 20, major: "计算机" }; // ✅
 ---
 
 > ✅ Day 2 完成！明天学 Tailwind CSS 和 shadcn/ui，让页面变好看。
-
-<!-- series-nav-start -->
-
----
-**📚 全栈开发**（3/6）
-
-⬅️ 上一篇：[[Day1-HTML基础]] | ➡️ 下一篇：[[Day3-Tailwind和shadcn]]
-
-<!-- series-nav-end -->

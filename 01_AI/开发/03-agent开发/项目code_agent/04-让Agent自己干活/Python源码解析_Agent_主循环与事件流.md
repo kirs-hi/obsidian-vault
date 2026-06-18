@@ -456,12 +456,3 @@ def plan_mode(self) -> bool:
 | 上下文保护 | 三级策略：磁盘持久化 / 截断 / 原样保留 |
 | 记忆提取 | `asyncio.ensure_future` fire-and-forget，每 5 次循环触发 |
 | 参数校验 | Pydantic `model_validate` ，显式校验每个字段 |
-
-<!-- series-nav-start -->
-
----
-**📚 让Agent自己干活**（4/6）
-
-⬅️ 上一篇：[[Java源码解析_Agent_主循环与事件流]] | ➡️ 下一篇：[[TypeScript源码解析_Agent主循环与事件流]]
-
-<!-- series-nav-end -->

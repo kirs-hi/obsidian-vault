@@ -407,12 +407,3 @@ private void writeToDisk() {
 | 提取策略 | 每 5 轮全量提取，LLM 驱动 |
 | 输入历史 | 循环缓冲区 200 条，连续去重 |
 | 并发模型 | `BlockingQueue.take()` 阻塞等待 |
-
-<!-- series-nav-start -->
-
----
-**📚 记忆系统**（3/6）
-
-⬅️ 上一篇：[[Go源码解析_会话持久化与记忆提取]] | ➡️ 下一篇：[[Python源码解析_会话持久化与记忆提取]]
-
-<!-- series-nav-end -->

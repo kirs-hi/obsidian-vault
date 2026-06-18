@@ -174,12 +174,3 @@ func (s *Skill) renderBody(args string) string {
 | 工具白名单 | `AllowedTools` 字段写入 fork 指令，限制子 Agent 可用工具 |
 | 参数替换 | 有 `$ARGUMENTS` 就替换，没有就追加 `## User Request` |
 | 容错策略 | 目录不存在静默跳过，单个 Skill 加载失败不影响全局 |
-
-<!-- series-nav-start -->
-
----
-**📚 Skill系统**（2/6）
-
-⬅️ 上一篇：[[理论学习_Skill_可复用技能包]] | ➡️ 下一篇：[[Java源码解析_技能加载与执行模式]]
-
-<!-- series-nav-end -->

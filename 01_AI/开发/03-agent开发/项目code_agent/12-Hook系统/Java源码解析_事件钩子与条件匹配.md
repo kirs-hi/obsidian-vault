@@ -292,12 +292,3 @@ public List<HookResult> drainNotifications() {
 | 拒绝语义 | `PreToolResult` record， `rejected` 布尔字段 |
 | 通知机制 | `drainNotifications()` 取走并清空 |
 | 变量解析 | switch 表达式，支持 `tool` 、 `event` 、 `args.*` |
-
-<!-- series-nav-start -->
-
----
-**📚 Hook系统**（3/6）
-
-⬅️ 上一篇：[[Go源码Go源码解析_事件钩子与条件匹配]] | ➡️ 下一篇：[[Python源码解析_事件钩子与条件匹配]]
-
-<!-- series-nav-end -->

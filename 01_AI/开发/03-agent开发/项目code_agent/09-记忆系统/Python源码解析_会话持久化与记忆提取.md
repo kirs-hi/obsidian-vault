@@ -432,12 +432,3 @@ def _assign_section(header, lines, user_sections, project_sections):
 | 自动记忆存储 | 用户级/项目级 `memories.md` ，按标题关键词分拣 |
 | 提取频率 | 只处理上次提取后的新消息，避免重复提取 |
 | 占位符过滤 | `_is_placeholder` 过滤 `...` 、 `暂无` 等 LLM 幻觉 |
-
-<!-- series-nav-start -->
-
----
-**📚 记忆系统**（4/6）
-
-⬅️ 上一篇：[[Java源码解析_会话持久化与记忆提取]] | ➡️ 下一篇：[[TypeScript源码解析_会话持久化与记忆提取]]
-
-<!-- series-nav-end -->

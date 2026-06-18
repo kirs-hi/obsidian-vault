@@ -172,12 +172,3 @@ private List<MessageParam> mergeConsecutiveSameRole(
 | 对话重建 | 一条 user（摘要 + 恢复块）+ 尾部原文，无 assistant ack |
 | 连续消息合并 | `mergeConsecutiveSameRole` 合并相邻纯文本同角色消息 |
 | 边界持久化 | `SessionManager.saveCompactBoundary` 追加 JSONL 记录 |
-
-<!-- series-nav-start -->
-
----
-**📚 上下文管理**（3/6）
-
-⬅️ 上一篇：[[Go源码解析_上下文压缩与溢写]] | ➡️ 下一篇：[[Python源码解析_上下文压缩与溢写]]
-
-<!-- series-nav-end -->

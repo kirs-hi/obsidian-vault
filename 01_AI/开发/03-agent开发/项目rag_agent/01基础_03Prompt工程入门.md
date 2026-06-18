@@ -1594,12 +1594,3 @@ if (content.length() > 500) {
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
-
-<!-- series-nav-start -->
-
----
-**📚 项目rag_agent**（3/87）
-
-⬅️ 上一篇：[[01基础_02调用大模型API]] | ➡️ 下一篇：[[01基础_04什么是RAG]]
-
-<!-- series-nav-end -->

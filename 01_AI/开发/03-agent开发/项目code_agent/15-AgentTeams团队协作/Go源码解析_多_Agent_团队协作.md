@@ -223,12 +223,3 @@ var CoordinatorAllowedTools = map[string]bool{
 | 工具暴露 | SendMessage / TeamCreate / TeamDelete 三个工具注册到 Registry |
 | 协调模式 | `CoordinatorAllowedTools` 白名单限制 Lead 只读不写 |
 | 优雅关闭 | 按后端分别处理：cancel context / kill-window / close tab |
-
-<!-- series-nav-start -->
-
----
-**📚 AgentTeams团队协作**（2/6）
-
-⬅️ 上一篇：[[理论学习_多_Agent_团队协作]] | ➡️ 下一篇：[[Java源码解析_多_Agent_团队协作]]
-
-<!-- series-nav-end -->

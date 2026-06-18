@@ -701,12 +701,3 @@ args: ["-y", "@upstash/context7-mcp"]
 - [ ] `docs/java/ch07/spec.md` 与本 checklist / tasks 三件套齐全且最新。
 - [ ] commit 信息标注 `ch07` 与三件套关闭状态（验收阶段产物，待用户审阅后随后续 commit 一并打标）。
 ```
-
-<!-- series-nav-start -->
-
----
-**📚 MCP协议**（6/6）
-
-⬅️ 上一篇：[[TypeScript源码解析_MCP协议与工具适配]]
-
-<!-- series-nav-end -->

@@ -307,12 +307,3 @@ MCP 选择 JSON-RPC 2.0，本质上是在 **标准化、简单性、灵活性** 
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
-
-<!-- series-nav-start -->
-
----
-**📚 项目rag_agent**（23/87）
-
-⬅️ 上一篇：[[02基础补充_01MCP协议规范JSON-RPC 2.0标准说明]] | ➡️ 下一篇：[[02基础补充_03工具调用架构设计指南]]
-
-<!-- series-nav-end -->

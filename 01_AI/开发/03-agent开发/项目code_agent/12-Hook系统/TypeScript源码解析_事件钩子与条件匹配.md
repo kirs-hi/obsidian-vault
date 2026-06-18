@@ -470,12 +470,3 @@ private async fireLifecycle(
 
 > 更新: 2026-06-08 16:27:37  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/ykkm0o969gakgbru](https://www.yuque.com/tianming-uvfnu/gmmfad/ykkm0o969gakgbru)
-
-<!-- series-nav-start -->
-
----
-**📚 Hook系统**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_事件钩子与条件匹配]] | ➡️ 下一篇：[[实战演练_动手实现_Hook_系统]]
-
-<!-- series-nav-end -->

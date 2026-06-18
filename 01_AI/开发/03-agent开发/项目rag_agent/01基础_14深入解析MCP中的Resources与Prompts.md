@@ -673,12 +673,3 @@ Prompt 工程解决的是怎么写好 Prompt，MCP Prompts 解决的是怎么把
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
-
-<!-- series-nav-start -->
-
----
-**📚 项目rag_agent**（14/87）
-
-⬅️ 上一篇：[[01基础_13MCP协议入门与实践]] | ➡️ 下一篇：[[01基础_15MCP之官方Java-SDK深度解析]]
-
-<!-- series-nav-end -->

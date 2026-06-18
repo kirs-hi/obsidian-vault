@@ -292,12 +292,3 @@ export function buildPlanModeExitReminder(): string {
 
 > 更新: 2026-06-08 13:21:56  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/ag94wtqnohnlb8im](https://www.yuque.com/tianming-uvfnu/gmmfad/ag94wtqnohnlb8im)
-
-<!-- series-nav-start -->
-
----
-**📚 SystemPrompt设计**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_系统提示词组装管线]] | ➡️ 下一篇：[[实战演练_动手设计提示词管线]]
-
-<!-- series-nav-end -->

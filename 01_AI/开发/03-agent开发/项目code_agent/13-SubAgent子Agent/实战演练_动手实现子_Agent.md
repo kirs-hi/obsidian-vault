@@ -1179,12 +1179,3 @@ nice，可以正常工作
 - [ ] 子 Agent 复用同一套 `agentLoop`，由 `subAgent.run(conv)` 启动虚拟线程并返回 `BlockingQueue<AgentEvent>`（`Agent.java:50-60`）
 - [ ] `setMaxIterations` 在 `runSync` / `spawnSubAgent` 内被显式设置
 ```
-
-<!-- series-nav-start -->
-
----
-**📚 SubAgent子Agent**（6/6）
-
-⬅️ 上一篇：[[TypeScript源码解析_子Agent创建与任务管理]]
-
-<!-- series-nav-end -->

@@ -284,12 +284,3 @@ Java 版的 Skill 系统在设计上有几个突出特点：
 | 上下文生成 | `buildActiveContext` 拼接激活 Skill 的 prompt body |
 | 容错策略 | 两层 `try-catch` ，目录和单个 Skill 各管各的错误 |
 | 查询 API | `get` 返回 `Optional` ， `list` 只返回 `SkillMeta` |
-
-<!-- series-nav-start -->
-
----
-**📚 Skill系统**（3/6）
-
-⬅️ 上一篇：[[Go源码解析_技能加载与执行模式]] | ➡️ 下一篇：[[Python源码解析_技能加载与执行模式]]
-
-<!-- series-nav-end -->

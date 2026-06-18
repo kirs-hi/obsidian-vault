@@ -435,12 +435,3 @@ if (skillReminder) {
 
 > 更新: 2026-06-08 13:16:15  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/psh3uk2nc3apfa2d](https://www.yuque.com/tianming-uvfnu/gmmfad/psh3uk2nc3apfa2d)
-
-<!-- series-nav-start -->
-
----
-**📚 让Agent自己干活**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_Agent_主循环与事件流]] | ➡️ 下一篇：[[实战演练_动手实现_Agent_Loop]]
-
-<!-- series-nav-end -->

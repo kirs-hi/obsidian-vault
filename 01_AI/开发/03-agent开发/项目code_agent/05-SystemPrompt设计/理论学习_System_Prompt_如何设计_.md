@@ -542,12 +542,3 @@ Prompt 组装管线从七个来源收集信息，通过三个字段（system / m
 System Prompt 是 Agent 行为质量的最大杠杆。你可以换模型版本、调温度参数、优化工具实现，但这些加起来的影响可能不如一个写得好的 System Prompt。它是 Agent 的灵魂，而灵魂值得反复打磨。
 
 下一章我们给 MewCode 装上硬约束：权限系统。System Prompt 里的安全边界是「劝」模型不做危险的事，权限系统是代码层面「拦」模型真的要做危险的事。软硬结合， 多层防御 。
-
-<!-- series-nav-start -->
-
----
-**📚 SystemPrompt设计**（1/6）
-
-➡️ 下一篇：[[Go源码解析_系统提示词组装管线]]
-
-<!-- series-nav-end -->

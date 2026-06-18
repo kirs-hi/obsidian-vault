@@ -346,12 +346,3 @@ export function saveTranscript(
 
 > 更新: 2026-06-08 16:41:24  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/ze6yy4bi96xz7ka9](https://www.yuque.com/tianming-uvfnu/gmmfad/ze6yy4bi96xz7ka9)
-
-<!-- series-nav-start -->
-
----
-**📚 AgentTeams团队协作**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_多_Agent_团队协作]] | ➡️ 下一篇：[[实战演练_动手实现_Agent_Teams]]
-
-<!-- series-nav-end -->

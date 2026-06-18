@@ -197,12 +197,3 @@ RustFS 提供了 Web 控制台，用于管理对象存储、创建存储桶（Bu
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
-
-<!-- series-nav-start -->
-
----
-**📚 项目rag_agent**（27/87）
-
-⬅️ 上一篇：[[03项目启动_01本地开发环境搭建]] | ➡️ 下一篇：[[03项目启动_03PostgreSQL数据库初始化]]
-
-<!-- series-nav-end -->

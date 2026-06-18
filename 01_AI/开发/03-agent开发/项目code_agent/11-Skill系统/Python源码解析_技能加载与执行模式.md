@@ -479,12 +479,3 @@ async def execute(self, params: BaseModel) -> ToolResult:
 | 自定义工具 | `tool.json` + `references/xxx.py` 动态加载 |
 | 参数替换 | 纯 `str.replace` ，无 `$ARGUMENTS` 时参数被静默忽略 |
 | 容错策略 | 加载失败打 warning 跳过，热重载失败用缓存兜底 |
-
-<!-- series-nav-start -->
-
----
-**📚 Skill系统**（4/6）
-
-⬅️ 上一篇：[[Java源码解析_技能加载与执行模式]] | ➡️ 下一篇：[[TypeScript源码解析_技能加载与执行模式]]
-
-<!-- series-nav-end -->

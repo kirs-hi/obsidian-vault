@@ -634,12 +634,3 @@ if cleanup.kept:
 | 模型选择 | 参数级 > 定义级 > 继承父 Agent |
 | Worktree 清理 | 有修改则保留，无修改则删除 |
 | 团队工具 | In-process 用白名单，pane 模式近乎全量 |
-
-<!-- series-nav-start -->
-
----
-**📚 SubAgent子Agent**（4/6）
-
-⬅️ 上一篇：[[Java源码解析_子_Agent_创建与任务管理]] | ➡️ 下一篇：[[TypeScript源码解析_子Agent创建与任务管理]]
-
-<!-- series-nav-end -->

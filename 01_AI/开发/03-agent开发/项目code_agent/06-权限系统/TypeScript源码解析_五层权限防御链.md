@@ -428,12 +428,3 @@ if (decision.effect === "ask" && this.onPermissionRequest) {
 
 > 更新: 2026-06-08 14:10:44  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/tbuca7ybke5ow0nz](https://www.yuque.com/tianming-uvfnu/gmmfad/tbuca7ybke5ow0nz)
-
-<!-- series-nav-start -->
-
----
-**📚 权限系统**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_五层权限防御链]] | ➡️ 下一篇：[[实战演练_动手实现权限系统]]
-
-<!-- series-nav-end -->

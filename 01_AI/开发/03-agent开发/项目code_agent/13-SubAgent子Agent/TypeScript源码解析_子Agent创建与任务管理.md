@@ -314,12 +314,3 @@ const client: LLMClient = definition.model
 
 > 更新: 2026-06-08 16:32:10  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/zkhb66ywwhnqz8ig](https://www.yuque.com/tianming-uvfnu/gmmfad/zkhb66ywwhnqz8ig)
-
-<!-- series-nav-start -->
-
----
-**📚 SubAgent子Agent**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_子_Agent_创建与任务管理]] | ➡️ 下一篇：[[实战演练_动手实现子_Agent]]
-
-<!-- series-nav-end -->

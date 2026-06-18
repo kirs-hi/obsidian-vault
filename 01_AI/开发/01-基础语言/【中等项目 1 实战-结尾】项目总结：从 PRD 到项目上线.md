@@ -166,12 +166,3 @@ Spec 约束的部分在claude code里面以不同形式存在, 比如：
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51115228418814
-
-<!-- series-nav-start -->
-
----
-**📚 中等项目 1 实战**（9/9）
-
-⬅️ 上一篇：[[【中等项目 1 实战-08】前后端进行 E2E 集成测试]]
-
-<!-- series-nav-end -->

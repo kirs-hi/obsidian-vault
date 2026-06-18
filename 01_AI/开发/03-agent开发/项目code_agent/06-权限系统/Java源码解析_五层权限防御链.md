@@ -570,12 +570,3 @@ public String describeToolAction(
 | Session 记忆 | `Set<String> allowAlwaysRules` ，当前会话有效 |
 | Plan Mode | Layer 0 独立处理，白名单 + 计划目录例外 |
 | 单文件设计 | 内嵌 record/enum，一个文件容纳全部类型和逻辑 |
-
-<!-- series-nav-start -->
-
----
-**📚 权限系统**（3/6）
-
-⬅️ 上一篇：[[Go源码解析_五层权限防御链]] | ➡️ 下一篇：[[Python源码解析_五层权限防御链]]
-
-<!-- series-nav-end -->

@@ -396,12 +396,3 @@ async disconnect(): Promise<void> {
 
 > 更新: 2026-06-08 14:20:10  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/qiycg0irawgm3zpl](https://www.yuque.com/tianming-uvfnu/gmmfad/qiycg0irawgm3zpl)
-
-<!-- series-nav-start -->
-
----
-**📚 MCP协议**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_MCP_协议与工具适配]] | ➡️ 下一篇：[[实战演练_动手接入MCP服务]]
-
-<!-- series-nav-end -->

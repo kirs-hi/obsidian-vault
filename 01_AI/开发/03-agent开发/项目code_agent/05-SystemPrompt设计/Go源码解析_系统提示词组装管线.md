@@ -214,12 +214,3 @@ func BuildPlanModeReminder(planFilePath string,
 | 条件注入 | BuildOptions 三个字段，有值才 Add |
 | Plan Mode 频率 | 第 1 轮完整版，每 5 轮重复，其余精简版 |
 | 内容与拼装分离 | sections.go 只管内容，builder.go 只管编排 |
-
-<!-- series-nav-start -->
-
----
-**📚 SystemPrompt设计**（2/6）
-
-⬅️ 上一篇：[[理论学习_System_Prompt_如何设计_]] | ➡️ 下一篇：[[Java源码解析_系统提示词组装管线]]
-
-<!-- series-nav-end -->

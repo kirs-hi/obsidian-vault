@@ -297,12 +297,3 @@ export function buildWorktreeNotice(
 
 > 更新: 2026-06-08 16:36:14  
 > 原文: [https://www.yuque.com/tianming-uvfnu/gmmfad/iopdpeu2ari8fl3z](https://www.yuque.com/tianming-uvfnu/gmmfad/iopdpeu2ari8fl3z)
-
-<!-- series-nav-start -->
-
----
-**📚 Worktree工作树**（5/6）
-
-⬅️ 上一篇：[[Python源码解析_Git_工作树隔离]] | ➡️ 下一篇：[[实战演练_动手实现_Worktree]]
-
-<!-- series-nav-end -->

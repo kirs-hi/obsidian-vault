@@ -312,12 +312,3 @@ PostgreSQL 经过 30 多年的积累，运维生态成熟得让人放心：
 查看更多优质内容
 
 https://wx.zsxq.com/mweb/views/joingroup/join\_group.html?group\_id=51121244585524
-
-<!-- series-nav-start -->
-
----
-**📚 项目rag_agent**（82/87）
-
-⬅️ 上一篇：[[09面试_02为什么不使用Python实现RAG]] | ➡️ 下一篇：[[10概述简历-怎样写才能让面试官眼前一亮？]]
-
-<!-- series-nav-end -->

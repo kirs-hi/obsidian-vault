@@ -1154,11 +1154,3 @@ https://www.bilibili.com/video/BV1oP5x6iEcG/?spm\_id\_from=333.1387.homepage.vid
 
 6\. Batch Invariance 提升工程可控性。通过保证相同输入在不同 batch 组织下输出一致，使模型在训练、推理和在线服务中具备更强的可复现性和稳定性。
 
-<!-- series-nav-start -->
-
----
-**📚 他人经验**（6/19）
-
-⬅️ 上一篇：[[04-Agent项目实战]] | ➡️ 下一篇：[[06-RAG]]
-
-<!-- series-nav-end -->

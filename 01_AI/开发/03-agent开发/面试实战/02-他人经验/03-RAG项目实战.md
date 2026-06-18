@@ -992,11 +992,5 @@ list\_collections、get\_document\_summary 等）
 
 * 测试框架用 pytest
 
-<!-- series-nav-start -->
 
----
-**📚 他人经验**（4/19）
 
-⬅️ 上一篇：[[02-大模型岗位介绍]] | ➡️ 下一篇：[[04-Agent项目实战]]
-
-<!-- series-nav-end -->

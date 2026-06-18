@@ -645,12 +645,3 @@ pnpm vitest run --reporter=verbose
 
 *最后更新：2026-03-14*
 *参考版本：commit 8873e13f（2026-03-07 索引）*
-
-<!-- series-nav-start -->
-
----
-**📚 OpenClaw**（7/7）
-
-⬅️ 上一篇：[[05_OpenClaw代码结构与架构]]
-
-<!-- series-nav-end -->

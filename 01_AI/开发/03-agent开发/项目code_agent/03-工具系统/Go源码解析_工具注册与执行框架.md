@@ -284,12 +284,3 @@ type DeferrableTool interface {
 | 结果传递 | `ToolResult{Output, IsError}` ，错误交给 LLM 自行处理 |
 | 延迟加载 | `DeferrableTool` 接口 + ToolSearch（详见第七章） |
 | 参数解析 | 手动类型断言 + `intArg()` 辅助函数兜底多种数字类型 |
-
-<!-- series-nav-start -->
-
----
-**📚 工具系统**（2/5）
-
-⬅️ 上一篇：[[理论学习_Function_Calling_与工具系统]] | ➡️ 下一篇：[[Java源码解析_工具注册与执行框架]]
-
-<!-- series-nav-end -->

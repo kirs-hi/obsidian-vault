@@ -380,12 +380,3 @@ public final class Coordinator {
 | 停止成员 | `Thread.interrupt()` 统一中断 |
 | 命名冲突 | 创建时加数字后缀（检查内存 map 而不是磁盘目录） |
 | 状态管理 | 纯内存，不做磁盘持久化，不支持跨 JVM 共享 |
-
-<!-- series-nav-start -->
-
----
-**📚 AgentTeams团队协作**（3/6）
-
-⬅️ 上一篇：[[Go源码解析_多_Agent_团队协作]] | ➡️ 下一篇：[[Python源码解析_多_Agent_团队协作]]
-
-<!-- series-nav-end -->

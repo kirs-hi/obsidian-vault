@@ -395,12 +395,3 @@ if (totalChars > ToolRegistry.MAX_OUTPUT_CHARS) {
 | 唯一性校验 | 手写 `countOccurrences()` 用 `indexOf` 循环计数 |
 | 延迟加载 | `shouldDefer()` 默认方法 + ToolSearchTool（详见第七章） |
 | 协议适配 | `getAllSchemas(protocol)` 参数区分 Anthropic/OpenAI 格式 |
-
-<!-- series-nav-start -->
-
----
-**📚 工具系统**（3/5）
-
-⬅️ 上一篇：[[Go源码解析_工具注册与执行框架]] | ➡️ 下一篇：[[Python源码解析_工具注册与执行框架]]
-
-<!-- series-nav-end -->
