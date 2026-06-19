@@ -1,10 +1,10 @@
 # 实战演练：RAG代码实战1(Python)
 
-![image.png](../attachments/LOwtbQo7hovdl0xV3Kmc3yQCnne.png)
+![[LOwtbQo7hovdl0xV3Kmc3yQCnne.png]]
 
 text
 
-![image.png](../attachments/NceqbRqTWo9doIxx5b8ctOSJnsg.png)
+![[NceqbRqTWo9doIxx5b8ctOSJnsg.png]]
 
 text
 
@@ -14,7 +14,7 @@ text
 
 这部分代码在： `app/services/vector_index_service.py`
 
-![image.png](../attachments/JfDDbQBtVoOtJlxAnPccNaQVnMh.png)
+![[JfDDbQBtVoOtJlxAnPccNaQVnMh.png]]
 
 text
 

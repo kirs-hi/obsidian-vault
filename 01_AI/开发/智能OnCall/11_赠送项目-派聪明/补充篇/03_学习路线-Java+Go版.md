@@ -2,29 +2,29 @@
 
 我这里再强调一下，一旦入门，就不要再长时间去通过视频学项目，否则你会发现自己工程能力提升很慢。养成看文档，看源码，看注释就能上手，对参加工作后快速融入到团队中，帮助会非常大。 很多球友像我反馈，看视频看完啥也记不住，就是因为视频不太适合你深入去学习一个项目，因为你的注意力无法把项目的源码、教程、面试题结合起来。
 
-![image\.png](../../attachments/JU9rbwxxwoAY7nxFWKdcsxtMnJ6.png)
+![[JU9rbwxxwoAY7nxFWKdcsxtMnJ6.png]]
 
 那这篇就给大家讲一下派聪明的学习方案。
 
-![image\.png](../../attachments/GeeIbho6QoohKcxaXLScELEbnFd.png)
+![[GeeIbho6QoohKcxaXLScELEbnFd.png]]
 
 第一步，先当用户，把项目跑起来 这是最最重要，也是最有成就感的一步。在分析任何代码之前，你必须让它在你的电脑上成为一个活生生的应用。 仔细阅读前置环境搭建的教程https://paicoding\.com/column/10/4
 
-![image\.png](../../attachments/BsTQb2Oh5oSiJmxyngAcG09Mnrh.png)
+![[BsTQb2Oh5oSiJmxyngAcG09Mnrh.png]]
 
 工程篇里的教程会告诉你需要安装哪些基础软件（JDK、Maven、Node\.js、Docker），以及如何一键启动项目依赖的中间件（比如 Kafka、MinIO、MySQL、ElasticSearch、Redis 等）。 包括 embedding 和 llm 模型的 API 接入。 前端的启动说明，教程里也有。 或者直接使用 Docker 一键跑起来https://paicoding\.com/
 
-![image\.png](../../attachments/N3GsbQ3I9osMFExt3flcsdrNnsb.png)
+![[N3GsbQ3I9osMFExt3flcsdrNnsb.png]]
 
 Go 版本的 Docker 搭建过程 [https://paicoding\.com/column/10/29](https://my.feishu.cn/https%3A%2F%2Fpaicoding.com%2Fcolumn%2F10%2F29)
 
-![image\.png](../../attachments/WXarbwuW3omO5kxuDW7c8UW2njd.png)
+![[WXarbwuW3omO5kxuDW7c8UW2njd.png]]
 
 ## 第二步，把你认可或者喜欢的内容抄到简历上
 
 主要看这个教程 [https://paicoding\.com/column/10/2](https://my.feishu.cn/https%3A%2F%2Fpaicoding.com%2Fcolumn%2F10%2F2)
 
-![image\.png](../../attachments/MaUBbsnLioSYXyxpsWHcHHqenCZ.png)
+![[MaUBbsnLioSYXyxpsWHcHHqenCZ.png]]
 
 Go版本看这个帖子： https://paicoding\.com/column/10/30
 
@@ -42,11 +42,11 @@ Go版本看这个帖子： https://paicoding\.com/column/10/30
 
 那你就重点关注这一部分的教程，比如说RAG知识库检索模块设计方案： https://paicoding\.com/column/10/15
 
-![image\.png](../../attachments/QDelbp0Utoo3SvxHiqCcy8C2n4d.png)
+![[QDelbp0Utoo3SvxHiqCcy8C2n4d.png]]
 
 最好是结合源码一起看，源码部分就主要在 HybridSearchService 混合检索这一趴。
 
-![image\.png](../../attachments/Ko0ibUOQZoMR1Ix7KxZcy0vUnWe.png)
+![[Ko0ibUOQZoMR1Ix7KxZcy0vUnWe.png]]
 
 之前有球友问，我自己怎么手搓代码啊，方法很简单，看完这个方法，你教程也看了。好，现在你把这个方法的主体删掉，自己实现一遍，看看交给你你能不能完成？
 
@@ -58,7 +58,7 @@ Go版本看这个帖子： https://paicoding\.com/column/10/30
 
 在这个阶段，最好找一个趁手的 AI助手。比如说 Qoder，lingma 插件，或者 TRAE、Claude Code 这些都可以。
 
-![image\.png](../../attachments/ApWDbVEUSoVS7ExMbFBcCtC5nof.png)
+![[ApWDbVEUSoVS7ExMbFBcCtC5nof.png]]
 
 当你找到一个关键类或方法时，不要只让它总结。可以问它更具体的问题，比如说针对文件上传这一趴。
 
@@ -90,7 +90,7 @@ FileProcessingConsumer 里的 DefaultErrorHandler 是如何实现重试和死信
 
 不少球友都自己修改过 bug [https://t\.zsxq\.com/uL51L](https://my.feishu.cn/https%3A%2F%2Ft.zsxq.com%2FuL51L)
 
-![image\.png](../../attachments/GgK3bdPiho4PjBxLjWScfffynef.png)
+![[GgK3bdPiho4PjBxLjWScfffynef.png]]
 
 ## 第五步，总结归纳，沉淀知识库
 
@@ -98,7 +98,7 @@ FileProcessingConsumer 里的 DefaultErrorHandler 是如何实现重试和死信
 
 比如说派聪明很多球友就写过经验贴，戳【派聪明】菜单就可以看到，类似Kafka 的安装踩坑 [https://paicoding\.com/article/detail/2521900044302336](https://my.feishu.cn/https%3A%2F%2Fpaicoding.com%2Farticle%2Fdetail%2F2521900044302336)
 
-![image\.png](../../attachments/SaxubyxjMoSBQFx5atbcJJNUntc.png)
+![[SaxubyxjMoSBQFx5atbcJJNUntc.png]]
 
 如果你在面试中遇到了自己回答不上来的问题， 也可以在星球里提问，或者 VIP 群里交流。我看到后都会第一时间给出答复。
 
@@ -106,11 +106,11 @@ FileProcessingConsumer 里的 DefaultErrorHandler 是如何实现重试和死信
 
 参考 2： [https://t\.zsxq\.com/7Wakn](https://my.feishu.cn/https%3A%2F%2Ft.zsxq.com%2F7Wakn)
 
-![image\.png](../../attachments/R7vtbH6JEoPi5WxfsW1cfLOOnqd.png)
+![[R7vtbH6JEoPi5WxfsW1cfLOOnqd.png]]
 
 也可以把自己面试中关于派聪明的面试题都分享出来： [https://paicoding\.com/column/10/25](https://my.feishu.cn/https%3A%2F%2Fpaicoding.com%2Fcolumn%2F10%2F25)
 
-![image\.png](../../attachments/DqCWbPvWFo0eqtxis0Ucf8xtnYe.png)
+![[DqCWbPvWFo0eqtxis0Ucf8xtnYe.png]]
 
 和大家一起共享学习项目中的点点滴滴，也算是给自己成长做一个记录。
 

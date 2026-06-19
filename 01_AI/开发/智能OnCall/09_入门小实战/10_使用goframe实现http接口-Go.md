@@ -20,7 +20,7 @@ https://goframe\.org/quick/scaffold\-index
 
 1. 首先，我们在api目录下依葫芦画瓢创建chat/v1目录，并编写Chat接口
 
-![image\.png](../attachments/GCvdbWO7xov4a4x9KKRcHOYlnwg.png)
+![[GCvdbWO7xov4a4x9KKRcHOYlnwg.png]]
 
 ```Go
 
@@ -28,7 +28,7 @@ https://goframe\.org/quick/scaffold\-index
 
 1. Ctrl\+S保存，此时框架会自动帮我们生成internal/controller/chat控制层的代码。我们返回一个chat demo字符串回去
 
-![image\.png](../attachments/QgMZbE5mGoIjYzxZsQXcpuBLned.png)
+![[QgMZbE5mGoIjYzxZsQXcpuBLned.png]]
 
 ```Bash
 
@@ -36,11 +36,11 @@ https://goframe\.org/quick/scaffold\-index
 
 1. 将我们刚才写的chat控制器绑定上去
 
-![image\.png](../attachments/XfYsb8wlroXlQwxtnnBcuO8Tnff.png)
+![[XfYsb8wlroXlQwxtnnBcuO8Tnff.png]]
 
 1. 最后，我们需要将collector层的返回值返回出去
 
-![image\.png](../attachments/KXMMbaThXojWArxcJVwcdnhZnsb.png)
+![[KXMMbaThXojWArxcJVwcdnhZnsb.png]]
 
 ```Go
 
@@ -48,8 +48,8 @@ https://goframe\.org/quick/scaffold\-index
 
 # 运行
 
-![image\.png](../attachments/DzjCbu9wZo737oxi5AGcHyXCnRe.png)
+![[DzjCbu9wZo737oxi5AGcHyXCnRe.png]]
 
 go run main\.go 看到route里面有刚才写的接口就说明成功了，赶快试一试吧～
 
-![image\.png](../attachments/MkEmb1WyXozGiYx9AoFcoy4Pnld.png)
+![[MkEmb1WyXozGiYx9AoFcoy4Pnld.png]]

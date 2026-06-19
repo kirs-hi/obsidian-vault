@@ -10,7 +10,7 @@
 
 派聪明是一个基于私有知识库的智能对话平台，允许用户上传文档构建专属知识空间，并通过自然语言交互方式查询和获取知识。它结合了大语言模型（如 DeepSeek、ChatGLM 等）和向量检索技术，让用户能够通过对话形式与自己的知识库进行高效交互。
 
-![image\.png](../../attachments/JZTFbypLfouGABxL1nCcToAGnYg.png)
+![[JZTFbypLfouGABxL1nCcToAGnYg.png]]
 
 派聪明本质上是一个"知识增强型"AI 助手，它不仅仅依赖大模型固有知识，更重要的是能够基于用户提供的专属内容进行精准回答，确保信息的可靠性和私密性。
 
@@ -64,13 +64,13 @@
 
 传统的关键词搜索经常出现这种情况：你明明知道有个文档讲过相关内容，但就是搜不出来，因为你用的词和文档里的不一样。派聪明采用了混合检索的方案，把 Elasticsearch 的全文检索和向量语义搜索结合起来。
 
-![image\.png](../../attachments/YKV7bGRB4odPOtxcSbxcpD4qnef.png)
+![[YKV7bGRB4odPOtxcSbxcpD4qnef.png]]
 
 这样即使你用的词不完全匹配，系统也能理解你的意图，找到相关的文档。比如你搜"报销流程"，即使文档里写的是"费用申请"，向量搜索也能找到相关内容。
 
 更厉害的是， **派聪明还集成了 RAG 技术 **。简单说就是先根据你的问题找到相关文档，然后基于这些文档内容生成精准的答案。看看这个对话处理的核心逻辑：
 
-![image\.png](../../attachments/BO59bDCPnoq5G4xyDmvcWdxbn4g.png)
+![[BO59bDCPnoq5G4xyDmvcWdxbn4g.png]]
 
 这样你不用自己去翻文档，AI 直接给你答案，还会告诉你答案来源于哪些文档。而且用 WebSocket 建立长连接，支持流式响应，AI 生成内容的时候可以一边生成一边显示，就像 ChatGPT 那样，用户不用干等着。
 
@@ -80,13 +80,13 @@
 
 首先，安全问题是大家最关心的。无论是企业机密文档还是个人隐私资料，上传后都不能让别人随便看到，这是基本底线。
 
-![image\.png](../../attachments/P3JZbYNaUoePFjxcUqtcIoqonLe.png)
+![[P3JZbYNaUoePFjxcUqtcIoqonLe.png]]
 
 其次，文档五花八门，PDF、Word、Excel 样样都有，系统得能全部吃得消，还要能准确理解里面的内容，就需要把文档转换为大模型可以理解的“语言”。
 
 用户也不想学什么特殊指令，他们希望像跟人聊天一样提问：“沉默王二很帅”，这种自然语言的交流体验很重要。
 
-![image\.png](../../attachments/CVPtbFFgNoQkPLxMxUncFe3anNd.png)
+![[CVPtbFFgNoQkPLxMxUncFe3anNd.png]]
 
 而且，问题通常不会一次问完。一个引出一个，系统需要记住前面说了什么，理解上下文，就像正常的对话一样流畅。
 
@@ -100,7 +100,7 @@
 
 私有 AI 知识库的核心必须包含"私有"二字。每个用户需要有自己的账号和权限边界，才能确保知识安全。
 
-![image\.png](../../attachments/GRMZbayI8ofiN2xdn5KcS6TUnnc.png)
+![[GRMZbayI8ofiN2xdn5KcS6TUnnc.png]]
 
 想象一下，如果所有人都能看到所有文档，那还叫"私有"吗？用户管理模块解决的就是"谁能看什么"的问题，这是整个系统安全性的基础。对于企业用户来说，部门间的文档隔离更是刚需，没有这个模块，产品寸步难行。
 
@@ -108,27 +108,27 @@
 
 文档上传与解析模块是连接用户知识和 AI 理解的关键环节。首先，我们需要一个简单直观的方式让用户上传各类文档，这是知识的来源；其次，上传的原始文档还需要经过专业处理，转化为 AI 可理解的格式。
 
-![image\.png](../../attachments/B2YvbJfwnoXI4yxg6NkcqZQynug.png)
+![[B2YvbJfwnoXI4yxg6NkcqZQynug.png]]
 
 如果只有上传功能而没有处理能力，系统就像是一个无法阅读的文件仓库；反之，如果有处理能力却没有好的上传体验，用户就无法输入自己的知识。文件上传功能是整个流程的起点，文档处理则是将这些上传的文件转化为“智能”的关键步骤，决定了系统能否真正理解文档内容。
 
-![image\.png](../../attachments/CsbCblWXboyJJJxMMBYcpNRFnyf.png)
+![[CsbCblWXboyJJJxMMBYcpNRFnyf.png]]
 
 ### 3\.知识检索模块
 
 用户提问后，系统需要从海量的知识中找到相关内容，这是检索模块的核心价值之一。如果把文档比作图书馆的藏书，检索模块就是图书管理员，决定了能否找到合适的“参考资料”。
 
-![image\.png](../../attachments/OJ9dbwu5ooz3WlxTlL3cRteAnfh.png)
+![[OJ9dbwu5ooz3WlxTlL3cRteAnfh.png]]
 
 没有精准的检索，AI 模型再强大也无法给出准确回答，因为它找不到相关信息。检索模块解决的是如何从信息海洋中快速定位所需知识的问题，这直接影响回答的准确性和相关性。
 
-![image\.png](../../attachments/B8rCbgRuao3g3ZxCWOVcYMtinNh.png)
+![[B8rCbgRuao3g3ZxCWOVcYMtinNh.png]]
 
 ### 4\.聊天助手模块
 
 再强大的后台技术，如果交互不自然，用户也会觉得产品难用。想象一下，如果每次都要用特定格式提问或等待很久才有回应，用户很快就会失去耐心。
 
-![image\.png](../../attachments/Dt86bLwkeov8f8xX4bic1DHpnxh.png)
+![[Dt86bLwkeov8f8xX4bic1DHpnxh.png]]
 
 ### 5\.聊天记录模块
 
@@ -138,7 +138,7 @@
 
 随着企业知识库规模扩大，需要更完善的文档组织功能，如分类目录、标签系统、权限管理等，帮助企业系统化管理大量文档资产。
 
-![image\.png](../../attachments/LKTTb6VKAoAeXmxnoToccChLnGh.png)
+![[LKTTb6VKAoAeXmxnoToccChLnGh.png]]
 
 ## 五、介绍一下你正在做的项目
 
@@ -154,11 +154,11 @@
 
 然后是向量化模块，这是比较核心的技术部分。我们会把文档的文本内容转换成向量表示，利用现在比较流行的 embedding 技术，让计算机能够理解文本的语义含义。这些向量数据会存储在 Elasticsearch 中，方便后续的快速检索。
 
-![image\.png](../../attachments/Sck1bczp7ofgAoxrtoAc42v0nAc.png)
+![[Sck1bczp7ofgAoxrtoAc42v0nAc.png]]
 
 接下来是知识检索模块，这也是用户最直接接触的功能。我们实现了混合检索算法，既支持传统的关键词搜索，也支持语义相似度搜索。用户输入一个问题，系统会找到最相关的文档片段返回给用户。而且我们还做了权限控制，不同用户只能搜索到自己有权限看的内容。
 
-![image\.png](../../attachments/Mu1KbfXjeoqA4DxhZzjc5Hf5nOc.png)
+![[Mu1KbfXjeoqA4DxhZzjc5Hf5nOc.png]]
 
 在技术架构上，后端用的是 Spring Boot，数据库用 MySQL 存储元数据，Redis 做缓存，Kafka 处理异步任务。前端是 Vue3 \+ TypeScript 的单页应用，界面比较现代化，用户体验还不错。
 
@@ -166,6 +166,6 @@
 
 目前这个项目已经基本完成了核心功能的开发，包括文档上传、解析、向量化、检索等全流程。下一步我们计划优化搜索算法的准确性，还有就是增加更多的文档格式支持。
 
-![image\.png](../../attachments/ZyePbA6ZOoIDgpxTVgwc3YeInNe.png)
+![[ZyePbA6ZOoIDgpxTVgwc3YeInNe.png]]
 
 总的来说，这是一个结合了传统信息检索和现代 AI 技术的知识管理平台，尤其是 RAG 技术的应用，希望能够帮助企业/用户更高效地利用已有的知识资源。

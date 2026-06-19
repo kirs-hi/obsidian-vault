@@ -6,7 +6,7 @@
 
 运行的代码在：SuperBizAgent/internal/ai/cmd/chat\_cmd/main.go
 
-![image.png](../attachments/PEojbOG2MooCVxxqN6EcgZIlnp4.png)
+![[PEojbOG2MooCVxxqN6EcgZIlnp4.png]]
 
 # 流程梳理
 
@@ -1620,7 +1620,7 @@ text
 
 生成完后，会在目标目录看到生成出来的这些组件，下面我们来逐个介绍
 
-![image.png](../attachments/Skidbz2ecohbblxW2bwcvbJanle.png)
+![[Skidbz2ecohbblxW2bwcvbJanle.png]]
 
 > 这部分代码在：SuperBizAgent/internal/ai/agent/chat\_pipeline
 
@@ -1750,7 +1750,7 @@ text
 
 里面有很多AddEdge，这里面的点、边连接顺序，其实就是上面我们用eino-dev插件编排的顺序。
 
-![image.png](../attachments/NodDbtuxTo0CWbxoX0ocL6gHnvb.png)
+![[NodDbtuxTo0CWbxoX0ocL6gHnvb.png]]
 
 也就是说： `BuildChatAgent` 返回的执行器，在调用后会按照这个顺序执行。
 
@@ -1823,7 +1823,7 @@ text
 - date : time.Now() ---当前时间
 - documents : \[]\*.schema.document ---召回的内容
 
-![image.png](../attachments/UJLfbpjReoDfAjxQIOmcFpQNnz7.png)
+![[UJLfbpjReoDfAjxQIOmcFpQNnz7.png]]
 
 有了这个map，怎么用呢？我们继续往下看， `FormatType: schema.FString`  代表使用{}作为占位符。那么{date} {content} {documents} 这三个比较好理解，框架自动将这三个key的value填充进去。
 
@@ -1879,7 +1879,7 @@ text
 
 ## 让Agent学会"思考-行动"循环——ReAct组件
 
-![image.png](../attachments/SrGnbLvkho2MNUxTVVzc8VmEnRh.png)
+![[SrGnbLvkho2MNUxTVVzc8VmEnRh.png]]
 
 就跟编排图中的ReAct组件一样，它有几个插口，我们需要给它装一个model，以及多个tool工具。
 

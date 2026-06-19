@@ -12,7 +12,7 @@ RAG的整体流程分为两部分：​
 
 - **提问后（回答生成） **：召回 \-\> 重排 \-\> 生成
 
-![image\.png](../attachments/KZQrbFaNLoNqtIxsOpncc47enod.png)
+![[KZQrbFaNLoNqtIxsOpncc47enod.png]]
 
 ## 提问前链路（数据准备）
 

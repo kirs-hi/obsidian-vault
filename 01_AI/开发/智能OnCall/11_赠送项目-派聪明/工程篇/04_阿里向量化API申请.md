@@ -8,40 +8,40 @@
 
 所以我加急申请了阿里的 embedding 模型，因为阿里明确了向下兼容，维度参数支持 1024、2048 等。
 
-![image\.png](../../attachments/UxkobKWt0oqkKMxAB31cullKnxe.png)
+![[UxkobKWt0oqkKMxAB31cullKnxe.png]]
 
 [登录阿里百炼 ](https://my.feishu.cn/https%3A%2F%2Fbailian.console.aliyun.com%2F%3Ftab%3Dmodel%23%2Fapi-key)，申请 API key，然后复制，随后需要复制到 application\.yml 中：
 
-![image\.png](../../attachments/TRC6b5Zopo3c54xfQBDcqVqonob.png)
+![[TRC6b5Zopo3c54xfQBDcqVqonob.png]]
 
 [在这里可以查看 ](https://my.feishu.cn/https%3A%2F%2Fbailian.console.aliyun.com%2F%3Ftab%3Dmodel%23%2Fmodel-market%3Fcapabilities%3D%255B%2522TR%2522%255D%26z_type_%3D%257B%2522capabilities%2522%253A%2522array%2522%257D)通用文本向量\-v4
 
-![image\.png](../../attachments/SzwxbUD6yoouCpxtKfNcFPPon0f.png)
+![[SzwxbUD6yoouCpxtKfNcFPPon0f.png]]
 
-![image\.png](../../attachments/YlKBbFGTbod4VVxYzuEckLmznXg.png)
+![[YlKBbFGTbod4VVxYzuEckLmznXg.png]]
 
-![image\.png](../../attachments/IlDMbKAeSoLhPtxQYOIcYpQxnDc.png)
+![[IlDMbKAeSoLhPtxQYOIcYpQxnDc.png]]
 
-![image\.png](../../attachments/S9WObLeRJozZPbxR9DhcKHZznCq.png)
+![[S9WObLeRJozZPbxR9DhcKHZznCq.png]]
 
 \-\-以下暂时废弃，留作备用\-\-\-\-
 
 向量化这一趴我们用的是豆包的 embedding： [账号登录\-火山引擎](https://my.feishu.cn/https%3A%2F%2Fconsole.volcengine.com%2Fark%2Fregion%3Aark%2Bcn-beijing%2Fmodel%2Fdetail%3FId%3Ddoubao-embedding-vision)\.
 
-![image\.png](../../attachments/XrdwbUelNoZSfExPlAycvvaensc.png)
+![[XrdwbUelNoZSfExPlAycvvaensc.png]]
 
 在 [火山引擎这里找到 api key 管理](https://my.feishu.cn/https%3A%2F%2Fconsole.volcengine.com%2Fark%2Fregion%3Aark%2Bcn-beijing%2FapiKey%3Fapikey%3D%257B%257D)
 
-![image\.png](../../attachments/NLyabHVuzo7eSqxIBfEcxL04nDd.png)
+![[NLyabHVuzo7eSqxIBfEcxL04nDd.png]]
 
 然后记得复制它。
 
 然后再开通管理这里找到第二个 doubao\-embedding 开通它。
 
-![image\.png](../../attachments/NZfQbM1aAo3Bhkxu1pRcuUrQnIb.png)
+![[NZfQbM1aAo3Bhkxu1pRcuUrQnIb.png]]
 
 **同样记得充值。 **。
 
 把你刚刚复制的 key 复制粘贴到这里。
 
-![image\.png](../../attachments/FIZub3EnToqX0PxdO0icZ7NPnEf.png)
+![[FIZub3EnToqX0PxdO0icZ7NPnEf.png]]

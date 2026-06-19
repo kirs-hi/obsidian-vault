@@ -8,7 +8,7 @@ AI时代，代码是最不值钱的东西。与其“求代码”，不如你花
 
 2026年了，拥抱AI吧。学会从写代码，到给AI提需求。
 
-![image\.png](../attachments/UMEBbZNKNo0lBox2g51c69B1nhk.png)
+![[UMEBbZNKNo0lBox2g51c69B1nhk.png]]
 
 ## 常见的AI IDE
 

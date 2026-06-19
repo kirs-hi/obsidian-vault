@@ -2,7 +2,7 @@
 
 大家好，今天我们来一起学习下派聪明中非常核心的一个功能——混合检索。我会给大家一步步讲清楚，看懂派聪明是如何结合“关键词搜索”和“语义搜索”这两种技术实现 RAG 中关键的 **Retrieval **。
 
-![image\.png](../../attachments/EVpRb8LH0oIpbhxMZ6PcL8BFnKg.png)
+![[EVpRb8LH0oIpbhxMZ6PcL8BFnKg.png]]
 
 ## 一、关键词搜索和语义搜索
 
@@ -10,7 +10,7 @@
 
 **关键词搜索需要将文档和查询都拆解成一个个独立的词语，然后通过匹配这些词语来计算相关性 **。依赖于一种名为“倒排索引”的数据结构，可以瞬间找到包含特定关键词的所有文档。
 
-![image\.png](../../attachments/KDnlbPZfJoqTJWxx6AOcHMEAnpc.png)
+![[KDnlbPZfJoqTJWxx6AOcHMEAnpc.png]]
 
 在没有搜索引擎前，我们搜内容是这样的，打开一个网址，获取网站的内容，然后输入关键词进行匹配：
 
@@ -30,7 +30,7 @@
 
 像技术派的首页，就用 ES 做过倒排的查询。
 
-![image\.png](../../attachments/EMQcbbvL9o3CbbxEZHGcb4EDn6c.png)
+![[EMQcbbvL9o3CbbxEZHGcb4EDn6c.png]]
 
 当用户的查询意图明确，用词精准时，关键词查询能提供精准、快速的结果。
 
@@ -40,7 +40,7 @@
 
 **语义搜索需要利用深度学习模型（Embedding Model），将文本的整体含义转换成一个高维空间中的数学向量。通过计算向量之间的距离（如余弦相似度），来判断文本在语义层面的相似性 **。
 
-![image\.png](../../attachments/FLrPbWAusoRg9XxU9jqchgJQnog.png)
+![[FLrPbWAusoRg9XxU9jqchgJQnog.png]]
 
 也就是说，语义搜索由向量搜索提供支持，具备极高的智能化水平。能够跨越文字的障碍，理解深层语义。对于上一个例子，语义搜索能准确判断“降低电脑温度”和“笔记本散热技巧”在语义上具有高度的一致性。
 
@@ -48,7 +48,7 @@
 
 派聪明的目标是成为一个专业的智能知识库问答系统。它既需要能理解用户模糊、口语化的自然语言查询，又必须保证返回结果的专业性和准确性，确保关键信息不缺失。
 
-![image\.png](../../attachments/XLNcbFF79o6WYWx56HKcEWVVnje.png)
+![[XLNcbFF79o6WYWx56HKcEWVVnje.png]]
 
 因此，单一的技术路径无法满足需求：
 
@@ -58,7 +58,7 @@
 
 因此， **混合搜索成为了必然选择 **。它融合了两者的优点，让“思想理解者”和“文字匹配员”协同工作，从而实现既智能又精准的顶级搜索体验。
 
-![image\.png](../../attachments/Lsizb3Z7moKsc6xnnG6cVYhpn0c.png)
+![[Lsizb3Z7moKsc6xnnG6cVYhpn0c.png]]
 
 经过对市面上技术栈的考察，最终我们选择了 ElasticSearch，因为它提供了开箱即用的语义搜索，同时，它本身就是一个天然的关键词搜索引擎。
 
@@ -72,7 +72,7 @@
 
 我们在 ElasticSearch 中新建了一个名 knowledge\_base 的索引，它将为每一条数据存储两种关键信息。
 
-![image\.png](../../attachments/XMmhbTkTFoJUA9xczKrcMxJ4nXx.png)
+![[XMmhbTkTFoJUA9xczKrcMxJ4nXx.png]]
 
 其结构定义在： src/main/resources/es\-mappings/knowledge\_base\.json 文件中。其中，textContent 字段用于关键词搜索，vector 字段用于语义搜索。
 
@@ -84,11 +84,11 @@
 
 **vector 字段的类型定义为 **"dense\_vector", 专门存储文本的“语义指纹”。文档内容在存入前，会被 Embedding 模型转换成一个 2048 维的数学向量。这个向量使得系统可以在语义层面进行相似性比较，是实现向量搜索的根本。
 
-![image\.png](../../attachments/D1gTbwwP7oRJ3TxWCMMc2l5Bnke.png)
+![[D1gTbwwP7oRJ3TxWCMMc2l5Bnke.png]]
 
 OK，接下来我们来看一次完整的搜索是怎么进行的。整个过程都在 HybridSearchService\.java 这个文件里，用户的一次查询，会严格执行“先召回、后精炼、再排序”的经典流程。
 
-![image\.png](../../attachments/DV7VbJc6xoYj9uxDWtBc8Q5Mn3g.png)
+![[DV7VbJc6xoYj9uxDWtBc8Q5Mn3g.png]]
 
 让我们以用户查询“ **如何提升AI模型的训练效率？ **”为例，深入探索每一步的细节。
 
@@ -132,4 +132,4 @@ OK，接下来我们来看一次完整的搜索是怎么进行的。整个过程
 
 1. **最后，把两种搜索的分数综合起来排序 **，得到一个既智能又准确的最终排名，返回给用户。
 
-![image\.png](../../attachments/MMAab376iosdlRx5Zv9cAgzSnzh.png)
+![[MMAab376iosdlRx5Zv9cAgzSnzh.png]]

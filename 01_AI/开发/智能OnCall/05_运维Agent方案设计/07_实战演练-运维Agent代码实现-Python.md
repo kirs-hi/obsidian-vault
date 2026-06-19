@@ -1,12 +1,12 @@
 # 实战演练：运维Agent代码实现\(Python\)
 
-![image\.png](../attachments/NzVBbNBn7oglXjxoYW4cnIHFn8e.png)
+![[NzVBbNBn7oglXjxoYW4cnIHFn8e.png]]
 
 # 前言
 
 关键代码： app/agent/aiops/ 目录下的 state\.py 、 planner\.py 、 executor\.py 、 replanner\.py ，以及 app/services/aiops\_service\.py 。
 
-![image\.png](../attachments/WiRvbTNJwoFQ6fxvt4vc0GiRnBe.png)
+![[WiRvbTNJwoFQ6fxvt4vc0GiRnBe.png]]
 
 # 流程梳理
 
@@ -20,7 +20,7 @@
 
 三个节点通过 LangGraph StateGraph 串联，共享同一份 PlanExecuteState 状态对象在整个流程中传递。
 
-![image\.png](../attachments/OdSlbq3b0o2lrlxdLtVc83uPnDQ.png)
+![[OdSlbq3b0o2lrlxdLtVc83uPnDQ.png]]
 
 # 实战
 
@@ -143,4 +143,4 @@ AIOpsService\.execute 使用 graph\.astream\(stream\_mode\="updates"\) 流式执
 
 框架帮我们处理了节点间的数据传递、条件路由和流式输出，核心还是要搞懂设计原理： **Plan\-Execute\-Replan 本质上是一个带反馈的闭环调度器 **，Replanner 的收敛策略决定了整个流程的质量与效率。
 
-![image\.png](../attachments/QeYcb9qbnorkE5xYEsxciNPEnmh.png)
+![[QeYcb9qbnorkE5xYEsxciNPEnmh.png]]

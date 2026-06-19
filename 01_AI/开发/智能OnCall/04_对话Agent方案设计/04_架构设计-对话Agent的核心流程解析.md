@@ -16,11 +16,11 @@
 
 1. 最终输出答案
 
-![image\.png](../attachments/PAGTbGypgoFaBhx8Qkscjpr3nnE.png)
+![[PAGTbGypgoFaBhx8Qkscjpr3nnE.png]]
 
 # 核心流程拆解
 
-![image\.png](../attachments/S9CCbGXkTo0mb3x99OncDjI9nVh.png)
+![[S9CCbGXkTo0mb3x99OncDjI9nVh.png]]
 
 ### RAG召回：让Agent学习外部知识
 

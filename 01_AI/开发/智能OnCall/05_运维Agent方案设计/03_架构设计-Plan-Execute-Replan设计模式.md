@@ -126,7 +126,7 @@ Replanner（重规划器）：进度监理
 
 Plan\-Execute\-Replan 的核心逻辑是「结构化推进\+动态校准」，流程如下：
 
-![image\.png](../attachments/My0kbB0ASoYrEcxMwLocMpMWnad.png)
+![[My0kbB0ASoYrEcxMwLocMpMWnad.png]]
 
 # 与 ReAct 的核心区别：先规划 vs 边想边做
 

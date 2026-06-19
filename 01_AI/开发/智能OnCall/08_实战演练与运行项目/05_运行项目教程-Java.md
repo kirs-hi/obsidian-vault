@@ -12,6 +12,6 @@
 
 注意，在启动之前务必将配置文件中的api key填好。mcp端口也要填好（或者直接注释掉，走mock）
 
-![image\.png](../attachments/Aea5biluQoHXBsx8s4xc1F31nif.png)
+![[Aea5biluQoHXBsx8s4xc1F31nif.png]]
 
-![image\.png](../attachments/IUGEbaXkYogdmkxm3hHcja8Xnog.png)
+![[IUGEbaXkYogdmkxm3hHcja8Xnog.png]]

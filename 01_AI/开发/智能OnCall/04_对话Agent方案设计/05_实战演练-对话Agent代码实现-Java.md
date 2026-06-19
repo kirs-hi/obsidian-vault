@@ -4,7 +4,7 @@
 
 这部分代码在： SuperBizAgent/src/main/java/org/example/controller/ChatController\.java
 
-![image\.png](../attachments/BUTDbvalGo50bVx6ogXcNo8Sneb.png)
+![[BUTDbvalGo50bVx6ogXcNo8Sneb.png]]
 
 # 流程梳理
 

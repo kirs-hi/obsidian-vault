@@ -4,4 +4,4 @@
 
 具体内容在子目录。
 
-![image\.png](../attachments/NCA8byT3hoTlIkxcXFFcuhbqnuc.png)
+![[NCA8byT3hoTlIkxcXFFcuhbqnuc.png]]

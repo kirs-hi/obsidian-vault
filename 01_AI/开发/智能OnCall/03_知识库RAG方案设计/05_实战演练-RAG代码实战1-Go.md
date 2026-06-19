@@ -18,7 +18,7 @@
 
 运行的代码在：SuperBizAgent/internal/ai/cmd/knowledge\_cmd/main\.go
 
-![image\.png](../attachments/KgwYbKdDroNcTJxDcdvcsoUMnjd.png)
+![[KgwYbKdDroNcTJxDcdvcsoUMnjd.png]]
 
 # 流程梳理
 
@@ -38,11 +38,11 @@
 
 1. 最后点击生成代码，插件会自动生成代码到你输入目标目录。
 
-![image\.png](../attachments/ZOd7bl1LxoDiA0xx0Vecm6gznod.png)
+![[ZOd7bl1LxoDiA0xx0Vecm6gznod.png]]
 
 生成完后，会在目标目录看到生成出来的这些组件，下面我们来逐个介绍，注意看代码注释！
 
-![image\.png](../attachments/S3yMbokSHoXOMWxwOx0cyUacnIh.png)
+![[S3yMbokSHoXOMWxwOx0cyUacnIh.png]]
 
 这部分代码在：SuperBizAgent/internal/ai/agent/knowledge\_index\_pipeline
 
@@ -60,7 +60,7 @@
 
 在运行之前，我们先进入向量数据库页面观察一下，可以看到现在是没有数据的。
 
-![image\.png](../attachments/O4fhb3DTwofgvUxgoFpc4z78nqf.png)
+![[O4fhb3DTwofgvUxgoFpc4z78nqf.png]]
 
 运行代码，将你docs目录下的md文件向量化到数据库中。
 
@@ -72,7 +72,7 @@
 
 数据库前端页面也可以看到，我们存储了5行记录。
 
-![image\.png](../attachments/M3O8bjiVAoemRlx3GYGcYkTDndh.png)
+![[M3O8bjiVAoemRlx3GYGcYkTDndh.png]]
 
 ### 执行代码研究
 

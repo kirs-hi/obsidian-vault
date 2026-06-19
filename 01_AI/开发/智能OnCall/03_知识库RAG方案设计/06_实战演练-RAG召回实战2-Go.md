@@ -12,7 +12,7 @@
 
 核心代码： SuperBizAgent/internal/ai/cmd/recall\_cmd/main\.go
 
-![image\.png](../attachments/USDKbEwzxoIBZ9xFOckcU6fTnge.png)
+![[USDKbEwzxoIBZ9xFOckcU6fTnge.png]]
 
 # 实战
 

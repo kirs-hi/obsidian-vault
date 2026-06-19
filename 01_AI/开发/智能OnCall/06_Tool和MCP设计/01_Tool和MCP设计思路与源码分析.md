@@ -14,4 +14,4 @@
 
 ---
 
-![image\.png](../attachments/PCTub0Esfo7hfbxA3qNc6eGTnmh.png)
+![[PCTub0Esfo7hfbxA3qNc6eGTnmh.png]]

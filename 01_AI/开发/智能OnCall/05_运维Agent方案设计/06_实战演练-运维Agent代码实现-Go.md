@@ -14,7 +14,7 @@
 
 •SuperBizAgent/internal/ai/cmd/ai\_ops\_cmd/main\.go
 
-![image\.png](../attachments/Oz9Yb85g5oVYCOxucwGcBbTEn9f.png)
+![[Oz9Yb85g5oVYCOxucwGcBbTEn9f.png]]
 
 # 流程梳理
 
@@ -26,7 +26,7 @@
 
 1. **Replaner：评估结果并调整计划**
 
-![image\.png](../attachments/YO5GbPfZQoWFH7xIr1hcJBmXncf.png)
+![[YO5GbPfZQoWFH7xIr1hcJBmXncf.png]]
 
 # 实战
 

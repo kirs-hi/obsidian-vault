@@ -1,12 +1,12 @@
 # 实战演练：对话Agent代码实现\(Python\)
 
-![屏幕截图 2026\-03\-15 144542\.png](../attachments/HExDbO47Wo8gKzxzioEcrL93nOc.png)
+![[HExDbO47Wo8gKzxzioEcrL93nOc.png]]
 
 # 前言
 
 这部分代码在： app/api/chat\.py 和 app/services/rag\_agent\_service\.py
 
-![image\.png](../attachments/LXsqbmIEvoRmWExHhSIc4abAnjg.png)
+![[LXsqbmIEvoRmWExHhSIc4abAnjg.png]]
 
 # 流程梳理
 

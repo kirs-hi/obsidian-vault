@@ -6,7 +6,7 @@
 
 这部分代码在： `SuperBizAgent/src/main/java/org/example/service/VectorIndexService.java`
 
-![image.png](../attachments/UtOrbJcLvo8Y24xPeNWcCNEMnCg.png)
+![[UtOrbJcLvo8Y24xPeNWcCNEMnCg.png]]
 
 # 流程梳理
 

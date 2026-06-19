@@ -87,6 +87,6 @@ func main() {
 }
 ```
 
-![image.png](../attachments/HLGfbGugqoX3hLxYTDGc9sErnNb.png)
+![[HLGfbGugqoX3hLxYTDGc9sErnNb.png]]
 
 text

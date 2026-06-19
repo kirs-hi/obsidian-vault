@@ -1,6 +1,6 @@
 # 实战演练：RAG召回实战2(Python)
 
-![image.png](../attachments/LDJVbfSr0ovNxmxcukMcM2jmnQh.png)
+![[LDJVbfSr0ovNxmxcukMcM2jmnQh.png]]
 
 # 前言
 
@@ -8,7 +8,7 @@
 
 核心代码分布在： `app/services/vector_search_service.py` — 使用原生 PyMilvus 执行向量检索
 
-![image.png](../attachments/V1X5bfUEtooZc4xn5UncxS4gnZe.png)
+![[V1X5bfUEtooZc4xn5UncxS4gnZe.png]]
 
 # 召回
 

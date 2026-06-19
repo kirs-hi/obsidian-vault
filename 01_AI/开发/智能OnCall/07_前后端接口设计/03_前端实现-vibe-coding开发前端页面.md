@@ -10,49 +10,49 @@ AI IDE：cursor，模型用的auto，让cursor自己选
 
 1. 让它实现对话接口
 
-![image\.png](../attachments/UjopbHKbOo2TRWxMGg5cm2Eknmf.png)
+![[UjopbHKbOo2TRWxMGg5cm2Eknmf.png]]
 
 2\.太丑了，让它模仿chatgpt
 
-![image\.png](../attachments/EvNibWhDpomUBDxOzLHctYnpnNh.png)
+![[EvNibWhDpomUBDxOzLHctYnpnNh.png]]
 
-![image\.png](../attachments/MNZBbjBZLosGLnxRQcocWs5bnke.png)
+![[MNZBbjBZLosGLnxRQcocWs5bnke.png]]
 
 3\.继续让它实现流式接口
 
-![image\.png](../attachments/I0qjbJKGFoE6RLxqly3cSyU8nDb.png)
+![[I0qjbJKGFoE6RLxqly3cSyU8nDb.png]]
 
-![image\.png](../attachments/VbA3borQ9opAjIxjkz0crvu5nvc.png)
+![[VbA3borQ9opAjIxjkz0crvu5nvc.png]]
 
 4\.实现上传文件的功能
 
-![image\.png](../attachments/Wjnmb3jTUoGRhEx8kYLcPiJ7nid.png)
+![[Wjnmb3jTUoGRhEx8kYLcPiJ7nid.png]]
 
-![image\.png](../attachments/BNmybNGigowDlbxhW60c7dkzn1g.png)
+![[BNmybNGigowDlbxhW60c7dkzn1g.png]]
 
 5\.去除没实现的ui
 
-![image\.png](../attachments/Uc0GbbCs5oCGKMxiCg0cTgXAnpf.png)
+![[Uc0GbbCs5oCGKMxiCg0cTgXAnpf.png]]
 
-![image\.png](../attachments/FEkIbhJC6o3dpmx7NcrcRMu0nel.png)
+![[FEkIbhJC6o3dpmx7NcrcRMu0nel.png]]
 
 6\.要求实现多会话的功能
 
-![image\.png](../attachments/J7MvbJtrzoBtoixjXjYcp055nig.png)
+![[J7MvbJtrzoBtoixjXjYcp055nig.png]]
 
-![image\.png](../attachments/RHdXbLLMEokF3vxV6SQcJgaPnfe.png)
+![[RHdXbLLMEokF3vxV6SQcJgaPnfe.png]]
 
 7\.实现AI OPS功能
 
-![image\.png](../attachments/WLNYb7krhoaqNGxZqcmcTnkcnDe.png)
+![[WLNYb7krhoaqNGxZqcmcTnkcnDe.png]]
 
-![image\.png](../attachments/NyS0bh1yVoO41HxJ0DyciJNLnMf.png)
+![[NyS0bh1yVoO41HxJ0DyciJNLnMf.png]]
 
 8\.功能实现完成了，改一下风格
 
-![image\.png](../attachments/NEbMbU32EoY4H8xTwFNcLluvn3d.png)
+![[NEbMbU32EoY4H8xTwFNcLluvn3d.png]]
 
-![image\.png](../attachments/GCW7bUQDHowJKSxvTcIc9mC2nWb.png)
+![[GCW7bUQDHowJKSxvTcIc9mC2nWb.png]]
 
 # 视频演示
 

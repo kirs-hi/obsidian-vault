@@ -6,23 +6,23 @@
 
 那基于派聪明的需求分析，我们梳理了下列需求（思维导图一目了然）：
 
-![image\.png](../../attachments/QG82bbYGyo0AtHx31Pdcz9Adn6c.png)
+![[QG82bbYGyo0AtHx31Pdcz9Adn6c.png]]
 
 ## 一、业务架构设计
 
 基于派聪明的需求梳理，我们设计了这样一个三层业务架构图：
 
-![image\.png](../../attachments/QYnQbHQroo5MuQxfN07cN634nXd.png)
+![[QYnQbHQroo5MuQxfN07cN634nXd.png]]
 
 ### 01、用户层
 
 用户层是整个系统的入口，主要面向两类用户群体。普通用户可以通过这一层进行日常的知识查询、文档上传和智能对话等操作，他们是系统的主要使用者，通过简洁直观的界面就能享受到智能的知识服务。
 
-![image\.png](../../attachments/AjVNbir4fo47nUx50L8cgthjnLc.png)
+![[AjVNbir4fo47nUx50L8cgthjnLc.png]]
 
 管理员则拥有更高的权限，可以进行系统配置、用户管理、数据监控等管理工作，确保整个平台的稳定运行和安全性。
 
-![image\.png](../../attachments/O3a8bBzbSoJmpyxocoocbaVLnKe.png)
+![[O3a8bBzbSoJmpyxocoocbaVLnKe.png]]
 
 ### 02、逻辑层
 
@@ -32,35 +32,35 @@
 
 该模块是系统安全和权限控制的基础。注册登录功能为用户提供了基础的身份认证机制，确保只有合法用户才能访问系统资源。
 
-![image\.png](../../attachments/Rq7lbblPho9wE8xF379cRTWAnJg.png)
+![[Rq7lbblPho9wE8xF379cRTWAnJg.png]]
 
 权限控制功能会根据用户的角色和级别，精确控制用户能够访问的功能和数据范围，比如某些敏感文档只有特定部门的用户才能查看。组织标签管理功能帮助企业按照部门、项目或其他维度对用户进行分组管理，使得权限分配更加灵活和精确。
 
-![image\.png](../../attachments/V2URbKD6DoVU4GxDYIrcb5AJnpe.png)
+![[V2URbKD6DoVU4GxDYIrcb5AJnpe.png]]
 
 用户信息管理功能则负责维护用户的基本信息、偏好设置等，为个性化服务提供基础数据支持。
 
-![image\.png](../../attachments/C6sfb2h2RoBMbYxHYNicbe6unFc.png)
+![[C6sfb2h2RoBMbYxHYNicbe6unFc.png]]
 
 #### ②、文档上传与处理模块
 
 该模块是知识输入的关键环节，负责将各种格式的文档转化为系统可以理解和处理的知识内容。文档上传功能支持多种常见的文档格式，包括 PDF、Word、文本文件等，系统会自动进行格式识别和处理。
 
-![image\.png](../../attachments/HjsCb79NboRXCrxfTLMcLvNlnsd.png)
+![[HjsCb79NboRXCrxfTLMcLvNlnsd.png]]
 
 文本提取功能是这个模块的核心技术之一，我们使用了 Apache Tika 的文档解析技术，能够准确地从各种格式的文档中提取出纯文本内容，同时保留重要的结构信息。文本向量化功能则将提取出的文本转换为计算机可以理解的数学向量，这是实现语义搜索的关键技术，让系统能够理解文本的真正含义而不仅仅是关键词匹配。
 
-![image\.png](../../attachments/Nl1NbFZ1wogDnHxwJ0Rc8mTwn8d.png)
+![[Nl1NbFZ1wogDnHxwJ0Rc8mTwn8d.png]]
 
 组织标签关联功能确保每个文档都能正确地归属到相应的组织或部门，这不仅有助于权限控制，也便于用户在自己的权限范围内快速找到相关文档。可见性设置功能则允许文档上传者设定文档的可见范围，比如设为公开、部门内可见或仅个人可见，灵活满足不同的共享需求。
 
-![image\.png](../../attachments/CH79bXzaMowprAxnzReczlpantb.png)
+![[CH79bXzaMowprAxnzReczlpantb.png]]
 
 #### ③、知识库检索模块
 
 检索模块是用户获取知识的主要途径，我们采用了先进的混合检索技术。语义检索功能利用 RAG 技术，能够理解用户查询的真正意图，即使用户使用的词汇与文档中的表述不完全一致，系统也能找到相关的内容。比如用户搜索"如何提升销售业绩"，系统不仅能找到包含这些关键词的文档，还能找到讨论"销售技巧"、"客户关系管理"等相关主题的内容。
 
-![image\.png](../../attachments/RL9UbvRSuos1wFxD3z7c30Ehnrd.png)
+![[RL9UbvRSuos1wFxD3z7c30Ehnrd.png]]
 
 关键词检索功能则提供了传统的精确搜索方式，当用户需要查找特定的术语、人名、地名或其他精确信息时，这种检索方式能够快速定位到相关文档。混合排序功能将语义检索和关键词检索的结果进行智能融合，综合考虑相关性、权威性、时效性等多个因素，为用户提供最有价值的搜索结果。
 
@@ -70,13 +70,13 @@
 
 聊天助手模块为用户提供了更加自然和智能的知识获取方式。基于 WebSocket 进行实时通信，用户方法就像和真人助手交流一样。多轮对话功能让系统能够记住对话的上下文，用户可以进行连续的提问，系统会根据之前的对话内容来理解当前的问题。
 
-![image\.png](../../attachments/Gi20bmYiyoaIN6x4eWmcespRn2d.png)
+![[Gi20bmYiyoaIN6x4eWmcespRn2d.png]]
 
 本地知识库集成功能是这个模块的核心优势，系统会根据用户的问题自动搜索相关的文档内容，并将这些信息整合到回答中。这样用户不仅能得到通用的答案，更能获得基于企业内部知识的专业回答。
 
 Prompt 构建与管理功能负责优化与 AI 模型的交互方式，通过精心设计的提示词模板，确保 AI 能够更好地理解用户意图并提供高质量的回答。大语言模型集成功能则让系统能够利用最新的 AI 技术，提供更加智能和自然的对话体验。
 
-![image\.png](../../attachments/A5Cobjz4soXFe9xN7eectvRYnae.png)
+![[A5Cobjz4soXFe9xN7eectvRYnae.png]]
 
 ### 03、数据层
 
@@ -84,7 +84,7 @@ Prompt 构建与管理功能负责优化与 AI 模型的交互方式，通过精
 
 对话数据存储记录了用户与系统的所有交互历史，这不仅便于用户回顾之前的对话内容，也为系统优化和个性化服务提供了宝贵的数据资源。文件存储系统则负责保存用户上传的原始文档。
 
-![image\.png](../../attachments/BUxkbuqKiolVAqxGpEFcT1VYn3d.png)
+![[BUxkbuqKiolVAqxGpEFcT1VYn3d.png]]
 
 向量化数据存储是系统实现智能检索的技术基础，它保存着所有文档内容的向量表示，这些数据经过精心的索引和优化，能够支持大规模的实时检索操作。
 
@@ -94,141 +94,141 @@ Prompt 构建与管理功能负责优化与 AI 模型的交互方式，通过精
 
 派聪明的文档处理与向量化是一个完整的自动化流程，涉及用户、文件服务、向量化服务、Elasticsearch 和 MySQL 等多个组件的协同工作。
 
-![image\.png](../../attachments/ZsxtbXTe4o7fhWxQ4K1cHBWOnmg.png)
+![[ZsxtbXTe4o7fhWxQ4K1cHBWOnmg.png]]
 
 整个流程从用户上传文档开始。用户通过前端界面选择文档并设置相关的组织标签和可见性权限后，系统开始接收文档。这个阶段的关键是建立文档的基本信息记录，包括文件的 MD5 哈希值、原始文件名、文件大小、上传用户信息等。系统会为每个文档生成唯一的标识符，并将文档的元数据信息存储到 MySQL 数据库中，同时将原始文件保存到文件存储系统中。
 
-![image\.png](../../attachments/DWurbrww8ojBf9xgmnVctoOtn3e.png)
+![[DWurbrww8ojBf9xgmnVctoOtn3e.png]]
 
 文档上传完成后，系统进入分块处理阶段。这个阶段采用循环处理的方式，逐个处理文档中的内容片段。首先，系统会调用文件服务来读取原始文档，然后使用 Apache Tika 等文档解析工具提取出纯文本内容。由于完整的文档通常内容较长，直接进行向量化处理会影响检索的精确度，因此系统会将提取出的文本按照一定的规则进行分块，比如按段落、按字数或按语义单元进行切分。每个文本块都会被分配一个块序号，确保能够准确定位到文档中的具体位置。
 
-![image\.png](../../attachments/ZOepbJA6VoZAOSxZuUWccjCrnse.png)
+![[ZOepbJA6VoZAOSxZuUWccjCrnse.png]]
 
 在分块完成后，系统会对生成的文本块进行合并和优化处理。这个步骤主要是为了确保文本块的质量和完整性。系统会检查相邻的文本块是否存在语义上的连续性，如果某些块过短或者语义不完整，会考虑与相邻块进行合并。同时，系统还会过滤掉一些无意义的内容，比如页眉页脚、图片说明等，确保每个文本块都包含有价值的信息内容。
 
-![image\.png](../../attachments/PaOOblXjPoj5QXxplAQcmIv1nCb.png)
+![[PaOOblXjPoj5QXxplAQcmIv1nCb.png]]
 
 文本块准备就绪后，系统开始进行向量化处理。这个阶段同样采用循环处理的方式，逐个处理每个文本块。系统会调用向量化服务，将文本块的内容发送给向量模型（Embedding Model）进行向量转换。向量模型会将文本内容转换为高维度的数学向量，这些向量能够表示文本的语义特征。向量化服务在完成转换后，会将生成的向量数据返回给系统。这个过程可能需要一定的时间，特别是当文档较大或者文本块较多时，因此系统采用了异步处理的方式来提高效率。
 
-![image\.png](../../attachments/CnlPb7w2qon684xe8zzcFdndnvb.png)
+![[CnlPb7w2qon684xe8zzcFdndnvb.png]]
 
 向量化完成后，系统需要将生成的向量数据进行持久化存储。这个阶段涉及两个存储系统的协同工作。首先，系统会将向量数据连同相关的文本内容、文档标识、块序号等信息一起存储到 Elasticsearch 中。Elasticsearch 作为专业的搜索引擎，不仅能够存储向量数据，还能够提供高效的向量相似度搜索功能。 同时，系统还会将文档的元数据信息更新到 MySQL 数据库中，包括处理状态、向量化完成时间等信息，确保数据的一致性和完整性。
 
-![image\.png](../../attachments/OEBIblDrgofw8pxVQZbc2HEKnre.png)
+![[OEBIblDrgofw8pxVQZbc2HEKnre.png]]
 
 数据存储完成后，Elasticsearch 会自动为新增的向量数据构建索引。这个过程包括创建倒排索引用于关键词搜索，以及构建向量索引用于语义相似度搜索。系统会根据预设的索引策略对数据进行分片和副本设置，确保搜索性能和数据安全性。索引构建完成后，这些文档内容就可以被用户通过各种方式进行检索和查询了。
 
-![image\.png](../../attachments/KlcQbI44gomQnMxPw5Zcexqwn4T.png)
+![[KlcQbI44gomQnMxPw5Zcexqwn4T.png]]
 
 在整个流程中，系统还包含了完善的异常处理和监控机制。如果在任何一个环节出现错误，比如文档解析失败、向量化服务不可用、存储系统异常等，系统都会记录详细的错误信息，并根据错误类型采取相应的处理策略。对于可恢复的错误，系统会自动进行重试；对于不可恢复的错误，系统会标记处理状态并通知管理员。同时，系统还会实时监控各个组件的运行状态和性能指标，确保整个流程的稳定性和高效性。
 
-![image\.png](../../attachments/Surnb20pfoDxhkxLEJYcsy8sned.png)
+![[Surnb20pfoDxhkxLEJYcsy8sned.png]]
 
 ### 02、知识检索
 
 整个知识检索流程体现了 RAG 智能知识库管理系统的核心特征：语义理解、权限控制、高性能检索和用户友好的交互体验。
 
-![image\.png](../../attachments/BgTCbuVwTo50T7x6IxiccPoqnNb.png)
+![[BgTCbuVwTo50T7x6IxiccPoqnNb.png]]
 
 第一阶段是用户查询请求。用户通过前端界面发起查询请求，系统首先接收用户的自然语言查询文本，并通过 WebSocket 实时传输到后端服务。
 
-![image\.png](../../attachments/HBqLbsc0Voc4D7xHPdLcK8MZnFf.png)
+![[HBqLbsc0Voc4D7xHPdLcK8MZnFf.png]]
 
 第二阶段是查询预处理与向量化。查询服务接收到用户请求后，会获取用户的组织标签信息和权限数据，确保后续检索符合权限控制要求。
 
 同时，系统将查询文本发送给向量化服务进行向量化处理，将自然语言转换为高维向量表示，这是实现语义检索的关键步骤。
 
-![image\.png](../../attachments/CfVqbMUEao8dYPxBS3ScW3oWnHe.png)
+![[CfVqbMUEao8dYPxBS3ScW3oWnHe.png]]
 
 第三阶段是混合检索执行。 HybridSearchService\.java 执行核心的混合检索逻辑。系统构建包含权限过滤条件的综合查询，结合向量相似度检索和关键词匹配，在 Elasticsearch 中进行高效搜索。这种混合检索策略既保证了语义理解的准确性，又兼顾了关键词匹配的精确性。
 
-![image\.png](../../attachments/TzyobJIEgoDud3xMk9fcGaJ3nfh.png)
+![[TzyobJIEgoDud3xMk9fcGaJ3nfh.png]]
 
 第四阶段是结果排序与权限过滤。检索到的候选结果会经过严格的权限验证，确保用户只能访问有权限的知识内容。系统根据相似度得分、关键词匹配度等多个维度对结果进行综合排序，并按照 SearchRequest\.java 中定义的 topK 参数返回最相关的结果。
 
-![image\.png](../../attachments/ZVkDbRNg4oTuuvxqRBVcIWW4nWh.png)
+![[ZVkDbRNg4oTuuvxqRBVcIWW4nWh.png]]
 
 第五阶段是结果返回与展示。最终的知识片段通过 SearchController\.java 返回给前端， chat\-message\.vue 组件负责渲染和展示检索结果，为用户提供直观的知识获取体验。
 
-![image\.png](../../attachments/PZUqbtSrOoIP0expeTCcq0b4nUg.png)
+![[PZUqbtSrOoIP0expeTCcq0b4nUg.png]]
 
 ### 03、聊天助手
 
 整个聊天助手流程体现了现代 AI 应用的核心特征：实时性、智能性、可靠性和用户友好性。
 
-![image\.png](../../attachments/O0XZbusC7o4dOLx9QK0c4KGxnvf.png)
+![[O0XZbusC7o4dOLx9QK0c4KGxnvf.png]]
 
 第一步是用户通过 WebSocket 发送问题。用户在 input\-box\.vue 组件中输入问题，点击发送按钮后，前端通过 index\.ts 中的 WebSocket 连接发送消息。系统使用 @vueuse/core 的 useWebSocket 建立连接，支持自动重连机制。
 
 前端会先将用户消息添加到对话列表，然后通过 chatStore\.wsSend\(input\.value\.message\) 发送到后端。
 
-![image\.png](../../attachments/QSyAbswOooRDOjx4zzicBbvSnCg.png)
+![[QSyAbswOooRDOjx4zzicBbvSnCg.png]]
 
 第二步是系统调用知识检索模块获取相关内容。 ChatWebSocketHandler\.java 接收到 WebSocket 消息后，调用 ChatHandler\.java 的 processMessage 方法。系统首先获取或创建会话 ID，然后调用
 
 searchService\.searchWithPermission\(userMessage, userId, 5\) 执行带权限过滤的混合搜索，从 Elasticsearch 中检索最相关的 5 条知识片段，确保用户只能访问有权限的内容。
 
-![image\.png](../../attachments/IJnUbaVQ3ozstUxmxNRcnTesnQp.png)
+![[IJnUbaVQ3ozstUxmxNRcnTesnQp.png]]
 
 第三步是系统构建包含检索结果和历史对话的 Prompt。系统通过 getConversationHistory\(conversationId\) 从 Redis 中获取对话历史记录，支持最近 20 条消息的上下文保持。
 
 然后调用 buildContext\(searchResults\) 方法将检索到的知识片段格式化为上下文信息，每个片段限制在 300 字符内并编号标记。这样构建的 Prompt 既包含了相关的知识背景，又保持了对话的连续性。
 
-![image\.png](../../attachments/WFxbbtSMRohc2kxF5P9c51Bcnmb.png)
+![[WFxbbtSMRohc2kxF5P9c51Bcnmb.png]]
 
 第四步是调用大语言模型 API 生成回答。系统调用 DeepSeekClient\.java 的 streamResponse 方法，将用户问题、构建的上下文和对话历史一起发送给 DeepSeek API。这个过程采用流式调用方式，能够实时接收 AI 生成的内容片段，而不需要等待完整回答生成完毕。
 
-![image\.png](../../attachments/Ny71bKxhQotJPIxZcgOc0RGxnYd.png)
+![[Ny71bKxhQotJPIxZcgOc0RGxnYd.png]]
 
 第五步是通过 WebSocket 流式返回生成内容。当 DeepSeek API 返回内容片段时，系统通过 sendResponseChunk 方法将每个 chunk 包装成 JSON 格式 （ \{"chunk": "内容片段"\} ） 并通过 WebSocket 实时发送给前端。
 
 前端在 input\-box\.vue 中监听 wsData 变化，当接收到包含 chunk 字段的数据时，会将内容追加到助手消息的 content 中，实现打字机效果的实时显示。
 
-![image\.png](../../attachments/KHLRb1Ft0o1PvExJ52hcQeutneb.png)
+![[KHLRb1Ft0o1PvExJ52hcQeutneb.png]]
 
 第六步是保存对话记录到数据库。当 AI 回答完成后，系统通过后台线程检测响应完成状态，然后调用 updateConversationHistory 方法将完整的用户问题和 AI 回答保存到 Redis 中。对话记录包含角色标识（user/assistant）、内容和时间戳，支持 7 天的数据保留期。
 
 同时发送完成通知（ \{"type": "completion", "status": "finished"\} ）给前端，前端接收后将消息状态更新为"finished"。
 
-![image\.png](../../attachments/LmrCbmQMzoFPZsxobo9c0yZfnsh.png)
+![[LmrCbmQMzoFPZsxobo9c0yZfnsh.png]]
 
 这一块也是整个 RAG 知识库的核心，聊天的请求会结合知识库进行相应的回复，这一点非常重要。
 
-![image\.png](../../attachments/JXxmbcIUGo11eaxWSRdcBb4knRg.png)
+![[JXxmbcIUGo11eaxWSRdcBb4knRg.png]]
 
 ### 04、权限管理
 
 派聪明实现了一套完整的组织权限管理体系，从管理员创建组织标签到用户文件访问控制形成了完整的权限管理闭环。
 
-![image\.png](../../attachments/BnHlbvN3PoScJ6xXaidc3VKtniK.png)
+![[BnHlbvN3PoScJ6xXaidc3VKtniK.png]]
 
 整个权限管理流程始于管理员通过 AdminController\.java 中的接口创建和管理组织标签。管理员可以通过 POST /api/admin/org\-tags 接口创建具有层级结构的组织标签，支持设置标签 ID、名称、描述和父级标签，所有标签信息都存储在 ddl\.sql 定义的 organization\_tags 表中。
 
-![image\.png](../../attachments/F9b7bs8GeouhmGxiBeUc9DqWngh.png)
+![[F9b7bs8GeouhmGxiBeUc9DqWngh.png]]
 
 在组织标签创建完成后，管理员通过 PUT /api/admin/users/\{userId\}/org\-tags 接口为用户分配相应的组织标签。这些标签以逗号分隔的字符串形式存储在用户表的 org\_tags 字段中。系统的一个重要特性是支持层级权限继承， OrgTagCacheService\.java 负责计算用户的有效组织标签，确保用户在拥有 父级标签时自动获得所有子级标签的访问权限 。
 
 为了提高查询性能，系统使用 Redis 缓存用户的有效组织标签信息。
 
-![image\.png](../../attachments/EzPabAaeqogiI6xAcXtcMbYDnCe.png)
+![[EzPabAaeqogiI6xAcXtcMbYDnCe.png]]
 
 当用户上传文件时，前端的 upload\-dialog\.vue 提供了直观的权限设置界面。管理员可以通过级联选择器选择任意组织标签，而普通用户只能选择自己被分配的组织标签。同时，用户需要设置文件的可见性级别，选择公开或私有。
 
 后端的 UploadController\.java 在处理文件上传时会接收这些权限参数，如果用户未指定组织标签，系统会自动使用用户的主组织标签，确保每个文件都有明确的权限归属。
 
-![image\.png](../../attachments/HKrYbhQsLoBnyHxnacwcB12nnuc.png)
+![[HKrYbhQsLoBnyHxnacwcB12nnuc.png]]
 
 系统的权限控制核心在于 OrgTagAuthorizationFilter\.java ，这个过滤器统一处理所有 API 请求的权限验证。它采用了智能的权限判断逻辑：公开资源直接允许访问，默认组织或无组织标签的资源也允许访问，私有标签资源仅限所有者和管理员访问，其他情况则需要检查用户的有效组织标签是否与资源的组织标签匹配。
 
-![image\.png](../../attachments/HjsHbRZvgoqzmnxRNz3c23UYnPe.png)
+![[HjsHbRZvgoqzmnxRNz3c23UYnPe.png]]
 
 在知识检索环节， HybridSearchService\.java 的 searchWithPermission 方法确保用户只能检索到有权限访问的内容。系统会获取用户的有效组织标签，并在 Elasticsearch 查询中添加相应的权限过滤条件，无论是向量搜索还是文本搜索都会应用这些权限限制。
 
-![image\.png](../../attachments/Xs4Jb7qQgolJpax6d0DcZc3hnmd.png)
+![[Xs4Jb7qQgolJpax6d0DcZc3hnmd.png]]
 
 最终，用户通过 DocumentService\.java 只能看到自己有权访问的文件和内容。这包括用户自己上传的文件、标记为公开的文件、用户所属组织标签的文件以及默认组织的文件。
 
-![image\.png](../../attachments/Jtk9bnopDoG740xC729cyZzanLe.png)
+![[Jtk9bnopDoG740xC729cyZzanLe.png]]
 
 这套权限管理体系的技术特色体现在多个方面：层级权限继承机制让组织结构管理更加灵活，Redis 缓存能显著提升权限查询性能，统一的权限过滤器确保了所有 API 的一致性安全控制。从文件上传到知识检索的全链路权限控制则构建了完整的数据安全防护体系。
 
@@ -236,7 +236,7 @@ searchService\.searchWithPermission\(userMessage, userId, 5\) 执行带权限过
 
 派聪明采用了分层架构设计，从上到下分为前端展示层、API 与安全层、业务逻辑层、数据访问层和数据存储层，同时集成了外部依赖服务，形成了完整的企业级应用架构。
 
-![image\.png](../../attachments/Sy8DbP5pnoaVObxgtTmcTRsZnod.png)
+![[Sy8DbP5pnoaVObxgtTmcTRsZnod.png]]
 
 前端采用了多端适配策略，支持移动端和 PC 端。确保用户可以在不同设备上获得一致的使用体验，满足移动办公和桌面办公的不同场景需求。前端与后端通过标准化的 API 接口进行通信，前后端完全分离。
 
@@ -300,19 +300,19 @@ Kafka 消息队列处理异步任务，确保系统的高并发处理能力。Lo
 
 当文件上传到 MinIO 后，系统会在状态表中记录“已上传”状态；当文档被解析并索引到 Elasticsearch 时，状态更新为“已索引”；当向量化完成后，状态变为“处理完成”。
 
-![image\.png](../../attachments/DKG6bf4s0oCGiMxrZRHcDnhInnO.png)
+![[DKG6bf4s0oCGiMxrZRHcDnhInnO.png]]
 
 下一个版本打算追加一个定时任务，定期扫描状态表，识别异常记录，比如文件已上传但长时间未完成索引的情况。针对这些异常，系统自动触发重试机制，重新执行失败的处理步骤。对于无法自动修复的数据，系统生成告警通知管理员人工介入。
 
 当用户删除文件时，系统会按照预定义的顺序依次清理 Elasticsearch 索引、MinIO 文件和 MySQL 记录。
 
-![image\.png](../../attachments/GnRxbZZtvoUxuWxDTrYcxOGUnje.png)
+![[GnRxbZZtvoUxuWxDTrYcxOGUnje.png]]
 
 派聪明采用了多层防护策略，JWT 身份认证作为第一道防线，提供无状态的用户身份验证机制。同时，令牌的过期机制和刷新策略，也能够最大程度确保用户身份的安全与登录体验。
 
 基于角色的权限控制定义了用户、管理员等不同角色的基础权限边界，而组织标签权限则在此基础上实现了更细粒度的数据访问控制，让企业能够灵活地管理复杂的组织结构和权限需求。
 
-![image\.png](../../attachments/F8vlblxmkoixxQxUBj9cLIXEnVe.png)
+![[F8vlblxmkoixxQxUBj9cLIXEnVe.png]]
 
 数据隔离通过组织标签实现了多租户架构下的数据安全。每个文件和知识条目都会标记所属的组织标签，系统在所有数据访问点都会验证用户的组织标签权限。这种设计不仅保护了数据安全，还支持企业内部不同部门或项目的数据隔离需求。当文件上传、删除、权限变更时，也会记录日志，确保在出现异常时，能够第一时间追溯到问题。
 
@@ -320,7 +320,7 @@ Kafka 消息队列处理异步任务，确保系统的高并发处理能力。Lo
 
 我们采用了分阶段开发模式，总共规划了三个主要开发阶段，每个阶段都有明确的功能目标和技术重点。
 
-![image\.png](../../attachments/Am42bEba2oLdZNxTVDycvEU7n9d.png)
+![[Am42bEba2oLdZNxTVDycvEU7n9d.png]]
 
 第一阶段：核心功能 （已完成）
 
