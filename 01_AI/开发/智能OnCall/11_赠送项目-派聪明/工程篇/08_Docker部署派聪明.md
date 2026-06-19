@@ -1,0 +1,205 @@
+# ✅Docker部署派聪明（懒人福音）
+
+看了前面两篇使用传统方式搭建环境的同学，不知有没有被繁琐的步骤还有时不时跳出的错误折磨的不轻啊，哈哈哈哈😄
+
+聪明的你，这时候就要想了，有没有什么方式可以告别这种原始的刀耕火种般的操作方式，以实现既可以快速的一键部署好环境，又能让项目轻松连接不报错？
+
+那么恭喜你！作为一名Docker玩家，我们可以轻松实现这一点，成年人从来不做选择题
+
+## 第一步、安装 Docker
+
+Docker 官网： https://www\.docker\.com/
+
+![image\.png](../../attachments/TUDbbfez8o3WZSx93flcaltznQf.png)
+
+这次我只针对 Windows 用户，macOS 用户后面我会把 Go 版本的分享出来，敬请期待。
+
+windows 用户想要安装使用 Docker，首先需要安装 wsl，具体的安装步骤和系统要求可以参考微软的官方文档，只将安装时的要点说明一下：
+
+```Bash
+
+```
+
+wsl 安装完成后，就可以下载安装 docker 了，docker 的安装比较简单，直接双击运行安装包就可以了。
+
+默认情况下 docker 会安装在 C:\\Program Files\\Docker\\Docker 目录下
+
+如果想安装到自定义目录，可以通过在 CMD 终端中执行以下指令：
+
+```Bash
+
+```
+
+## 第二步，配置 docker
+
+docker 安装完成后，可以修改几个配置，达到自定义镜像目录和提高镜像拉取速度的效果：
+
+### a\.修改镜像地址，从 c 盘 切换到自定义目录
+
+![image\.png](../../attachments/ZfRFbTtAqom6rWxzmdjcPJ4Jncc.png)
+
+### b\.添加 docker 镜像源
+
+![image\.png](../../attachments/K70qbnLPToWbAdxHB1Wcm6P0nUb.png)
+
+https://blog\.xuanyuan\.me/archives/1154 最新镜像源
+
+### c\.验证
+
+```Bash
+
+```
+
+看到 Hello from Docker\! 说明你的电脑已获得容器超能力！
+
+## 三、docker compose 一键部署
+
+1\.打开 CMD 终端，直接敲 wsl\+ 回车，进入 ubuntu 子系统，然后执行下面三条命令，在根目录创建 data 目录
+
+```Bash
+
+```
+
+2\.复制下面的 docker\-compose\.yaml 文件到 data 目录下，代码仓库的 docs 目录下也有。
+
+![image\.png](../../attachments/AEiibeIpqoAY9uxk9oncSsWsntg.png)
+
+代码仓库的获取方式，可以复制这个链接到浏览器的 URL 打开： https://t\.zsxq\.com/XBc0a
+
+3\.在 /data 目录下，执行启动命令
+
+```Plaintext
+
+```
+
+首次执行的时候 docker 会自动下载相关的镜像，这一步可能会耗费一点时间
+
+![image\.png](../../attachments/DEnWbbXENoDxPHxDaHTcECD9n3c.png)
+
+出现以下界面，就说明所有服务都部署完成了
+
+![image\.png](../../attachments/EVQBb0oMvo6vUTxVmtEcINqnnT2.png)
+
+这时候同样可以在 docker\-desktop 中查看容器的运行状态
+
+![image\.png](../../attachments/XuHtbLoPhoaXgux1i7ncP3GBnqh.png)
+
+## 四、验货时间！确认服务正常运行
+
+输入 sudo docker ps 查看容器运行状态：
+
+![image\.png](../../attachments/ORqSbLUHRoWxTSx21gocfwY9ncf.png)
+
+验证 **mysql**
+
+![image\.png](../../attachments/XZXPbl2JeoSxDyxgPtXcirRWnTc.png)
+
+验证 **redis**
+
+![image\.png](../../attachments/Zua9bmYf6oL0RexhdszcjkN5nRd.png)
+
+验证 **minio **，直接在浏览器输入 [http://localhost:19001/login ](https://my.feishu.cn/http%3A%2F%2Flocalhost%3A19001%2Flogin)，输入账号密码验证
+
+![image\.png](../../attachments/IhXKbzefvoNnVPxyCDMcgI55npe.png)
+
+验证 **kafka **在 docker 桌面端输入命令，查看主题列表 kafka\-topics\.sh \-\-list \-\-bootstrap\-server localhost:9092
+
+![image\.png](../../attachments/SAZpbhV2IoE5u9xIGWsc9hSgnkb.png)
+
+验证 **ElasticSearch **浏览器访问 [http://localhost:9200/ ](https://my.feishu.cn/http%3A%2F%2Flocalhost%3A9200%2F)，输入账号密码登录
+
+![image\.png](../../attachments/FdWubLibLo5CuhxC3rXckp5fnFg.png)
+
+![image\.png](../../attachments/CPkpbhZvgoDbvfxycMdcRLLknFh.png)
+
+输入 [http://localhost:9200/\_cat/plugins?v ](https://my.feishu.cn/http%3A%2F%2Flocalhost%3A9200%2F_cat%2Fplugins%3Fv)，验证分词器插件是否安装成功
+
+![image\.png](../../attachments/Hcn1bjqd0oT2jRxqEg3csaVYnGh.png)
+
+## 五、修改本地运行参数
+
+最后修改 application\.yml 相关参数，和 docker\-compose\.yaml 中的对应参数保持一致即可。
+
+![image\.png](../../attachments/MnMWbkfQgou8E9xyubDc1wRLn4f.png)
+
+## 六、docker 和 docker compose 常用命令
+
+最后附上 docker 和 docker compose 常用命令，方便我们快速查阅：
+
+### Docker 常用命令
+
+#### 镜像管理
+
+| 命令 | 说明 |
+| --- | --- |
+| docker ps | 查看运行中的容器 |
+| docker ps \-a | 查看所有容器（包括已停止的） |
+| docker run \-d \-p <主机端口\>:<容器端口\> \-\-name <容器名\> <镜像名\> | 启动容器（\-d 后台运行，\-p 端口映射） |
+| docker start/stop/restart <容器名/ID\> | 启动/停止/重启容器 |
+| docker rm <容器ID\> | 删除已停止的容器 |
+
+| docker rm \-f <容器ID\> | 强制删除容器（包括运行中的） |
+| --- | --- |
+| docker exec \-it <容器名/ID\> /bin/bash | 进入容器交互终端 |
+| docker logs <容器名/ID\> | 查看容器日志 |
+| docker inspect <容器名/ID\> | 查看容器详细信息 |
+
+#### 容器管理
+
+| 命令 | 说明 |
+| --- | --- |
+| docker ps | 查看运行中的容器 |
+| docker ps \-a | 查看所有容器（包括已停止的） |
+| docker run \-d \-p <主机端口\>:<容器端口\> \-\-name <容器名\> <镜像名\> | 启动容器（\-d 后台运行，\-p 端口映射） |
+| docker start/stop/restart <容器名/ID\> | 启动/停止/重启容器 |
+
+| docker rm <容器ID\> | 删除已停止的容器 |
+| --- | --- |
+| docker rm \-f <容器ID\> | 强制删除容器（包括运行中的） |
+| docker exec \-it <容器名/ID\> /bin/bash | 进入容器交互终端 |
+| docker logs <容器名/ID\> | 查看容器日志 |
+| docker inspect <容器名/ID\> | 查看容器详细信息 |
+
+#### 网络与数据卷
+
+| 命令 | 说明 |
+| --- | --- |
+| docker network ls | 查看网络列表 |
+| docker volume ls | 查看数据卷列表 |
+| docker volume create <卷名\> | 创建数据卷 |
+
+#### 系统清理
+
+| 命令 | 说明 |
+| --- | --- |
+| docker system prune | 清理无用镜像、容器、网络（需确认） |
+| docker system prune \-a | 清理所有未使用的镜像（慎用） |
+
+### Docker Compose 常用命令
+
+#### 基本操作
+
+| 命令 | 说明 |
+| --- | --- |
+| docker\-compose up \-d | 启动所有服务（\-d 后台运行） |
+| docker\-compose down | 停止并删除所有容器、网络 |
+| docker\-compose start/stop/restart | 启动/停止/重启服务 |
+
+| docker\-compose ps | 查看服务运行状态 |
+| --- | --- |
+| docker\-compose logs \-f <服务名\> | 实时查看服务日志 |
+
+#### 构建与更新
+
+| 命令 | 说明 |
+| --- | --- |
+| docker\-compose build | 根据 docker\-compose\.yml 构建镜像 |
+| docker\-compose pull | 拉取服务所需的镜像 |
+| docker\-compose up \-\-build \-d | 重新构建并启动服务 |
+
+#### 其他
+
+| 命令 | 说明 |
+| --- | --- |
+| docker\-compose exec <服务名\> /bin/bash | 进入指定服务的容器 |
+| docker\-compose config | 验证配置文件语法 |
