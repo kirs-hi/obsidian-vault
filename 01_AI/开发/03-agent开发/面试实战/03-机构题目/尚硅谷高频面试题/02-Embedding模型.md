@@ -1,0 +1,16 @@
+---
+title: 第2章 Embedding模型
+created: 2026-06-29
+tags: [面试, 高频面试题, 尚硅谷]
+source: 尚硅谷
+---
+
+# 第2章 Embedding模型
+
+> 来源：尚硅谷大模型智能体之高频面试题 V2.1.5
+
+---
+
+2.  Embedding模型
+
+采用[BAAI/bge-small-zh-v1.5](https://huggingface.co/BAAI/bge-small-zh-v1.5)，向量维度为512。

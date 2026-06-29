@@ -1,0 +1,187 @@
+---
+title: 第3章 RAGFlow会话工具定制
+created: 2026-06-29
+tags: [面试, 高频面试题, 尚硅谷]
+source: 尚硅谷
+---
+
+# 第3章 RAGFlow会话工具定制
+
+> 来源：尚硅谷大模型智能体之高频面试题 V2.1.5
+
+---
+
+3.  RAGFlow会话工具定制
+
+负责检索企业私有非结构化文档（如规章制度、技术文档），解决\"内部怎么规定\"的深度问题！连接自定义部署的RAGFlow服务器，进行会话开启，提问以及会话管理的完整流程！
+
+\@tool
+
+def get_assistant_list(
+
+dummy_arg: Annotated[str, \"不需要输入参数，直接调用即可\"] = \"\",
+
+) -\> str:
+
+\"\"\"
+
+【工具功能】获取 RAGFlow 中所有聊天助手信息
+
+适用场景：Agent
+需要确认当前有哪些可用助手，及每个助手绑定的知识库范围时调用
+
+返回：结构化字符串（助手名称+功能介绍+关联知识库）
+
+\"\"\"
+
+\# 埋点监控：记录工具调用行为
+
+monitor.report_tool(\"RAGFlow助手列表查询\")
+
+api_key, base_url = _load_ragflow_env()
+
+\# 配置校验
+
+if not api_key or not base_url:
+
+return \"错误：RAGFlow 环境变量未配置（需设置 RAGFLOW_API_URL 与
+RAGFLOW_API_KEY）\"
+
+result = \"\"
+
+try:
+
+rag = RAGFlow(api_key=api_key, base_url=base_url)
+
+\# 获取所有聊天助手（list_chats() 无参数返回全部）
+
+for assistant in rag.list_chats():
+
+\# 解析助手关联的知识库名称（assistant.datasets 是知识库列表）
+
+kb_names = []
+
+if assistant.datasets and isinstance(assistant.datasets, list):
+
+for dataset in assistant.datasets:
+
+if isinstance(dataset, dict) and \"name\" in dataset:
+
+kb_names.append(dataset[\"name\"])
+
+\# 格式化知识库名称（无则显示\"无\"）
+
+kb_names_str = \"、\".join(kb_names) if kb_names else \"无\"
+
+\# 结构化拼接助手信息
+
+result += f\"助手名称：{assistant.name}；
+功能介绍：{assistant.description}； 关联知识库：{kb_names_str}\\n\"
+
+\# 移除末尾多余换行符
+
+return result.rstrip(\"\\n\") if result else \"未找到任何聊天助手\"
+
+except Exception as e:
+
+return f\"获取助手列表失败：{str(e)}\"
+
+\@tool
+
+def create_ask_delete(
+
+assistant_name: Annotated[str, \"必填：目标聊天助手的名称\"],
+
+question: Annotated[str, \"必填：要向助手提问的问题\"],
+
+) -\> str:
+
+\"\"\"
+
+【工具功能】向指定 RAGFlow 助手发起单次提问（临时会话，用完即删）
+
+适用场景：Agent 需单次查询某个助手，无需保留会话记录时调用
+
+特点：创建临时会话→流式接收答案→自动删除会话，无数据残留
+
+\"\"\"
+
+\# 埋点监控：记录提问信息
+
+monitor.report_tool(
+
+\"RAGFlow助手提问工具\",
+
+{\"助手名称\": assistant_name, \"查询问题\": question}
+
+)
+
+\# 步骤1： 获取参数
+
+api_key, base_url = _load_ragflow_env()
+
+\# 步骤2：核心提问逻辑
+
+try:
+
+rag = RAGFlow(api_key=api_key, base_url=base_url)
+
+\# 按名称筛选目标助手（取第一个匹配结果）
+
+assistants = rag.list_chats(name=assistant_name)
+
+if not assistants:
+
+return f\"错误：未找到名为「{assistant_name}」的聊天助手\"
+
+assistant = assistants[0]
+
+session = None \# 初始化会话对象（用于后续删除）
+
+try:
+
+\# 创建临时会话（名称自定义，便于识别）
+
+session = assistant.create_session(name=\"temp_session_for_single_ask\")
+
+\# 流式提问（stream=True 逐段接收答案，避免等待全量结果）
+
+response_generator = session.ask(question, stream=True)
+
+\# 收集流式响应（适配 SDK 格式：part.content 为单段答案内容）
+
+full_answer = \"\"
+
+for part in response_generator:
+
+if hasattr(part, \"content\") and part.content:
+
+full_answer = part.content \#
+覆盖更新为完整答案（流式最后一段是完整内容）
+
+\# 埋点监控：记录返回的答案
+
+monitor.report_tool(
+
+\"RAGFlow助手回答记录\",
+
+{\"助手名称\": assistant_name, \"问题\": question, \"答案\":
+full_answer}
+
+)
+
+\# 自动删除临时会话（核心：避免会话堆积）
+
+if session and hasattr(session, \"id\"):
+
+assistant.delete_sessions(ids=[session.id])
+
+return full_answer if full_answer else \"未获取到助手的回答\"
+
+except Exception as e:
+
+return f\"提问过程失败：{str(e)}\"
+
+except Exception as e:
+
+return f\"RAGFlow 操作失败：{str(e)}\"
