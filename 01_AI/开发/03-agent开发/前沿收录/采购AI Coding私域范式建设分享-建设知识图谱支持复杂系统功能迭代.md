@@ -1,7 +1,12 @@
 ---
-source: https://km.sankuai.com/collabpage/2725883149
+source:
 title: 采购AI Coding私域范式建设分享-建设知识图谱支持复杂系统功能迭代
-tags: [AI, AI编程, 知识图谱, GraphRAG, Agent]
+tags:
+  - AI
+  - AI编程
+  - 知识图谱
+  - GraphRAG
+  - Agent
 ---
 
 # 采购AI Coding私域范式建设分享-建设知识图谱支持复杂系统功能迭代
@@ -121,15 +126,4 @@ tags: [AI, AI编程, 知识图谱, GraphRAG, Agent]
 
 传统模式下，实际是先查询直接调用目标方法的方法，再去Web层、Service层和定时任务中看是否存在直接或间接调用目标方法以及相关查询服务的方法，这里存在两个明显问题：一是只能检索到比较短的链路，一般只能找到2次调用的链路；二是可能找到的方法并没有真正调用目标方法（幻觉问题），因此会出现调用链路的遗漏，并把一些未调用目标方法的链路误纳入，这两个问题会随着链路复杂度的提高愈发明显。知识图谱下，代码实际上是基于Cypher语句到图数据库中获取对应的代码调用链路，检索结果依赖于知识图谱，针对链路长度大于2的场景，也可以通过Cypher语句准确获取，且不会检索出错误的代码链路，结果更加准确可控。
 
-## 脚注与参考
-
-- Knowledge Graph Based Repository-Level Code Generation 和 CodeXGraph：[arxiv.org/abs/2505.14394](https://arxiv.org/abs/2505.14394) ，[arxiv.org/abs/2408.03910](https://arxiv.org/abs/2408.03910)
-- GraphRAG：[CSDN 参考文章](https://blog.csdn.net/AIBigModel/article/details/141504686)
-- 代码文件范围：需要分析核心的Service、Controller、Mapper代码，DTO传输对象不用分析
-- AST：Abstract Syntax Tree（抽象语法树），是源代码语法结构的一种树状表现形式，树的每个节点都表示源代码中的一种结构，比如变量、运算符、语句块等
-- 准确率：输出的链路中真实调用目标方法的链路占比
-- 召回率：实际的调用链路中被检索出的链路占比
-
----
-
-> 说明：本文档由学城文档同步整理而来，原文包含多张流程图（Drawio）、示意图、录屏视频等富媒体内容（均为美团内网资源，需要内网权限访问），如需查看请前往[原文链接](https://km.sankuai.com/collabpage/2725883149)。
+##
