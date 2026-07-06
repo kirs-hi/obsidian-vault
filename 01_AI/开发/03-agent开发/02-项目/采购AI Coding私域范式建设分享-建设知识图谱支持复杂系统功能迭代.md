@@ -18,9 +18,15 @@ tags:
 
 随着公司AI探索的深入，我们发现AI在实际应用中存在明显的效率提升瓶颈。从实际使用体验来看，AI目前仅能解决30%~40%的代码问题，加上人工交互修改和检查的成本，整体提效并未达到预期的30%增长。这主要源于AI Coding的贡献与提效呈现非线性增长特征，存在明显的阶段性规律：
 
-| AI Coding贡献率和提效比例的关系曲线（经验） | 曲线变化说明 |
-| --- | --- |
-| ![[attachments/img_0.png]] | **初期阶段**：AI输出质量较差，代码采用率低，研发人员需要投入大量时间进行代码甄别和优化，效率反而出现下降。 **发展阶段**：随着AI代码贡献度逐步提升，人工干预成本逐渐降低，效率开始显现。 **成熟阶段**：当AI输出质量足够高、无需人工修正时，提效比率达到最大值。 目前我们已经跨越了效率提升的临界点，能够感受到的提效，但对团队整体工作的影响尚未达到预期强度。**关键在于，后续对AI Coding的每一次优化都将带来更显著的提效增长，这正是我们需要重点投入的原因。** |
+![[attachments/img_0.png]]
+
+> **AI Coding贡献率和提效比例的关系曲线（经验）**
+
+- **初期阶段**：AI输出质量较差，代码采用率低，研发人员需要投入大量时间进行代码甄别和优化，效率反而出现下降。
+- **发展阶段**：随着AI代码贡献度逐步提升，人工干预成本逐渐降低，效率开始显现。
+- **成熟阶段**：当AI输出质量足够高、无需人工修正时，提效比率达到最大值。
+
+目前我们已经跨越了效率提升的临界点，能够感受到的提效，但对团队整体工作的影响尚未达到预期强度。**关键在于，后续对AI Coding的每一次优化都将带来更显著的提效增长，这正是我们需要重点投入的原因。**
 
 #### **第一阶段认知与调研**
 
@@ -168,23 +174,158 @@ tags:
 
 ![[attachments/img_4.png]]
 
-知识图谱构建的系统架构，主要分为三个核心部分： **1、多维知识图谱构建：**将各类知识库的信息，转换为我们设计的知识图谱的结构，存入图数据库中。包括： **代码仓库处理（已完成）：** **识别要解析的文件 **- 确定需要分析的代码文件范围[^代码文件范围：需要分析核心的Service、Controller、Mapper代码，DTO传输对象不用分析]，**AST****解析识别代码组件 **- 使用抽象语法树分析静态，解析出代码结构，识别类、方法、变量等组件，**代码组件与图谱结构对齐 **- 将解析出的代码组件映射到知识图谱的节点和关系结构，**构建知识图谱** - 将对齐后的代码信息存储到图数据库中。 **技术文档处理（建设中）：** **E-R关系解析** - 使用大模型解析文档中的实体关系模型，**核心流程解析** - 提取文档中描述的业务流程和操作步骤，**接口文档解析** - 解析API接口文档，识别接口参数、返回值等信息，**构建知识图谱 **- 将解析出的文档信息存储到图数据库中 **其他维度（设计中）：**预留了其他维度知识图谱构建的设计空间，为未来扩展做准备。 **2、知识图谱索构建：**对构建好的知识图谱进行索引构建和向量化处理，为后续查询应用做准备。包括： **构建标量索引（已完成）** ： 基于全量节点构建结构化索引。 **创建向量索引（建设中）** ：**文档路径 -** 获取需求文档和设计文档，进行向量化处理 **代码路径 - **获取代码块，通过大模型生成代码描述，然后进行向量化基于向量化结果创建语义索引。 **3、知识图谱应用：**基于构建好的索引，为用户提供智能化的信息检索和查询服务。主要包含2种搜索方法： **图搜索路径（已完成）：****生成图数据库查询语句** - 通过大模型将查询转换为图数据库查询语言，**图搜索** - 在图数据库中执行结构化查询，**返回节点及关系信息** - 返回匹配的节点和它们之间的关系 **向量搜索路径（建设中）：****大模型处理** - 使用大模型理解和优化查询，**向量化** - 将查询转换为向量表示，**向量检索** - 在向量索引中搜索相似内容，**返回相似节点** - 返回语义相似的节点信息。
+知识图谱构建的系统架构，主要分为三个核心部分：
 
+**1、多维知识图谱构建：**将各类知识库的信息，转换为我们设计的知识图谱的结构，存入图数据库中。包括：
+- **代码仓库处理（已完成）：** **识别要解析的文件 **- 确定需要分析的代码文件范围[^代码文件范围：需要分析核心的Service、Controller、Mapper代码，DTO传输对象不用分析]，**AST****解析识别代码组件 **- 使用抽象语法树分析静态，解析出代码结构，识别类、方法、变量等组件，**代码组件与图谱结构对齐 **- 将解析出的代码组件映射到知识图谱的节点和关系结构，**构建知识图谱** - 将对齐后的代码信息存储到图数据库中。
+- **技术文档处理（建设中）：** **E-R关系解析** - 使用大模型解析文档中的实体关系模型，**核心流程解析** - 提取文档中描述的业务流程和操作步骤，**接口文档解析** - 解析API接口文档，识别接口参数、返回值等信息，**构建知识图谱 **- 将解析出的文档信息存储到图数据库中
+- **其他维度（设计中）：**预留了其他维度知识图谱构建的设计空间，为未来扩展做准备。
+
+**2、知识图谱索构建：**对构建好的知识图谱进行索引构建和向量化处理，为后续查询应用做准备。包括：
+- **构建标量索引（已完成）** ： 基于全量节点构建结构化索引。
+- **创建向量索引（建设中）** ：**文档路径 -** 获取需求文档和设计文档，进行向量化处理 **代码路径 - **获取代码块，通过大模型生成代码描述，然后进行向量化基于向量化结果创建语义索引。
+
+**3、知识图谱应用：**基于构建好的索引，为用户提供智能化的信息检索和查询服务。主要包含2种搜索方法：
+- **图搜索路径（已完成）：****生成图数据库查询语句** - 通过大模型将查询转换为图数据库查询语言，**图搜索** - 在图数据库中执行结构化查询，**返回节点及关系信息** - 返回匹配的节点和它们之间的关系
+- **向量搜索路径（建设中）：****大模型处理** - 使用大模型理解和优化查询，**向量化** - 将查询转换为向量表示，**向量检索** - 在向量索引中搜索相似内容，**返回相似节点** - 返回语义相似的节点信息。
 
 **知识图谱建模：融合多源异构知识**
 
 ![[attachments/img_5.png]]
 
-**融合多源异构知识：**知识图谱设计上融合了代码仓库知识、技术知识、业务流程、领域模型、页面映射等多源异构知识，实现全景式的知识覆盖，帮助AI理解业务全貌。知识图谱通过节点和边描述整个关系。 **节点：节点代表知识图谱中的实体，主要包括：** **服务**：代表一个微服务实例，包含服务名、描述等信息。 **服务接口**：表示服务对外暴露的接口，包括接口名、协议、请求方法、路径等。 **Java接口类**：描述Java接口类的相关信息，如名称、包名、文件路径等。 **Java实现类**：描述Java接口的实现类，包括类名、包名、文件路径等。 **Java方法**：代表类或接口中的具体方法，包含方法名、所属类、签名、层次等信息。 **SQL语句**：表示与数据库交互的SQL语句，记录SQL内容、类型、文件路径等。 **数据库表**：描述数据库中的表，包括表名、所属数据库、描述等。 **边：边用于表达不同实体之间的各种关系，主要包括：** **暴露**：服务 → 服务接口，表示服务暴露了某个接口。 **服务接口实现**：服务接口 → Java方法，表示接口由某个方法实现。 **接口定义**：Java实现类/Java接口类 → Java方法，表示类或接口声明了某个方法。 **Java接口实现**：Java实现类 → Java接口类，表示实现类实现了某个接口。 **调用**：Java方法 → Java方法，表示方法之间的调用关系。 **执行**：Java方法 → SQL语句，表示方法执行了某条SQL语句。 **操作**：SQL语句 → 数据库表，表示SQL语句操作了某个数据库表。
+**融合多源异构知识：**知识图谱设计上融合了代码仓库知识、技术知识、业务流程、领域模型、页面映射等多源异构知识，实现全景式的知识覆盖，帮助AI理解业务全貌。知识图谱通过节点和边描述整个关系。
+
+**节点**：节点代表知识图谱中的实体，主要包括：** **服务**：代表一个微服务实例，包含服务名、描述等信息。
+- **服务接口**：表示服务对外暴露的接口，包括接口名、协议、请求方法、路径等。
+- **Java接口类**：描述Java接口类的相关信息，如名称、包名、文件路径等。
+- **Java实现类**：描述Java接口的实现类，包括类名、包名、文件路径等。
+- **Java方法**：代表类或接口中的具体方法，包含方法名、所属类、签名、层次等信息。
+- **SQL语句**：表示与数据库交互的SQL语句，记录SQL内容、类型、文件路径等。
+- **数据库表**：描述数据库中的表，包括表名、所属数据库、描述等。
+
+**边**：边用于表达不同实体之间的各种关系，主要包括：** **暴露**：服务 → 服务接口，表示服务暴露了某个接口。
+- **服务接口实现**：服务接口 → Java方法，表示接口由某个方法实现。
+- **接口定义**：Java实现类/Java接口类 → Java方法，表示类或接口声明了某个方法。
+- **Java接口实现**：Java实现类 → Java接口类，表示实现类实现了某个接口。
+- **调用**：Java方法 → Java方法，表示方法之间的调用关系。
+- **执行**：Java方法 → SQL语句，表示方法执行了某条SQL语句。
+- **操作**：SQL语句 → 数据库表，表示SQL语句操作了某个数据库表。
 
 <details>
 <summary>知识图谱 Schema 定义（点击展开）</summary>
 
-```Java // schema ## 知识图谱结构说明 ### Nodes（节点） 1. **SERVICE（服务）**:    - **属性**:      - `appKey` (String): 微服务名称，代表服务的唯一标识（如com.myco.purchasemall.po）      - `description` (String): 服务描述 2. **SERVICE_ENDPOINT（服务接口）**:    - **属性**:      - `name` (String): 接口标识，一般为：类名.方法名      - `protocol` (String): 协议类型（HTTP, Thrift）      - `http_method` (String): HTTP 方法请求类型（GET, POST，若适用）      - `path` (String): HTTP 接口URL 路径（若适用）      - `description` (String): 接口描述（可选） 3. **JAVA_INTERFACE（Java接口类）**:    - **属性**:      - `name` (String): Java 接口类名称（如 UserService）      - `full_name` (String): Java 接口类全限定名称，包名.类名（如 com.myco.myco.UserService）      - `package` (String): 包名      - `file_path` (String): 文件路径 4. **JAVA_IMPLEMENTATION（Java实现类）**:    - **属性**:      - `name` (String): 实现类名称（如 UserServiceImpl）      - `full_name` (String): Java 接口类全限定名称，包名.类名（如 com.myco.myco.impl.UserServiceImpl）      - `package` (String): 包名      - `file_path` (String): 文件路径 5. **METHOD（方法）**:    - **属性**:      - `name` (String): 方法名（如 login）      - `class` (String): 方法所属类/接口全限定名（如 com.myco.myco.impl.UserServiceImpl）      - `full_name` (String): 方法全限定名，类名.方法名（如 com.myco.myco.impl.UserServiceImpl.login）      - `signature` (String): 方法签名      - `file_path` (String): 方法所在文件路径       - `layer` (String): 所属层（Controller, Service, Mapper） 6. **SQL_STATEMENT（SQL语句）**:    - **属性**:      - `id` (String): SQL 标识（如 SQL#UserMapper.selectById）      - `sql` (String): SQL 语句内容      - `operation` (String): 操作类型（select, insert, update, delete）      - `file_path` (String): SQL 所在文件路径（如 /resources/base/mapper/PoAdjustRecordMapper.xml） 7. **TABLE（数据库表）**:    - **属性**:      - `name` (String): 表名      - `database` (String): 数据库名（可选）      - `description` (String): 表描述（可选） ### Edges（边） 1. **EXPOSES（暴露）**:    - **Source**: SERVICE    - **Target**: SERVICE_ENDPOINT 2. **ENDPOINT_IMPLEMENTED_BY（服务接口实现）**:    - **Source**: SERVICE_ENDPOINT    - **Target**: METHOD 3. **DECLARES（接口定义）**:    - **Source**: JAVA_INTERFACE 或 JAVA_IMPLEMENTATION    - **Target**: METHOD 4. **IMPLEMENTS（java接口实现）**:    - **Source**: JAVA_IMPLEMENTATION    - **Target**: JAVA_INTERFACE 5. **METHOD_IMPLEMENTS（java方法实现）**:    - **Source**: METHOD（实现类中的方法）    - **Target**: METHOD（接口中的方法） 6. **CALLS（调用）**:    - **Source**: METHOD    - **Target**: METHOD 7. **EXECUTES（执行）**:    - **Source**: METHOD    - **Target**: SQL_STATEMENT 8. **OPERATES_ON（操作）**: ---  ## 示例  ### 节点 - **SERVICE**: UserService - **SERVICE_ENDPOINT**: /api/user/login（protocol: HTTP, http_method: POST） - **JAVA_INTERFACE**: UserService（package: com.example.service） - **JAVA_IMPLEMENTATION**: UserServiceImpl（package: com.example.service.impl） - **METHOD**: UserController.login()、UserService.login()、UserServiceImpl.login()、UserMapper.selectById() - **SQL_STATEMENT**: SQL#UserMapper.selectById（sql: SELECT * FROM user WHERE id = ?, operation: select） - **TABLE**: user  ### 边 - UserService **EXPOSES** /api/user/login - /api/user/login **ENDPOINT_IMPLEMENTED_BY** UserController.login() - UserService **DECLARES** UserService.login() - UserServiceImpl **DECLARES** UserServiceImpl.login() - UserServiceImpl **IMPLEMENTS** UserService - UserServiceImpl.login() **METHOD_IMPLEMENTS** UserService.login() - UserController.login() **CALLS** UserService.login() - UserService.login() **CALLS** UserMapper.selectById() - UserMapper.selectById() **EXECUTES** SQL#UserMapper.selectById - SQL#UserMapper.selectById **OPERATES_ON** user（operation: select） ```
+```
+// schema
+
+## 知识图谱结构说明
+
+### Nodes（节点）
+
+1. **SERVICE（服务）**: 
+   - **属性**:
+      - `appKey` (String): 微服务名称，代表服务的唯一标识（如com.myco.purchasemall.po）
+      - `description` (String): 服务描述
+
+2. **SERVICE_ENDPOINT（服务接口）**: 
+   - **属性**:
+      - `name` (String): 接口标识，一般为：类名.方法名
+      - `protocol` (String): 协议类型（HTTP, Thrift）
+      - `http_method` (String): HTTP 方法请求类型（GET, POST，若适用）
+      - `path` (String): HTTP 接口URL 路径（若适用）
+      - `description` (String): 接口描述（可选）
+
+3. **JAVA_INTERFACE（Java接口类）**: 
+   - **属性**:
+      - `name` (String): Java 接口类名称（如 UserService）
+      - `full_name` (String): Java 接口类全限定名称，包名.类名（如 com.myco.myco.UserService）
+      - `package` (String): 包名
+      - `file_path` (String): 文件路径
+
+4. **JAVA_IMPLEMENTATION（Java实现类）**: 
+   - **属性**:
+      - `name` (String): 实现类名称（如 UserServiceImpl）
+      - `full_name` (String): Java 接口类全限定名称，包名.类名（如 com.myco.myco.impl.UserServiceImpl）
+      - `package` (String): 包名
+      - `file_path` (String): 文件路径
+
+5. **METHOD（方法）**: 
+   - **属性**:
+      - `name` (String): 方法名（如 login）
+      - `class` (String): 方法所属类/接口全限定名（如 com.myco.myco.impl.UserServiceImpl）
+      - `full_name` (String): 方法全限定名，类名.方法名（如 com.myco.myco.impl.UserServiceImpl.login）
+      - `signature` (String): 方法签名
+      - `file_path` (String): 方法所在文件路径 
+      - `layer` (String): 所属层（Controller, Service, Mapper）
+
+6. **SQL_STATEMENT（SQL语句）**: 
+   - **属性**:
+      - `id` (String): SQL 标识（如 SQL#UserMapper.selectById）
+      - `sql` (String): SQL 语句内容
+      - `operation` (String): 操作类型（select, insert, update, delete）
+      - `file_path` (String): SQL 所在文件路径（如 /resources/base/mapper/PoAdjustRecordMapper.xml）
+
+7. **TABLE（数据库表）**: 
+   - **属性**:
+      - `name` (String): 表名
+      - `database` (String): 数据库名（可选）
+      - `description` (String): 表描述（可选）
+
+### Edges（边）
+
+1. **EXPOSES（暴露）**: 
+   - **Source**: SERVICE 
+   - **Target**: SERVICE_ENDPOINT
+
+2. **ENDPOINT_IMPLEMENTED_BY（服务接口实现）**: 
+   - **Source**: SERVICE_ENDPOINT 
+   - **Target**: METHOD
+
+3. **DECLARES（接口定义）**: 
+   - **Source**: JAVA_INTERFACE 或 JAVA_IMPLEMENTATION 
+   - **Target**: METHOD
+
+4. **IMPLEMENTS（java接口实现）**: 
+   - **Source**: JAVA_IMPLEMENTATION 
+   - **Target**: JAVA_INTERFACE
+
+5. **METHOD_IMPLEMENTS（java方法实现）**: 
+   - **Source**: METHOD（实现类中的方法） 
+   - **Target**: METHOD（接口中的方法）
+
+6. **CALLS（调用）**: 
+   - **Source**: METHOD 
+   - **Target**: METHOD
+
+7. **EXECUTES（执行）**: 
+   - **Source**: METHOD 
+   - **Target**: SQL_STATEMENT
+
+8. **OPERATES_ON（操作）**: ---
+
+## 示例
+
+### 节点 
+- **SERVICE**: UserService 
+- **SERVICE_ENDPOINT**: /api/user/login（protocol: HTTP, http_method: POST） 
+- **JAVA_INTERFACE**: UserService（package: com.example.service） 
+- **JAVA_IMPLEMENTATION**: UserServiceImpl（package: com.example.service.impl） 
+- **METHOD**: UserController.login()、UserService.login()、UserServiceImpl.login()、UserMapper.selectById() 
+- **SQL_STATEMENT**: SQL#UserMapper.selectById（sql: SELECT * FROM user WHERE id = ?, operation: select） 
+- **TABLE**: user
+
+### 边 
+- UserService **EXPOSES** /api/user/login 
+- /api/user/login **ENDPOINT_IMPLEMENTED_BY** UserController.login() - UserService **DECLARES** UserService.login() 
+- UserServiceImpl **DECLARES** UserServiceImpl.login() 
+- UserServiceImpl **IMPLEMENTS** UserService 
+- UserServiceImpl.login() **METHOD_IMPLEMENTS** UserService.login() 
+- UserController.login() **CALLS** UserService.login() 
+- UserService.login() **CALLS** UserMapper.selectById() 
+- UserMapper.selectById() **EXECUTES** SQL#UserMapper.selectById 
+- SQL#UserMapper.selectById **OPERATES_ON** user（operation: select）
+```
 
 </details>
-
-**采购项目知识图谱示例**
 
 **采购项目知识图谱示例**
 
@@ -196,20 +337,194 @@ tags:
 
 采购PO项目中，查询框架订单详情接口，查询PO头、行、历史表来组装BPO页面展示信息。这个案例使用Cypher查询，一次性获取queryBlanketPoDetailPage方法的完整调用链路，包含了该方法对应的http接口，方法调用的方法及数据库表。
 
-```SQL // cypher语句 // 从图数据库中查找一个名为 'queryBlanketPoDetailPage' 的方法节点，并将其标记为 target MATCH (target:METHOD {name: 'queryBlanketPoDetailPage'})  /* 向前进行查询：从服务节点到达目标方法节点的所有可能路径    这部分用来识别哪个服务通过哪个端点最终实现了或调用了目标方法。    - s:SERVICE 表示服务节点    - :EXPOSES 关系表示服务对外暴露的接口    - SERVICE_ENDPOINT 表示服务的具体接口点    - :ENDPOINT_IMPLEMENTED_BY 表示这个接口点由某个方法实现    - m0:METHOD - 初始的接口实现方法    - METHOD_IMPLEMENTS*0.. 表示方法的实现关系，可以追溯实现链至多个方法    - CALLS*0.. 表示方法之间调用关系，可以是多个连续调用    - m2:METHOD 表示在路径中找到的方法节点    - 仅当 m2 是目标方法或与目标方法有实现关系时，路径才有效 */ OPTIONAL MATCH p_up =   (s:SERVICE)-[:EXPOSES]->(:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(m0:METHOD)   -[:METHOD_IMPLEMENTS*0..]-(m1:METHOD)   -[:CALLS*0..]->(m2:METHOD) WHERE m2 = target OR (m2)-[:METHOD_IMPLEMENTS*0..]-(target)  /* 向后进行查询：从目标方法向下追踪其执行到表的所有路径    此部分识别该方法执行了哪条 SQL 语句并操作了哪些数据库表。    - target 方法的实现链和所调用的方法链被追踪，直到执行 SQL 语句    - EXECUTES 关系表示方法执行的 SQL 语句    - OPERATES_ON：SQL 语句操作的数据库表    - m3:METHOD - 中途可能调用的方法    - sql:SQL_STATEMENT - 由某个方法执行的 SQL 语句    - t:TABLE - SQL 语句最终操作的数据库表 */ OPTIONAL MATCH p_down =   (target)-[:METHOD_IMPLEMENTS*0..]-(m3:METHOD)   -[:CALLS*0..]->(m4:METHOD)   -[:EXECUTES]->(sql:SQL_STATEMENT)   -[:OPERATES_ON]->(t:TABLE)  // 收集符合条件的向上路径和向下路径，过滤掉空路径 WITH [p IN collect(p_up) WHERE p IS NOT NULL] AS upPaths,      [p IN collect(p_down) WHERE p IS NOT NULL] AS downPaths  // 合并向上和向下的路径集成为一个总路径集 WITH upPaths + downPaths AS paths  // 展开路径集以便返回，并确保返回的路径是唯一的（无重复路径） UNWIND paths AS p RETURN DISTINCT p  ```
+```cypher
+// cypher语句 // 从图数据库中查找一个名为 'queryBlanketPoDetailPage' 的方法节点，并将其标记为 target MATCH (target:METHOD {name: 'queryBlanketPoDetailPage'})
+
+/* 向前进行查询：从服务节点到达目标方法节点的所有可能路径    这部分用来识别哪个服务通过哪个端点最终实现了或调用了目标方法。    - s:SERVICE 表示服务节点    - :EXPOSES 关系表示服务对外暴露的接口    - SERVICE_ENDPOINT 表示服务的具体接口点    - :ENDPOINT_IMPLEMENTED_BY 表示这个接口点由某个方法实现    - m0:METHOD - 初始的接口实现方法    - METHOD_IMPLEMENTS*0.. 表示方法的实现关系，可以追溯实现链至多个方法    - CALLS*0.. 表示方法之间调用关系，可以是多个连续调用    - m2:METHOD 表示在路径中找到的方法节点    - 仅当 m2 是目标方法或与目标方法有实现关系时，路径才有效 */
+OPTIONAL MATCH p_up = 
+  (s:SERVICE)-[:EXPOSES]->(:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(m0:METHOD) 
+  -[:METHOD_IMPLEMENTS*0..]-(m1:METHOD) 
+  -[:CALLS*0..]->(m2:METHOD)
+
+WHERE m2 = target OR (m2)-[:METHOD_IMPLEMENTS*0..]-(target)
+
+/* 向后进行查询：从目标方法向下追踪其执行到表的所有路径    此部分识别该方法执行了哪条 SQL 语句并操作了哪些数据库表。    - target 方法的实现链和所调用的方法链被追踪，直到执行 SQL 语句    - EXECUTES 关系表示方法执行的 SQL 语句    - OPERATES_ON：SQL 语句操作的数据库表    - m3:METHOD - 中途可能调用的方法    - sql:SQL_STATEMENT - 由某个方法执行的 SQL 语句    - t:TABLE - SQL 语句最终操作的数据库表 */
+OPTIONAL MATCH p_down = 
+  (target)-[:METHOD_IMPLEMENTS*0..]-(m3:METHOD) 
+  -[:CALLS*0..]->(m4:METHOD) 
+  -[:EXECUTES]->(sql:SQL_STATEMENT) 
+  -[:OPERATES_ON]->(t:TABLE)
+// 收集符合条件的向上路径和向下路径，过滤掉空路径
+
+WITH [p IN collect(p_up)
+
+WHERE p IS NOT NULL] AS upPaths,      [p IN collect(p_down)
+
+WHERE p IS NOT NULL] AS downPaths
+// 合并向上和向下的路径集成为一个总路径集
+
+WITH upPaths + downPaths AS paths
+// 展开路径集以便返回，并确保返回的路径是唯一的（无重复路径）
+
+UNWIND paths AS p
+
+RETURN DISTINCT p
+```
 
 > 🎬**视频附件**：234视频呢.mov *(见原文)*
 
 采购规则配置化模块中，保存规则时，会更新或插入规则基础信息、规则信息、规则执行信息等。这个案例展示了通过一条Cypher语句，查询到保存规则接口（saveDetail）的上下游所有调用链路。
 
-```SQL // cypher语句 // 从图数据库中查找一个名为 'saveDetail' 的方法节点，并将其标记为 target MATCH (target:METHOD {name: 'saveDetail'})  /* 向前进行查询：从服务节点到达目标方法节点的所有可能路径    这部分用来识别哪个服务通过哪个端点最终实现了或调用了目标方法。    - s:SERVICE 表示服务节点，这里定义代表各个服务的实体    - :EXPOSES 表示服务如何对外暴露接口，指向 SERVICE_ENDPOINT 节点    - SERVICE_ENDPOINT 表示服务的具体接口点，即服务暴露的具体终端    - :ENDPOINT_IMPLEMENTED_BY 表示这个接口点由某个方法实现    - m0:METHOD - 表示初始实现接口的第一层方法    - METHOD_IMPLEMENTS*0.. 表示方法的实现关系，可以追溯实现链至多个方法，这里表示可能有多个实现层级    - CALLS*0.. 表示方法之间调用关系，可以是多个连续调用，表示从一个方法到另一个方法的调用链    - m2:METHOD 表示在路径中找到的方法节点    - WHERE 子句确保仅当 m2 是目标方法或通过实现链连接到目标方法时，路径才有效 */ OPTIONAL MATCH p_up =   (s:SERVICE)-[:EXPOSES]->(:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(m0:METHOD)   -[:METHOD_IMPLEMENTS*0..]-(m1:METHOD)   -[:CALLS*0..]->(m2:METHOD) WHERE m2 = target OR (m2)-[:METHOD_IMPLEMENTS*0..]-(target)  /* 向后进行查询：从目标方法向下追踪其执行到表的所有路径    此部分识别该方法执行了哪条 SQL 语句并操作了哪些数据库表。    - 从 target 方法的实现链和所调用的方法链被追踪，直到执行 SQL 语句    - EXECUTES 表示方法执行的 SQL 语句，表示某个方法会执行某些 SQL 操作    - OPERATES_ON 表示 SQL 语句对数据库表进行的操作，连接到具体的数据库表节点    - m3:METHOD 和 m4:METHOD - 路径中间可能调用的其他方法    - sql:SQL_STATEMENT - 由某个方法执行的 SQL 语句    - t:TABLE - 表示 SQL 语句最终操作的数据库表 */ OPTIONAL MATCH p_down =   (target)-[:METHOD_IMPLEMENTS*0..]-(m3:METHOD)   -[:CALLS*0..]->(m4:METHOD)   -[:EXECUTES]->(sql:SQL_STATEMENT)   -[:OPERATES_ON]->(t:TABLE)  // 收集符合条件的向上路径和向下路径，并过滤掉空路径以保留有效路径 WITH [p IN collect(p_up) WHERE p IS NOT NULL] AS upPaths,      [p IN collect(p_down) WHERE p IS NOT NULL] AS downPaths  // 合并向上路径和向下路径，形成一个完整的传输路径集 WITH upPaths + downPaths AS paths  // 展开路径集以便返回，并确保返回的路径是唯一的（即去除重复路径） UNWIND paths AS p RETURN DISTINCT p  ```
+```cypher
+// cypher语句 // 从图数据库中查找一个名为 'saveDetail' 的方法节点，并将其标记为 target MATCH (target:METHOD {name: 'saveDetail'})
 
+/* 向前进行查询：从服务节点到达目标方法节点的所有可能路径    这部分用来识别哪个服务通过哪个端点最终实现了或调用了目标方法。    - s:SERVICE 表示服务节点，这里定义代表各个服务的实体    - :EXPOSES 表示服务如何对外暴露接口，指向 SERVICE_ENDPOINT 节点    - SERVICE_ENDPOINT 表示服务的具体接口点，即服务暴露的具体终端    - :ENDPOINT_IMPLEMENTED_BY 表示这个接口点由某个方法实现    - m0:METHOD - 表示初始实现接口的第一层方法    - METHOD_IMPLEMENTS*0.. 表示方法的实现关系，可以追溯实现链至多个方法，这里表示可能有多个实现层级    - CALLS*0.. 表示方法之间调用关系，可以是多个连续调用，表示从一个方法到另一个方法的调用链    - m2:METHOD 表示在路径中找到的方法节点    -
+
+WHERE 子句确保仅当 m2 是目标方法或通过实现链连接到目标方法时，路径才有效 */
+OPTIONAL MATCH p_up = 
+  (s:SERVICE)-[:EXPOSES]->(:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(m0:METHOD) 
+  -[:METHOD_IMPLEMENTS*0..]-(m1:METHOD) 
+  -[:CALLS*0..]->(m2:METHOD)
+
+WHERE m2 = target OR (m2)-[:METHOD_IMPLEMENTS*0..]-(target)
+
+/* 向后进行查询：从目标方法向下追踪其执行到表的所有路径    此部分识别该方法执行了哪条 SQL 语句并操作了哪些数据库表。    - 从 target 方法的实现链和所调用的方法链被追踪，直到执行 SQL 语句    - EXECUTES 表示方法执行的 SQL 语句，表示某个方法会执行某些 SQL 操作    - OPERATES_ON 表示 SQL 语句对数据库表进行的操作，连接到具体的数据库表节点    - m3:METHOD 和 m4:METHOD - 路径中间可能调用的其他方法    - sql:SQL_STATEMENT - 由某个方法执行的 SQL 语句    - t:TABLE - 表示 SQL 语句最终操作的数据库表 */
+OPTIONAL MATCH p_down = 
+  (target)-[:METHOD_IMPLEMENTS*0..]-(m3:METHOD) 
+  -[:CALLS*0..]->(m4:METHOD) 
+  -[:EXECUTES]->(sql:SQL_STATEMENT) 
+  -[:OPERATES_ON]->(t:TABLE)
+// 收集符合条件的向上路径和向下路径，并过滤掉空路径以保留有效路径
+
+WITH [p IN collect(p_up)
+
+WHERE p IS NOT NULL] AS upPaths,      [p IN collect(p_down)
+
+WHERE p IS NOT NULL] AS downPaths
+// 合并向上路径和向下路径，形成一个完整的传输路径集
+
+WITH upPaths + downPaths AS paths
+// 展开路径集以便返回，并确保返回的路径是唯一的（即去除重复路径）
+
+UNWIND paths AS p
+
+RETURN DISTINCT p
+```
 
 #### 知识库图谱设计应用
 
 ![[attachments/img_9.png]]
 
-**MCP工具接入：**通过开放MCP工具和引入自定义rule，可以快速接入目前各类编码或设计的Agent中。 案例： 我们在“元析”的基础上，尝试了接入知识图谱的MCP，其生成的设计文档可用率都有较大的提升。 基于目前知识库的使用场景以及对“元析”Agent的分析，在【概设生成详设】模板中【代码考古】模块，增加知识库使用场景以及说明。让AI在代码考古阶段通过知识库完成代码读取以及上下游链路梳理工作。 ![[attachments/img_10.png]] 随着知识库的增加，后续规划在“元析”最外层Agent中增加【知识库】模块，让AI根据场景自行/指定调用知识库，提升准确率。 ```SQL // 知识库使用rules > #### 任务指令: > 按照以下步骤使用灵活路径查询创建最优的Cypher查询: > > **步骤1: 层级识别** > - 从查询中识别**起始层级**(API, Controller, Service, Mapper, SQL, Database) > - 从查询中识别**目标层级**(API, Controller, Service, Mapper, SQL, Database) > > **步骤2: 灵活路径构建** > - 使用灵活的路径模式构建查询，关注起点和终点 > - **正向查询**: 使用可变长度路径模式如`-[:CALLS*]->`, `-[:CALLS*1..3]->`, `-[:CALLS*0..]->` 等 > - **反向查询**: 使用可变长度反向路径模式如`<-[:CALLS*]-`, `<-[:CALLS*1..3]-`, `<-[:CALLS*0..]-` 等 > - 根据查询需求选择正向或反向路径，或者组合使用 > > **步骤3: 查询生成** > 你的回答应遵循以下格式: > > [start_of_layer_analysis] > **起始层级**: <识别的起始层级> > **目标层级**: <识别的目标层级> > [end_of_layer_analysis] > > [start_of_cypher_queries] > ### 查询1 > **分解的文本查询**: <这个查询做什么的简短摘要> > **层级路径**: <起始层级> → <目标层级> > ```cypher > <cypher查询> > ``` > > ### 查询2 > **分解的文本查询**: <这个查询做什么的简短摘要> > **层级路径**: <起始层级> → <目标层级> > ```cypher > <cypher查询> > ``` > ... > [end_of_cypher_queries] > > #### 层级映射指南: > - **API查询** → 使用SERVICE_ENDPOINT节点 > - **Controller查询** → 使用layer='Controller'的METHOD节点 > - **Service查询** → 使用layer='Service'的METHOD节点 > - **Mapper查询** → 使用layer='Mapper'的METHOD节点 > - **SQL查询** → 使用SQL_STATEMENT节点 > - **数据库/表查询** → 使用TABLE节点 > > #### 灵活路径查询示例: > > **正向查询示例:** > - 查找Controller到叶子节点的所有路径: >   ```cypher >   MATCH p = (n:METHOD {layer: 'Controller'})-[:CALLS*0..]->(m) >   WHERE NOT (m)-[:CALLS]->() >   RETURN p >   ``` > > - 查找特定方法的所有调用链: >   ```cypher >   MATCH p = (n:METHOD {full_name: 'com.example.Controller.method'})-[:CALLS*]->(m) >   RETURN p >   ``` > > - 查找从API到SQL的路径: >   ```cypher >   MATCH p = (api:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(start:METHOD) >   -[:CALLS*]->(mapper:METHOD {layer: 'Mapper'}) >   -[:EXECUTES]->(sql:SQL_STATEMENT) >   RETURN p >   ``` > > **反向查询示例:** > - 查找调用特定方法的所有上层调用者: >   ```cypher >   MATCH path = (rootCaller:METHOD)-[:CALLS*1..10]->(target:METHOD) >   WHERE target.name = $methodName  >   AND target.class = $className >   WITH path, rootCaller,  >     [node IN nodes(path) \| node.class + "." + node.name] AS callChain >   RETURN DISTINCT rootCaller.name AS rootCallerMethod, >       rootCaller.class AS rootCallerClass, >       rootCaller.file_path AS rootCallerFile, >       length(path) AS callDepth, >       callChain > ORDER BY callDepth, rootCaller.class, rootCaller.name >   ``` > > - 查找操作特定表的所有API入口: >   ```cypher > MATCH p = (api:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(start:METHOD) > -[:CALLS*]->(mapper:METHOD)-[:EXECUTES]->(sql:SQL_STATEMENT) > -[:OPERATES_ON]->(table:TABLE {name: 'table_name'}) > RETURN p >   ``` > > #### 重要注意事项: > - 使用模糊匹配: `WHERE n.name =~ '.*<关键词>.*'` 或 `WHERE n.name CONTAINS '<关键词>'` > - 过滤METHOD节点时始终包含`layer`属性 > - 优先使用灵活的路径模式，不必显式指定每一层的调用关系 > > - **正向查询**: 使用条件过滤终点节点，如`WHERE NOT (m)-[:CALLS]->()`表示叶子节点 > - **反向查询**: 使用条件过滤入口节点，如`WHERE NOT ()-[:CALLS]->(m)`表示顶层调用者 > - 根据分析目的选择正向（影响分析）或反向（依赖分析）查询 > - 如果没有请求特定属性，则返回完整节点 ```
+**MCP工具接入：**通过开放MCP工具和引入自定义rule，可以快速接入目前各类编码或设计的Agent中。 案例： 我们在“元析”的基础上，尝试了接入知识图谱的MCP，其生成的设计文档可用率都有较大的提升。 基于目前知识库的使用场景以及对“元析”Agent的分析，在【概设生成详设】模板中【代码考古】模块，增加知识库使用场景以及说明。让AI在代码考古阶段通过知识库完成代码读取以及上下游链路梳理工作。
+
+![[attachments/img_10.png]]
+ 随着知识库的增加，后续规划在“元析”最外层Agent中增加【知识库】模块，让AI根据场景自行/指定调用知识库，提升准确率。
+
+```
+// 知识库使用rules
+> #### 任务指令:
+> 按照以下步骤使用灵活路径查询创建最优的Cypher查询:
+> > **步骤1: 层级识别**
+> - 从查询中识别**起始层级**(API, Controller, Service, Mapper, SQL, Database)
+> - 从查询中识别**目标层级**(API, Controller, Service, Mapper, SQL, Database)
+> > **步骤2: 灵活路径构建**
+> - 使用灵活的路径模式构建查询，关注起点和终点
+> - **正向查询**: 使用可变长度路径模式如`-[:CALLS*]->`, `-[:CALLS*1..3]->`, `-[:CALLS*0..]->` 等
+> - **反向查询**: 使用可变长度反向路径模式如`<-[:CALLS*]-`, `<-[:CALLS*1..3]-`, `<-[:CALLS*0..]-` 等
+> - 根据查询需求选择正向或反向路径，或者组合使用
+> > **步骤3: 查询生成**
+> 你的回答应遵循以下格式:
+> > [start_of_layer_analysis]
+> **起始层级**: <识别的起始层级>
+> **目标层级**: <识别的目标层级>
+> [end_of_layer_analysis]
+> > [start_of_cypher_queries]
+> ### 查询1
+> **分解的文本查询**: <这个查询做什么的简短摘要>
+> **层级路径**: <起始层级> → <目标层级>
+>
+```cypher
+> <cypher查询>
+>
+```
+> > ### 查询2
+> **分解的文本查询**: <这个查询做什么的简短摘要>
+> **层级路径**: <起始层级> → <目标层级>
+>
+```cypher
+> <cypher查询>
+>
+```
+> ...
+> [end_of_cypher_queries]
+> > #### 层级映射指南:
+> - **API查询** → 使用SERVICE_ENDPOINT节点
+> - **Controller查询** → 使用layer='Controller'的METHOD节点
+> - **Service查询** → 使用layer='Service'的METHOD节点
+> - **Mapper查询** → 使用layer='Mapper'的METHOD节点
+> - **SQL查询** → 使用SQL_STATEMENT节点
+> - **数据库/表查询** → 使用TABLE节点
+> > #### 灵活路径查询示例:
+> > **正向查询示例:**
+> - 查找Controller到叶子节点的所有路径:
+>  
+```cypher
+>   MATCH p = (n:METHOD {layer: 'Controller'})-[:CALLS*0..]->(m)
+>   WHERE NOT (m)-[:CALLS]->()
+>   RETURN p
+>  
+```
+> > - 查找特定方法的所有调用链:
+>  
+```cypher
+>   MATCH p = (n:METHOD {full_name: 'com.example.Controller.method'})-[:CALLS*]->(m)
+>   RETURN p
+>  
+```
+> > - 查找从API到SQL的路径:
+>  
+```cypher
+>   MATCH p = (api:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(start:METHOD)
+>   -[:CALLS*]->(mapper:METHOD {layer: 'Mapper'})
+>   -[:EXECUTES]->(sql:SQL_STATEMENT)
+>   RETURN p
+>  
+```
+> > **反向查询示例:**
+> - 查找调用特定方法的所有上层调用者:
+>  
+```cypher
+>   MATCH path = (rootCaller:METHOD)-[:CALLS*1..10]->(target:METHOD)
+>   WHERE target.name = $methodName 
+>   AND target.class = $className
+>   WITH path, rootCaller, 
+>     [node IN nodes(path) \| node.class + "." + node.name] AS callChain
+>   RETURN DISTINCT rootCaller.name AS rootCallerMethod,
+>       rootCaller.class AS rootCallerClass,
+>       rootCaller.file_path AS rootCallerFile,
+>       length(path) AS callDepth,
+>       callChain
+> ORDER BY callDepth, rootCaller.class, rootCaller.name
+>  
+```
+> > - 查找操作特定表的所有API入口:
+>  
+```cypher
+> MATCH p = (api:SERVICE_ENDPOINT)-[:ENDPOINT_IMPLEMENTED_BY]->(start:METHOD)
+> -[:CALLS*]->(mapper:METHOD)-[:EXECUTES]->(sql:SQL_STATEMENT)
+> -[:OPERATES_ON]->(table:TABLE {name: 'table_name'})
+> RETURN p
+>  
+```
+> > #### 重要注意事项:
+> - 使用模糊匹配: `WHERE n.name =~ '.*<关键词>.*'` 或 `WHERE n.name CONTAINS '<关键词>'`
+> - 过滤METHOD节点时始终包含`layer`属性
+> - 优先使用灵活的路径模式，不必显式指定每一层的调用关系
+> > - **正向查询**: 使用条件过滤终点节点，如`WHERE NOT (m)-[:CALLS]->()`表示叶子节点
+> - **反向查询**: 使用条件过滤入口节点，如`WHERE NOT ()-[:CALLS]->(m)`表示顶层调用者
+> - 根据分析目的选择正向（影响分析）或反向（依赖分析）查询
+> - 如果没有请求特定属性，则返回完整节点
+```
 
 ### 四、案例效果
 
@@ -286,7 +601,6 @@ tags:
 
 ---
 
-
 > **📂 折叠块（默认折叠）：传统方式分析全流程**
 >
 > ![[attachments/img_22.png]]
@@ -294,10 +608,6 @@ tags:
 > **📂 折叠块（默认折叠）：知识图谱分析全流程**
 >
 > ![[attachments/img_23.png]]
-
-​
-
-### 
 
 ---
 
