@@ -5,7 +5,7 @@ tags:
   - Agent
   - 技术指南
 date: 2025-07-09
-source: 内部技术文档
+source:
 ---
 
 # AI Skill 书写与设计技巧
